@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="InstMerRateConf"
+		table="inst_mer_rate_conf"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<composite-id name="Id" class="InstMerRateConfPK">
+			<key-property
+				name="Gid"
+				column="gid"
+				type="integer"
+			/>
+			<key-property
+				name="GType"
+				column="g_type"
+				type="integer"
+			/>
+			<key-property
+				name="MerCode"
+				column="mer_code"
+				type="string"
+			/>
+			<key-property
+				name="CardType"
+				column="card_type"
+				type="string"
+			/>
+			<key-property
+				name="LineOrinter"
+				column="lineOrinter"
+				type="integer"
+			/>
+		</composite-id>
+
+		<property
+			name="FeePoundage"
+			column="fee_Poundage"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="UserName"
+			column="user_name"
+			type="string"
+			not-null="true"
+			length="24"
+		/>
+		
+		<many-to-one name="InstRatePK" 
+			class="InstRate" 
+			not-null="true">
+			<column name="inst_type"/> 
+			<column name="inst_id"/>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

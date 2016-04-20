@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="EmailPolice"
+		table="email_police"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="email_id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="Email"
+			column="email"
+			type="string"
+			not-null="false"
+			length="250"
+		/>
+		<property
+			name="Phone"
+			column="phone"
+			type="string"
+			not-null="false"
+			length="150"
+		/>
+		<property
+			name="EmailTheme"
+			column="email_theme"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="EmailContent"
+			column="email_content"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="PhoneContent"
+			column="phone_content"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="DataType"
+			column="data_type"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="EmailRemark"
+			column="email_remark"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="PhoneRemark"
+			column="phone_remark"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<many-to-one
+			name="Police"
+			column="police_id"
+			class="PoliceType"
+			not-null="true"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

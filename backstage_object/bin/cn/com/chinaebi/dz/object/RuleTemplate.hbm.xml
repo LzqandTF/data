@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="RuleTemplate"
+		table="rule_template"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="template_id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="TemplateName"
+			column="template_name"
+			type="string"
+			not-null="true"
+			length="255"
+		/>
+		<property
+			name="TemplateFunction"
+			column="template_function"
+			type="string"
+			not-null="true"
+			length="255"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

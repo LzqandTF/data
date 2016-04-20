@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="TimingTaskConf"
+		table="timing_task_conf"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		
+		
+		<id
+			name="Id"
+			type="integer"
+			column="inst_id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="AcquisitionTime"
+			column="acquisition_time"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="AcquisitionTimeDesc"
+			column="acquisition_time_desc"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="AcquisitionTimeName"
+			column="acquisition_time_name"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="GatherDataTimeDesc"
+			column="gather_data_time_desc"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="GatherDataTimeName"
+			column="gather_data_time_name"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="GatherDataTime"
+			column="gather_data_time"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="DzHandlerTime"
+			column="dz_handler_time"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="DzFileCreateTime"
+			column="dz_file_create_time"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="DzFileCreateName"
+			column="dz_file_create_time_name"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="DzHandlerTimeDesc"
+			column="dz_handler_time_desc"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="DzHandlerTimeName"
+			column="dz_handler_time_name"
+			type="string"
+			not-null="true"
+		/>
+		<property
+			name="ChannelId"
+			column="channel_id"
+			type="integer"
+			not-null="true"
+		/>
+		<property
+			name="InstType"
+			column="inst_type"
+			type="integer"
+		/>
+
+	</class>	
+</hibernate-mapping>

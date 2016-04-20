@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="InstRate"
+		table="inst_rate"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<composite-id name="Id" class="InstRatePK">
+			<key-property
+				name="InstType"
+				column="inst_type"
+				type="integer"
+			/>
+			<key-property
+				name="InstId"
+				column="inst_id"
+				type="integer"
+			/>
+		</composite-id>
+
+		<property
+			name="WhetherReturnFee"
+			column="whetherReturnFee"
+			type="boolean"
+			not-null="true"
+		/>
+		<property
+			name="InstRateType"
+			column="inst_rate_type"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="InstRateMcc"
+			column="inst_rate_mcc"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="BankInstCode"
+			column="bank_inst_code"
+			type="string"
+			not-null="true"
+			length="128"
+		/>
+		<property
+			name="UserName"
+			column="user_name"
+			type="string"
+			not-null="true"
+			length="24"
+		/>
+		<property
+			name="InstName"
+			column="inst_name"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

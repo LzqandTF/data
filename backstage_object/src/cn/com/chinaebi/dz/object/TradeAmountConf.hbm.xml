@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="TradeAmountConf"
+		table="trade_amount_conf"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="string"
+			column="id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="Process"
+			column="process"
+			type="string"
+			not-null="true"
+			length="6"
+		/>
+		
+		<property
+			name="TrademsgType"
+			column="trademsg_type"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="Name"
+			column="name_"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		
+		<property
+			name="TradeMoneyStatus"
+			column="trade_money_status"
+			type="boolean"
+			not-null="true"
+			length="11"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

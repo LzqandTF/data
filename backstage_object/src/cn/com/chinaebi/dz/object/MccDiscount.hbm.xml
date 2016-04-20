@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="MccDiscount"
+		table="mcc_discount"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		
+		<id
+			name="Id"
+			type="integer"
+			column="mcc_id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="MccCode"
+			column="mcc_code"
+			type="string"
+			not-null="true"
+			length="4"
+		/>
+		<property
+			name="Issuers"
+			column="issuers"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="BillToParty"
+			column="billToParty"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="Unionpay"
+			column="unionpay"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="RangeDesc"
+			column="range_desc"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="MccFee"
+			column="mcc_fee"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<many-to-one
+			name="Type"
+			column="type_id"
+			class="MccType"
+			not-null="true"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

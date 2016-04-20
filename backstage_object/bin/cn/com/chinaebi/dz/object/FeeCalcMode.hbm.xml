@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="FeeCalcMode"
+		table="fee_calc_mode"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<composite-id name="Id" class="FeeCalcModePK">
+			<key-property
+				name="Mid"
+				column="mid"
+				type="string"
+			/>
+			<key-property
+				name="Gate"
+				column="gate"
+				type="integer"
+			/>
+		</composite-id>
+
+		<property
+			name="Type"
+			column="type"
+			type="java.lang.Byte"
+			not-null="false"
+			length="3"
+		/>
+		<property
+			name="CalcMode"
+			column="calc_mode"
+			type="string"
+			not-null="false"
+			length="120"
+		/>
+		<property
+			name="BaseFee"
+			column="base_fee"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="MinFee"
+			column="min_fee"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="MaxFee"
+			column="max_fee"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="CalcCond"
+			column="calc_cond"
+			type="string"
+			not-null="false"
+			length="120"
+		/>
+		<property
+			name="AuthorType"
+			column="author_type"
+			type="java.lang.Byte"
+			not-null="false"
+			length="3"
+		/>
+		<property
+			name="State"
+			column="state"
+			type="java.lang.Byte"
+			not-null="false"
+			length="3"
+		/>
+		<property
+			name="TransMode"
+			column="trans_mode"
+			type="java.lang.Byte"
+			not-null="false"
+			length="3"
+		/>
+		<property
+			name="GateId"
+			column="gate_id"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="BkFeeMode"
+			column="bk_fee_mode"
+			type="string"
+			not-null="false"
+			length="120"
+		/>
+		<property
+			name="Gid"
+			column="gid"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

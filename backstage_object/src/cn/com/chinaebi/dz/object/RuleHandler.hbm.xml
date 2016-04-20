@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="RuleHandler"
+		table="rule_handler"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="rule_id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="DzColumnName"
+			column="dz_column_name"
+			type="string"
+			not-null="true"
+			length="124"
+		/>
+		<property
+			name="AttributeColumn"
+			column="attribute_column"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="OldValue"
+			column="old_value"
+			type="string"
+			not-null="true"
+			length="255"
+		/>
+		<property
+			name="NewValue"
+			column="new_value"
+			type="string"
+			not-null="true"
+			length="255"
+		/>
+		<property
+			name="HandlerType"
+			column="handler_type"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="TemplateId"
+			column="template_id"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

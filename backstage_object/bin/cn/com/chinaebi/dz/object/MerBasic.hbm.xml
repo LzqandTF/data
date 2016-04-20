@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="MerBasic"
+		table="mer_basic"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="string"
+			column="mer_code"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="MerName"
+			column="mer_name"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="MerCategory"
+			column="mer_category"
+			type="integer"
+			not-null="true"
+			length="11"
+		/>
+		<property
+			name="MerAbbreviation"
+			column="mer_abbreviation"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="MerState"
+			column="mer_state"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="City"
+			column="city"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="MerType"
+			column="mer_type"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="StartDate"
+			column="startDate"
+			type="integer"
+			not-null="true"
+			length="20"
+		/>
+		<property
+			name="EndDate"
+			column="endDate"
+			type="integer"
+			not-null="true"
+			length="20"
+		/>
+		<property
+			name="Channel"
+			column="channel"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="Expand"
+			column="expand"
+			type="string"
+			not-null="false"
+			length="255"
+		/>
+		<property
+			name="Expandno"
+			column="expandno"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="Provinces"
+			column="provinces"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+	
+
+		<set name="MerBillings" inverse="true">
+			<key column="mer_code"/>
+			<one-to-many class="MerBilling"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

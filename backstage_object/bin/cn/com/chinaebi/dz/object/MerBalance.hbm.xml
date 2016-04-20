@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="MerBalance"
+		table="mer_balance"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="MerCategory"
+			column="mer_category"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="MerBalance"
+			column="mer_balance"
+			type="string"
+			not-null="true"
+			length="40"
+		/>
+		<property
+			name="MerState"
+			column="mer_state"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<many-to-one
+			name="MerCode"
+			column="mer_code"
+			class="MerBasic"
+			not-null="true"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+## 融易付收款UPMP原始交易表
+ALTER TABLE `ryt_upmp` ADD INDEX sys_date ( `sys_date` ) ;
+ALTER TABLE `ryt_upmp` ADD INDEX whetherValid ( `whetherValid` );
+ALTER TABLE `ryt_upmp` ADD INDEX bk_chk ( `bk_chk` );
+
+
+## 融易付退款UPMP原始交易表
+ALTER TABLE `ryt_refund_log` ADD INDEX ref_date ( `ref_date` ) ;
+ALTER TABLE `ryt_refund_log` ADD INDEX whetherValid ( `whetherValid` ) ;
+ALTER TABLE `ryt_refund_log` ADD INDEX bk_chk ( `bk_chk` );
+
+
+##融易付日切收款UPMP原始交易表
+ALTER TABLE `riqie_ryt_upmp` ADD INDEX riqie_sys_date ( `sys_date` ) ;
+ALTER TABLE `riqie_ryt_upmp` ADD INDEX riqie_whetherValid ( `whetherValid` ) ;
+ALTER TABLE `riqie_ryt_upmp` ADD INDEX riqie_bk_chk ( `bk_chk` );
+
+
+## 融易付日切退款UPMP原始交易表
+ALTER TABLE `riqie_ryt_refund_log` ADD INDEX riqie_ref_date ( `ref_date` ) ;
+ALTER TABLE `riqie_ryt_refund_log` ADD INDEX riqie_whetherValid ( `whetherValid` ) ;
+ALTER TABLE `riqie_ryt_refund_log` ADD INDEX riqie_bk_chk ( `bk_chk` );
+

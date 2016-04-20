@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="ExecuteNode"
+		table="execute_node"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="string"
+			column="id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="DeductSysId"
+			column="deduct_sys_id"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="DeductStmlDate"
+			column="deduct_stml_date"
+			type="timestamp"
+			not-null="true"
+			length="19"
+		/>
+		<property
+			name="TradeCollect"
+			column="trade_collect"
+			type="integer"
+		/>
+		<property
+			name="DzFileGain"
+			column="dz_file_gain"
+			type="integer"
+		/>
+		<property
+			name="DzHandle"
+			column="dz_handle"
+			type="integer"
+		/>
+		<property
+			name="ErrorHandle"
+			column="error_handle"
+			type="integer"
+		/>
+		<property
+			name="DzFileCreate"
+			column="dz_file_create"
+			type="integer"
+		/>
+		<property
+			name="instName"
+			column="inst_name"
+			type="string"
+		/>
+		<property
+			name="InstType"
+			column="inst_type"
+			type="integer"
+		/>
+
+	</class>	
+</hibernate-mapping>

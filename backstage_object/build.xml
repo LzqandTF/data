@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<project name="backstage_object" basedir="." default="jar">
+	<property file="build.properties" />
+	
+	<property name="generated.source.dir" value="${basedir}" />
+
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${bin.dir}" />
+	</path>
+	
+	<target name="clean" description="Delete all build file" >
+		<delete dir="${bin.dir}"/>
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+
+	<target name="build" depends="clean" description="Compile main source tree java files">
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${dist.dir}"/>
+		<javac destdir="${bin.dir}" encoding="UTF-8" source="1.6" target="1.6" debug="${debug}" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+		
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml" />
+			</fileset>		
+		</copy>	
+		
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${objconfigure.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>			
+		</copy>
+		
+	</target>
+	
+	<target name="native2ascii" depends="build" description="Compile Resource files from text to property">
+		<native2ascii dest="./${bin.dir}" encoding="UTF-8" src="./${src.dir}" includes="**/*.txt" ext=".properties"/>
+		<native2ascii dest="./${bin.dir}" encoding="UTF-8" src="./${objconfigure.dir}" includes="*.txt" ext=".properties"/>
+	</target>
+	
+	<target name="jar" depends="build,native2ascii" description="Package application as a WAR file">
+		<mkdir dir="${dist.dir}"/>
+		
+		<jar destfile="${dist.dir}/${object.project.name}.${version}.jar">
+			<fileset dir="${bin.dir}">
+				<exclude name="**/test/*.*" />
+			</fileset>	
+		</jar>
+	</target>
+</project>

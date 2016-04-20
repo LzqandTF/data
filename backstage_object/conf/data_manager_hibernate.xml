@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration
+    PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory >
+		<!-- local connection properties -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.datasource">
+			java:/comp/env/jdbc/duiz
+		</property>
+		<!-- dialect for MySQL -->
+        <property name="dialect">cn.com.chinaebi.dz.object.dialect.CustomDialect</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+        <!-- 关闭二级缓存 -->
+        <property name="hiberante.cache.use_second_level_cache">false</property>
+         <!-- 渠道对账文件 -->
+         <!-- 线下渠道 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangBeijingbankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangCupsLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangDljhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangErrorCupsLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangSzzhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangSzghLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZhongxingbankLst.hbm.xml" />
+    	<!-- 线上渠道 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangErrorUpmpLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangUpmpLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangKuaiqianLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangYlShoujizhifuLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZhaohangLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangGonghangLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangJiaohangLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangShyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZgyhRytLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZfbLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangPufaBankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangYlLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangJsyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangXingyeLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZgyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangYzcxLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangBjyhVasLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangGfyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangHfyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangGdyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangJiangsuyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangHbyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangMsyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangQdyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangQlyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZsyhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangYnnxsLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangZhxtLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DuizhangYbyhLst.hbm.xml" />
+    	
+    	<!-- 线下原始交易表 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalBeijingbankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalCupsLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalZhongxingbankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalSzzhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalSzghLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalDljhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieBeijingbankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieCupsLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieZhongxingbankLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieSzzhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieSzghLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RiqieDljhLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/TradeLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/YlcupsErrorEntry.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ErrorDataLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/CreditcardpayTradeLst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/OriginalShengjingbankLst.hbm.xml" />
+    	<!-- 线上原始交易表 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/FeeCalcMode.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RefundLog.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytCupsSjzf.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytGonghang.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytJh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytJsyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytKuaiqian.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytNh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytPufa.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytShyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytUpmp.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytXyyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytYl.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytYzcx.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZfb.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZgyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZgyhRyt.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZhaohang.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytBjyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytGdyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytGfyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytHebeiYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytHengfengYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytJiangsuYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytMsyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytQiluYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytQingdaoYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytSjyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytYunnanNxs.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZheshangYh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZhxt.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytZxyh.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/Hlog.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RytYb.hbm.xml" />
+    	
+    	<!-- 系统配置表、自定义对账文件 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/TimingTaskConf.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DzFileTab.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/CustomObject.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/CustomInstConfig.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/DzFileColumnConf.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ObjectRelevanceColumn.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RuleHandler.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/RuleTemplate.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/FtpUploadRecord.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/EmailPolice.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/PoliceType.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ExecuteNode.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/InstInfo.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/SettleMerchantConfig.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/SettleMerchantMatchTable.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/InstRate.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/InstMerRateConf.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/CardTransfer.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MccBigType.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MccDiscount.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MccType.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/BankInst.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ErrorTkLst.hbm.xml" />
+    	
+    	<!-- 商户管理 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/MerBasic.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerBilling.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerchantFundSettle.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerTradecode.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerFundStance.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerBalance.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/MerchantSettleStatistics.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/Tmoney.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/UnionpayAreaCode.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ManualRec.hbm.xml" />
+    	
+    	<!-- 对账渠道总表 -->
+    	<mapping resource="cn/com/chinaebi/dz/object/ChannelDzCollect.hbm.xml" />
+    	<mapping resource="cn/com/chinaebi/dz/object/ChannelTradeCollect.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

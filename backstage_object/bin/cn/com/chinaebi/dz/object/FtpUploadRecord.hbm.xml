@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="cn.com.chinaebi.dz.object">
+	<class
+		name="FtpUploadRecord"
+		table="ftp_upload_record"
+	>
+		<meta attribute="sync-DAO">true</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="id"
+		>
+			<generator class="org.hibernate.id.UUIDHexGenerator"/>
+		</id>
+
+		<property
+			name="DeductStlmDate"
+			column="deduct_stlm_date"
+			type="string"
+			not-null="true"
+			length="20"
+		/>
+		<property
+			name="ObjectId"
+			column="object_id"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="ObjectName"
+			column="object_name"
+			type="string"
+			not-null="true"
+			length="124"
+		/>
+		<property
+			name="UploadContent"
+			column="upload_content"
+			type="string"
+			not-null="true"
+			length="124"
+		/>
+		<property
+			name="GenerateTime"
+			column="generate_time"
+			type="date"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="UploadStatus"
+			column="upload_status"
+			type="integer"
+			not-null="true"
+			length="1"
+		/>
+
+
+	</class>	
+</hibernate-mapping>
