@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project name="cupsDzHandler" basedir="." default="jar">
+	<property file="build.properties" />
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${backstage_object.dir}/${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${backstage_object.dir}/bin" />
+		<pathelement path="${backstage_manager.dir}/bin" />
+	</path>
+	
+	<target name="build_backageObj" description="build_backageObj">
+		<ant dir="${backstage_object.dir}" target="jar"/>
+	</target>
+				
+	<target name="build_managerObj" description="build_managerObj">
+		<ant dir="${backstage_manager.dir}" target="jar"/>
+	</target>	
+	
+	<target name="clean" description="Delete all build file" >
+		<delete dir="${bin.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	
+	<target name="build" depends="clean,build_backageObj,build_managerObj" description="Compile main source tree java files">
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${bin.dir}"/>
+		<javac destdir="${bin.dir}" encoding="UTF-8" source="1.6" target="1.6" debug="${debug}" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+		
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${configure.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>		
+		</copy>	
+	</target>
+	
+	<target name="native2ascii" depends="build" description="Compile Resource files from text to property">
+		<native2ascii dest="./${bin.dir}" encoding="UTF-8" src="./${src.dir}" includes="**/*.txt" ext=".properties"/>
+		<native2ascii dest="./${bin.dir}" encoding="UTF-8" src="./${configure.dir}" includes="*.txt" ext=".properties"/>
+	</target>
+	
+	<target name="jar" depends="build,native2ascii" description="Package application as a Jar file">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${project.name}.${version}.jar">
+			<fileset dir="${bin.dir}">
+				<!--
+					<include name="**/*.xml" />
+					<include name="**/*.properties" />
+				-->
+			</fileset>	
+		</jar>
+	</target>
+	
+</project>
