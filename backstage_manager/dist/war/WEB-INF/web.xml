@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>backstage_manager</display-name>
+  <!--  
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-quartz.xml</param-value>
+    </context-param>
+  
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>-->
+  <!--   -->
+  <listener>
+		<listener-class>cn.com.chinaebi.dz.startup.BackstageStartup</listener-class>
+	</listener>
+	
+	<!-- 内部接口调用 -->
+	<servlet>
+		<servlet-name>backstageservice</servlet-name>
+		<servlet-class>cn.com.chinaebi.dz.webservice.BackstageService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>backstageservice</servlet-name>
+		<url-pattern>/backstageservice</url-pattern>
+	</servlet-mapping>
+  
+    <!-- 代付融易付平台异步回调接口 -->
+  	<servlet>
+  		<servlet-name>reciveMerBilingAmtDfService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.dz.webservice.ReciveMerBilingAmtDfService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveMerBilingAmtDfService</servlet-name>
+		<url-pattern>/reciveMerBilingAmtDfService</url-pattern>
+	</servlet-mapping> 
+	
+	<!-- 退款交易经办、审核、商户余额查询 -->
+	<servlet>
+  		<servlet-name>ryfIfaceHandlerService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.dz.webservice.RyfIfaceHandlerService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>ryfIfaceHandlerService</servlet-name>
+		<url-pattern>/ryfIfaceHandlerService</url-pattern>
+	</servlet-mapping>  
+  
+    <!-- 融易付商户信息同步-->
+	<servlet>
+  		<servlet-name>reciveMerBilingInforService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.dz.webservice.ReciveMerBilingInforService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveMerBilingInforService</servlet-name>
+		<url-pattern>/reciveMerBilingInforService</url-pattern>
+	</servlet-mapping> 
+	
+	<!-- 商户后台退款管理接口-->
+	<servlet>
+  		<servlet-name>reciveTradeDataTkService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.dz.tk.webservice.ReciveTradeDataTkService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveTradeDataTkService</servlet-name>
+		<url-pattern>/reciveTradeDataTkService</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 商户后台数据查询接口-->
+	<servlet>
+  		<servlet-name>tradeDataQueryService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.trade.webservice.TradeDataQueryService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>tradeDataQueryService</servlet-name>
+		<url-pattern>/tradeDataQueryService</url-pattern>
+	</servlet-mapping>
+	<!-- 商户后台数据下载接口-->
+	<servlet>
+  		<servlet-name>tradeDataDownLoadService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.trade.webservice.TradeDataDownLoadService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>tradeDataDownLoadService</servlet-name>
+		<url-pattern>/tradeDataDownLoadService</url-pattern>
+	</servlet-mapping>
+	<!-- 待支付交易同步接口-->
+	<servlet>
+  		<servlet-name>reciveTradeDataDzfService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.syn.webservice.ReciveTradeDataDzfService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveTradeDataDzfService</servlet-name>
+		<url-pattern>/reciveTradeDataDzfService</url-pattern>
+	</servlet-mapping>	
+	<!-- 支付完成交易同步接口-->
+	<servlet>
+  		<servlet-name>reciveTradeDataOkService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.syn.webservice.ReciveTradeDataOkService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveTradeDataOkService</servlet-name>
+		<url-pattern>/reciveTradeDataOkService</url-pattern>
+	</servlet-mapping>	
+	
+	<!-- 流水查询接口-->
+	<servlet>
+  		<servlet-name>reciveMerStanceService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.ReciveMerStanceService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveMerStanceService</servlet-name>
+		<url-pattern>/reciveMerStanceService</url-pattern>
+	</servlet-mapping>
+	<!-- 流水下载接口-->
+	<servlet>
+  		<servlet-name>merFundStanceDataDownLoadService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.MerFundStanceDataDownLoadService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>merFundStanceDataDownLoadService</servlet-name>
+		<url-pattern>/merFundStanceDataDownLoadService</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 手工调账查询接口-->
+	<servlet>
+  		<servlet-name>reciveManualRecService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.ReciveManualRecService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveManualRecService</servlet-name>
+		<url-pattern>/reciveManualRecService</url-pattern>
+	</servlet-mapping>
+	<!-- 手工下载接口-->
+	<servlet>
+  		<servlet-name>manualRecDataDownLoadService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.ManualRecDataDownLoadService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>manualRecDataDownLoadService</servlet-name>
+		<url-pattern>/manualRecDataDownLoadService</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 结算单明细查询接口-->
+	<servlet>
+  		<servlet-name>reciveMerchantFundSettleDetailService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.ReciveMerchantFundSettleDetailService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>reciveMerchantFundSettleDetailService</servlet-name>
+		<url-pattern>/reciveMerchantFundSettleDetailService</url-pattern>
+	</servlet-mapping>
+	<!-- 结算单明细下载接口-->
+	<servlet>
+  		<servlet-name>merchantFundSettleDetailDataDownLoadService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mfs.webservice.MerchantFundSettleDetailDataDownLoadService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>merchantFundSettleDetailDataDownLoadService</servlet-name>
+		<url-pattern>/merchantFundSettleDetailDataDownLoadService</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 商户结算单数据查询接口-->
+	<servlet>
+  		<servlet-name>merFundSettleDataQueryService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mer.webservice.MerFundSettleDataQueryService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>merFundSettleDataQueryService</servlet-name>
+		<url-pattern>/merFundSettleDataQueryService</url-pattern>
+	</servlet-mapping>
+	<!-- 商户结算单数据下载接口-->
+	<servlet>
+  		<servlet-name>merFundSettleDataDownLoadService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mer.webservice.MerFundSettleDataDownLoadService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>merFundSettleDataDownLoadService</servlet-name>
+		<url-pattern>/merFundSettleDataDownLoadService</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 商户余额数据查询接口-->
+	<servlet>
+  		<servlet-name>merchantBalanceQueryService</servlet-name>
+  		<servlet-class>cn.com.chinaebi.mer.webservice.MerchantBalanceQueryService</servlet-class>
+  	</servlet>
+	<servlet-mapping>
+		<servlet-name>merchantBalanceQueryService</servlet-name>
+		<url-pattern>/merchantBalanceQueryService</url-pattern>
+	</servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

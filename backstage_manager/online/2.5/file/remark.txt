@@ -1,0 +1,3 @@
+备注：
+1：在系统目录/var/www/apps/java下面创建目录keyStore
+2：将文件shdy.keystore放在keyStore目录下

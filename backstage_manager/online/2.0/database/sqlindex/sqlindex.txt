@@ -1,0 +1,78 @@
+##中信对账文件数据存储表
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX tradeTime ( `tradeTime` ) ;
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX reqSysStance ( `reqSysStance` ) ;
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX deductMerCode ( `deductMerCode` ) ;
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX outAccount ( `outAccount` ) ; 
+ALTER TABLE `duizhang_zhongxingbank_lst` ADD INDEX deductMerTermId ( `deductMerTermId` ) ;
+
+##银联CUPS对账文件数据存储表
+ALTER TABLE `duizhang_cups_lst` ADD INDEX reqTime ( `reqTime` ) ;
+ALTER TABLE `duizhang_cups_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `duizhang_cups_lst` ADD INDEX reqSysStance ( `reqSysStance` ) ;
+ALTER TABLE `duizhang_cups_lst` ADD INDEX merCode ( `merCode` ) ;
+ALTER TABLE `duizhang_cups_lst` ADD INDEX outAccount ( `outAccount` ) ; 
+ALTER TABLE `duizhang_cups_lst` ADD INDEX termId ( `termId` ) ;
+
+##北京银行对账文件数据存储表
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX reqTime ( `reqTime` ) ;
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX reqSysStance ( `reqSysStance` ) ;
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX merCode ( `merCode` ) ;
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX outAccount ( `outAccount` ) ; 
+ALTER TABLE `duizhang_beijingbank_lst` ADD INDEX termId ( `termId` ) ;
+
+##银联CUPS差错对账文件数据存储表
+ALTER TABLE `duizhang_error_cups_lst` ADD INDEX reqTime ( `reqTime` ) ;
+ALTER TABLE `duizhang_error_cups_lst` ADD INDEX reqSysStance ( `reqSysStance` ) ;
+
+##北京银行原始交易数据存储表
+ALTER TABLE `original_beijingbank_lst` ADD INDEX trade_time ( `trade_time` ) ;
+ALTER TABLE `original_beijingbank_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `original_beijingbank_lst` ADD INDEX req_sys_stance ( `req_sys_stance` ) ;
+ALTER TABLE `original_beijingbank_lst` ADD INDEX deduct_sys_stance ( `deduct_sys_stance` ) ;
+ALTER TABLE `original_beijingbank_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##银联CUPS原始交易数据存储表
+ALTER TABLE `original_cups_lst` ADD INDEX trade_time ( `trade_time` ) ;
+ALTER TABLE `original_cups_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `original_cups_lst` ADD INDEX req_sys_stance ( `req_sys_stance` ) ;
+ALTER TABLE `original_cups_lst` ADD INDEX deduct_sys_stance ( `deduct_sys_stance` ) ;
+ALTER TABLE `original_cups_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##中信银行原始交易数据存储表
+ALTER TABLE `original_zhongxingbank_lst` ADD INDEX trade_time ( `trade_time` ) ;
+ALTER TABLE `original_zhongxingbank_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `original_zhongxingbank_lst` ADD INDEX req_sys_stance ( `req_sys_stance` ) ;
+ALTER TABLE `original_zhongxingbank_lst` ADD INDEX deduct_sys_stance ( `deduct_sys_stance` ) ;
+ALTER TABLE `original_zhongxingbank_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##北京银行日切数据表
+ALTER TABLE `riqie_beijingbank_lst` ADD INDEX deduct_sys_time ( `deduct_sys_time` ) ;
+ALTER TABLE `riqie_beijingbank_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##银联CUPS日切数据表
+ALTER TABLE `riqie_cups_lst` ADD INDEX deduct_sys_time ( `deduct_sys_time` ) ;
+ALTER TABLE `riqie_cups_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##中信银行日切数据表
+ALTER TABLE `riqie_zhongxingbank_lst` ADD INDEX deduct_sys_time ( `deduct_sys_time` ) ;
+ALTER TABLE `riqie_zhongxingbank_lst` ADD INDEX whetherValid ( `whetherValid` ) ;
+
+##差错交易数据存储表
+ALTER TABLE `error_data_lst` ADD INDEX deduct_sys_id ( `deduct_sys_id` ) ;
+ALTER TABLE `error_data_lst` ADD INDEX trade_time ( `trade_time` ) ;
+ALTER TABLE `error_data_lst` ADD INDEX deduct_stlm_date ( `deduct_stlm_date` ) ;
+ALTER TABLE `error_data_lst` ADD INDEX req_sys_stance ( `req_sys_stance` ) ;
+ALTER TABLE `error_data_lst` ADD INDEX deduct_sys_stance ( `deduct_sys_stance` ) ;
+
+##银联CUPS差错数据存储表
+ALTER TABLE `ylcups_error_entry` ADD INDEX deduct_sys_id ( `deduct_sys_id` ) ;
+ALTER TABLE `ylcups_error_entry` ADD INDEX trade_time ( `trade_time` ) ;
+ALTER TABLE `ylcups_error_entry` ADD INDEX reqSysStance ( `reqSysStance` ) ;
+ALTER TABLE `ylcups_error_entry` ADD INDEX deductStlmDate ( `deductStlmDate` ) ;
+
+
+
+
+

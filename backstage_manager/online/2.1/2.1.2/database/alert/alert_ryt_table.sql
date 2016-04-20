@@ -1,0 +1,14 @@
+ALTER TABLE hlog MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_cups_sjzf MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_gonghang_wap MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_jhvas MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_kuaiqian MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_kuaiqian_gh MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_kuaiqian_hh MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_pufa_wap MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_sh_bank_wszhifu MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_upmp MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_yl_wap MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_zfb_haihang MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_zhaohang_wap MODIFY card_no VARCHAR(100);
+ALTER TABLE ryt_zonghang_wap MODIFY card_no VARCHAR(100);

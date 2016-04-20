@@ -1,0 +1,16 @@
+:Modified=true
+:Description=
+-
+	/**
+	 * Return the name of the configuration file to be used with this DAO or null if default
+	 */
+	public String getConfigurationFileName () {
+		return "data_manager_hibernate.cfg.xml";
+	}
+
+	/**
+	 * Return the specific Object class that will be used for class-specific
+	 * implementation of this DAO.
+	 * @return the reference Class
+	 */
+	protected abstract Class getReferenceClass();

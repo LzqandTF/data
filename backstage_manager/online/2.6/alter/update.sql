@@ -1,0 +1,1 @@
+alter table inst_info CHANGE innner_dz_level whether_apply_online_tk tinyint(1) DEFAULT '0'; 

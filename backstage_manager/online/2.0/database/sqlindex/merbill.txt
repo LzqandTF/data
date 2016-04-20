@@ -1,0 +1,23 @@
+##商户结算发起失败
+alter table merchant_settle_fail
+add index settle_start_date_index(settle_start_date);
+
+alter table merchant_settle_fail
+add index last_settle_date_index(last_settle_date);
+
+##商户T+1表
+alter table merchant_settle_statistics
+add index merchant_settle_statistics_index(mer_code,deduct_stlm_date,mer_type);
+
+##商户结算单表
+alter table merchant_fund_settle
+add index settle_date_index(settle_state);
+
+alter table merchant_fund_settle
+add index settle_way_index(settle_way);
+
+##商户资金流水表
+alter table mer_fund_stance
+add index trade_time_index(trade_time);
+
+

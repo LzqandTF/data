@@ -1,0 +1,1 @@
+alter table mer_tradecode add column status int(11) NOT NULL;

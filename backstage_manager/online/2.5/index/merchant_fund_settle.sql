@@ -1,0 +1,2 @@
+alter table merchant_fund_settle
+add index end_date_settle_state_index(end_date,settle_state);

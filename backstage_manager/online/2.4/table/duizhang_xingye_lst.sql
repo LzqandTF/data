@@ -1,0 +1,25 @@
+CREATE TABLE `duizhang_xingye_lst` (
+  `id` varchar(100) NOT NULL,
+  `orderDate` varchar(23) DEFAULT NULL,
+  `reqSysStance` varchar(32) DEFAULT NULL,
+  `merchantCode` varchar(32) DEFAULT NULL,
+  `orderId` varchar(32) DEFAULT NULL,
+  `outAccount` varchar(32) DEFAULT NULL,
+  `tradeAmount` varchar(32) DEFAULT NULL,
+  `refundAmount` varchar(32) DEFAULT NULL,
+  `tradeFee` varchar(23) DEFAULT NULL,
+  `orderStatus` varchar(23) DEFAULT NULL,
+  `reqTime` varchar(32) DEFAULT NULL,
+  `deduct_stlm_date` varchar(32) DEFAULT NULL,
+  `bankSeq` varchar(32) DEFAULT NULL,
+  `dz_file_name` varchar(50) DEFAULT NULL,
+  `inst_name` varchar(32) DEFAULT NULL,
+  `bk_chk` int(11) DEFAULT NULL,
+  `whetherTk` tinyint(1) NOT NULL,
+  `deductSysReference` varchar(32) DEFAULT NULL,
+  `termId` varchar(32) DEFAULT NULL,
+  `merCode` varchar(32) DEFAULT NULL,
+  `process` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

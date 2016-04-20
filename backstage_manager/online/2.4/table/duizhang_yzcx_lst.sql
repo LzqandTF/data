@@ -1,0 +1,26 @@
+CREATE TABLE `duizhang_yzcx_lst` (
+  `id` varchar(100) NOT NULL,
+  `trade_code` char(4) DEFAULT NULL,
+  `deduct_stlm_date` varchar(20) NOT NULL,
+  `reqTime` varchar(20) NOT NULL,
+  `orderId` varchar(32) DEFAULT NULL,
+  `reqSysStance` varchar(32) DEFAULT NULL,
+  `merCode` varchar(16) NOT NULL,
+  `termId` varchar(8) NOT NULL,
+  `tradeAmount` varchar(12) NOT NULL,
+  `tradeFee` varchar(12) DEFAULT '0.00',
+  `settleAmount` varchar(12) DEFAULT NULL,
+  `authorizationCode` varchar(6) DEFAULT NULL,
+  `bk_1` varchar(100) DEFAULT NULL,
+  `bk_2` varchar(100) DEFAULT NULL,
+  `bk_chk` int(11) NOT NULL DEFAULT '0',
+  `whetherTk` tinyint(4) DEFAULT NULL,
+  `whetherErroeHandle` int(11) NOT NULL DEFAULT '0',
+  `dz_file_name` varchar(100) NOT NULL,
+  `inst_name` varchar(64) NOT NULL,
+  `deductSysReference` varchar(12) DEFAULT NULL,
+  `outAccount` varchar(19) NOT NULL,
+  `process` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

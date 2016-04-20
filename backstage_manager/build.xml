@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<project name="backstagemamage" basedir="." default="war">
+	<property file="build.properties" />
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${backstage_object.dir}/${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${backstage_object.dir}/bin" />
+	</path>
+	
+	<target name="build_backageObj" description="build_backageObj">
+		<ant dir="${backstage_object.dir}" target="jar"/>
+	</target>
+	
+	<target name="build_posDzHandlerObj" description="build_posDzHandlerObj">
+		<ant dir="${posDzHandler.dir}" target="jar"/>
+	</target>
+	
+	<target name="build_rytDzHandlerObj" description="rytDzHandler.dir">
+		<ant dir="${rytDzHandler.dir}" target="jar"/>
+	</target>
+	
+	<target name="clean" description="Delete all build file" >
+		<delete dir="${bin.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	
+	<target name="build" depends="clean,build_backageObj" description="Compile main source tree java files">
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${dist.dir}"/>
+		
+		<javac destdir="${bin.dir}" encoding="UTF-8" source="1.6" target="1.6" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${conf.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>		
+		</copy>	
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${conf.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="native2ascii" depends="build" description="Compile Resource files from text to property">
+		<native2ascii dest="./${bin.dir}" encoding="UTF-8" src="./${src.dir}" includes="**/*.txt" ext=".properties"/>
+	</target>
+	
+	<target name="war" depends="build,native2ascii,build_posDzHandlerObj,build_rytDzHandlerObj" description="Package application as a WAR file">
+		<mkdir dir="${war.dir}"/>
+		<mkdir dir="${war.dir}/WEB-INF"/>
+		<mkdir dir="${war.dir}/WEB-INF/lib"/>
+		<mkdir dir="${war.dir}/WEB-INF/classes"/>
+		<mkdir dir="${dist.dir}"/>
+	
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${war.dir}" preservelastmodified="true">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		 
+		<copy todir="${war.dir}/WEB-INF/lib" preservelastmodified="true">
+			<fileset dir="${posDzHandler.dir}/dist/">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${rytDzHandler.dir}/dist/">
+				<include name="*.jar" />
+			</fileset>
+			<!-- 备付金使用 -->
+			<fileset dir="${lib.dir}">
+				<include name="httpclient-4.2.5.jar"/>
+				<include name="httpcore-4.2.4.jar"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${war.dir}/WEB-INF/classes" preservelastmodified="true">
+			<fileset dir="${bin.dir}">
+				<include name="**/*.class" />
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+				<exclude name="**/test/**"/>
+				<exclude name="**/base/TradeDzHandler.*" />
+			</fileset>
+		</copy>
+			
+		<war destfile="${dist.dir}/${backstagemamage.war}.war" webxml="${web.dir}/WEB-INF/web.xml">
+			<fileset dir="${war.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+	
+	<target name="jar" depends="build,native2ascii,build_backageObj" description="Package application as a jar file">
+		<mkdir dir="${dist.dir}"/>
+			
+		<jar destfile="${dist.dir}/${backstagemamage.jar}.${version}.jar">
+			<fileset dir="${bin.dir}">
+				<include name="**/base/**" />
+			</fileset>	
+		</jar>
+	</target>
+	
+	<target name="tomcat-deploy" depends="war" description="Deploy application as a War file" >
+		<copy todir="${deploy.path}" preservelastmodified="true">
+			<fileset dir="${dist.dir}">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+	</target>
+</project>
