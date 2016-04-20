@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BankDealWith">
+	<resultMap type="BankDealWith" id="BankDealWithMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="originalDataTableName" column="originalDataTableName" />
+		<result property="instType" column="instType" />
+		<result property="sunmPayAmt" column="sunmPayAmt" />
+		<result property="sumArefundAmt" column="sumArefundAmt" />
+		<result property="sumPayFee" column="sumPayFee" />
+		<result property="sumArefundFee" column="sumArefundFee" />
+		<result property="bankPaidInFee" column="bankPaidInFee" />
+		<result property="bankAmt" column="bankAmt" />
+		
+		<result property="tseq" column="tseq" />
+		<result property="oid" column="oid" />
+		<result property="mid" column="mid" />
+		<result property="mabbreviation" column="mabbreviation" />
+		<result property="type" column="type" />
+		<result property="mdate" column="mdate" />
+		<result property="amount" column="amount" />
+		<result property="zf_file_fee" column="zf_file_fee" />
+		<result property="zf_fee" column="zf_fee" />
+		<result property="process" column="process" />
+		<result property="tradeMsgTypeprivate" column="tradeMsgTypeprivate" />
+		<result property="sys_date" column="sys_date" />
+		<result property="sys_time" column="sys_time" />
+		
+	</resultMap>
+	
+	<!-- 线上线下查询数据 -->
+	<select id="queryInstInfo" resultMap="BankDealWithMap">
+		select name_ as "name",inst_id as "originalDataTableName", 
+			   inst_type as "instType", whether_outer_dz, active 
+			   from inst_info where whether_outer_dz='1' and active='1' 
+			   order by convert(name_ using gbk) collate gbk_chinese_ci asc
+	</select>
+	
+	<!-- 线上线下查询数据总和 -->
+	<select id="queryListCountByAll" parameterType="Map" resultMap="BankDealWithMap">
+		select inst_id as name, inst_type as instType,
+			IFNULL(sum(CONVERT(trade_amount,DECIMAL(20,2))),0) as sunmPayAmt,
+			IFNULL(sum(CONVERT(refund_amount,DECIMAL(20,2))),0) as sumArefundAmt,
+			IFNULL(sum(CONVERT(zf_fee,DECIMAL(20,2))),0) as sumPayFee,
+			IFNULL(sum(CONVERT(refund_zf_fee,DECIMAL(20,2))),0) as sumArefundFee
+		from merchant_settle_statistics where 
+			 deduct_stlm_date BETWEEN  #{startDate} and #{endDate} 
+			 and data_status in(0,2,3) 
+			 <if test="instId != null">
+			  	and ${instId} 
+			 </if>
+		group by inst_id,inst_type
+	</select>
+	
+	
+	<!-- 线上线下查询数据总和 -->
+	<select id="queryListCountInfoExcel" parameterType="Map" resultMap="BankDealWithMap">
+		SELECT * FROM ${selectSql}
+	</select>
+	
+	<!-- 查询交易数据-->
+	<select id="queryTradingListCount" parameterType="Map" resultType="int">
+		select count(*) from ${sqlList}
+	</select>
+	 
+	 <!-- 查询交易数据-->
+	<select id="queryTradingList" parameterType="Map" resultMap="BankDealWithMap">
+		select * from ${sqlList} limit #{startRow},#{limit}
+	</select>
+	
+	 <!-- 查询商户简称-->
+	<select id="queryMerName" parameterType="String" resultType="String">
+		select mc.mer_abbreviation from  mer_basic mc where mc.mer_code = #{mercode} 
+	</select>
+	
+	 <!-- 查询商户简称-->
+	<select id="queryMernameOne" parameterType="String" resultType="String">
+		select sc.settle_mer_name from settle_merchant_config sc,settle_merchant_match_table st where sc.settle_mer_code=st.settle_mer_code and st.dy_mer_code = #{mercode} 
+	</select>
+	
+	<!-- 查询交易金额总和-->
+	<select id="querySumTradingList" parameterType="Map" resultMap="BankDealWithMap">
+		select * from ${sumSql}
+	</select>
+	
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PpfwData">
+	<resultMap type="PpfwData" id="PpfwDataMap">
+		<id property="id" column="id"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="bank_code_one" column="bank_code_one"/>
+		<result property="whether_yl_card" column="whether_yl_card"/>
+		<result property="card_type" column="card_type"/>
+		<result property="term_type" column="term_type"/>
+		<result property="card_media" column="card_media"/>
+		<result property="trade_area" column="trade_area"/>
+		<result property="mer_type" column="mer_type"/>
+		<result property="bank_code_two" column="bank_code_two"/>
+		<result property="acceptance_code" column="acceptance_code"/>
+		<result property="forwarding_code" column="forwarding_code"/>
+		<result property="card_issuer_code" column="card_issuer_code"/>
+		<result property="receiving_code" column="receiving_code"/>
+		<result property="receiving_single_code" column="receiving_single_code"/>
+		<result property="message_type" column="message_type"/>
+		<result property="process" column="process"/>
+		<result property="server_point_code" column="server_point_code"/>
+		<result property="reqSysStance" column="reqSysStance"/>
+		<result property="trade_time" column="trade_time"/>
+		<result property="cardNo" column="cardNo"/>
+		<result property="outAccount" column="outAccount"/>
+		<result property="inAccount" column="inAccount"/>
+		<result property="ori_trade_info" column="ori_trade_info"/>
+		<result property="term_code" column="term_code"/>
+		<result property="card_identification_code" column="card_identification_code"/>
+		<result property="deduct_sys_refence" column="deduct_sys_refence"/>
+		<result property="trade_amount" column="trade_amount"/>
+		<result property="card_issuer" column="card_issuer"/>
+		<result property="brand_service_fee" column="brand_service_fee"/>
+		<result property="spare_one" column="spare_one"/>
+		<result property="net_amount" column="net_amount"/>
+		<result property="trade_start_type" column="trade_start_type"/>
+		<result property="spare_two" column="spare_two"/>
+		<result property="dz_file_name" column="dz_file_name"/>
+	</resultMap>
+	
+	<!-- 分页查询原始交易数据 -->
+	<select id="queryPagePpfwData" parameterType="Map" resultMap="PpfwDataMap">
+		 select
+			id,
+			reqTime,
+			card_identification_code,
+			card_issuer,
+			brand_service_fee,
+			dz_file_name,
+			reqSysStance,
+			trade_amount,
+			cardNo,
+			net_amount		
+		from duizhang_cups_lfe_lst
+		where 1=1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		order by deduct_stlm_date desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from duizhang_cups_lfe_lst 
+		where 1=1 
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+	</select>
+	
+	<select id="queryPagePpfwDataTotalCount" parameterType="Map" resultType="string">
+		 select SUM(CONVERT(brand_service_fee,DECIMAL(20,2))) from duizhang_cups_lfe_lst
+		where 1=1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+	</select>
+	
+	<select id="getPpfwFeeTotalCount" parameterType="Map" resultType="string">
+		select SUM(CONVERT(brand_service_fee,DECIMAL(20,2))) from duizhang_cups_lfe_lst where 1=1
+		<if test="startDate != null and startDate != ''">
+			and deduct_stlm_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and deduct_stlm_date &lt;= #{endDate}
+		</if>
+	</select>
+</mapper>

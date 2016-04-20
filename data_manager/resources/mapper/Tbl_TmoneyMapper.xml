@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Tmoney">
+	<resultMap type="Tmoney" id="TmoneyMap">
+		<id property="id" column="id"/>
+		<result property="_name" column="_name"/>
+		<result property="total_money" column="total_money"/>
+		<result property="settle_way" column="settle_way"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="mer_code" column="mer_code"/>
+		<result property="bil_account" column="bil_account"/>
+		<result property="bil_accountname" column="bil_accountname"/>
+		<result property="inst_id" column="inst_id"/>
+		<result property="inst_type" column="inst_type"/>
+	</resultMap>
+	
+	<!-- 分页查询银行账户数据 -->
+	<select id="queryPageBankAccountData" parameterType="Map" resultMap="TmoneyMap">
+		SELECT _name, SUM(total_money) AS total_money FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} 
+		and settle_way = 1 and _name IS NOT NULL AND _name != 'null' AND _name != '' 
+		GROUP BY _name limit #{startRow},#{limit}
+	</select>
+	<select id="queryBankAccountCount" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT COUNT(*) FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} and settle_way = 1 
+		 AND _name IS NOT NULL AND _name != 'null' AND _name != '' GROUP BY _name) t
+	</select>
+	
+	<!-- 银行账户数据下载 -->
+	<select id="queryBankAccountDataList" parameterType="Map" resultMap="TmoneyMap">
+		SELECT _name, SUM(total_money) AS total_money FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} and settle_way = 1 
+		 AND _name IS NOT NULL AND _name != 'null' AND _name != '' GROUP BY _name
+	</select>
+	
+	<!-- 分页查询电银账户数据 -->
+	<select id="queryPageDyAccountData" parameterType="Map" resultMap="TmoneyMap">
+		SELECT bil_accountname, bil_account, SUM(total_money) AS total_money FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} 
+		and settle_way = 2  AND bil_accountname IS NOT NULL AND bil_accountname != 'null' AND bil_accountname != '' 
+		GROUP BY bil_accountname limit #{startRow},#{limit}
+	</select>
+	<select id="queryDyAccountCount" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM (
+			SELECT COUNT(*) FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} 
+			and settle_way = 2 AND bil_accountname IS NOT NULL AND bil_accountname != 'null' AND bil_accountname != '' 
+			GROUP BY bil_accountname) t
+	</select>
+	
+	<!-- 电银账户数据下载 -->
+	<select id="queryDyAccountDataList" parameterType="Map" resultMap="TmoneyMap">
+		SELECT bil_accountname, bil_account, SUM(total_money) AS total_money FROM tmoney where deduct_stlm_date between #{startTime} and #{endTime} 
+		and settle_way = 2 AND bil_accountname IS NOT NULL AND bil_accountname != 'null' AND bil_accountname != '' 
+		GROUP BY bil_accountname
+	</select>
+</mapper>

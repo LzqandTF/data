@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChannelDzCollect">
+	<resultMap type="ChannelDzCollect" id="ChannelDzCollectMap">
+		<id property="trade_id" column="trade_id"/>
+		<result property="out_account" column="out_account"/>
+		<result property="out_account_type" column="out_account_type"/>
+		<result property="in_account" column="in_account"/>
+		<result property="in_card_name" column="in_card_name"/>
+		<result property="trade_amount" column="trade_amount"/>
+		<result property="trade_fee" column="trade_fee"/>
+		<result property="trade_currency" column="trade_currency"/>
+		<result property="trade_currency_name" column="trade_currency_name"/>
+		<result property="trade_result" column="trade_result"/>
+		<result property="req_sys_id" column="req_sys_id"/>
+		<result property="req_sys_stance" column="req_sys_stance"/>
+		<result property="req_mer_code" column="req_mer_code"/>
+		<result property="req_mer_term_id" column="req_mer_term_id"/>
+		<result property="deduct_sys_id" column="deduct_sys_id"/>
+		<result property="deduct_sys_stance" column="deduct_sys_stance"/>
+		<result property="deduct_mer_code" column="deduct_mer_code"/>
+		<result property="deduct_mer_term_id" column="deduct_mer_term_id"/>
+		<result property="trade_time" column="trade_time"/>
+		<result property="deduct_sys_time" column="deduct_sys_time"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="deduct_roll_bk" column="deduct_roll_bk"/>
+		<result property="trade_type" column="trade_type"/>
+		<result property="trade_type_name" column="trade_type_name"/>
+		<result property="authorization_code" column="authorization_code"/>
+		<result property="deduct_sys_reference" column="deduct_sys_reference"/>
+		<result property="mer_name" column="mer_name"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="whetherValid" column="whetherValid"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="whetherRiqie" column="whetherRiqie"/>
+		<result property="whetherQs" column="whetherQs"/>
+		<result property="mer_fee" column="mer_fee"/>
+		<result property="whetherTk" column="whetherTk"/>
+		<result property="zf_fee" column="zf_fee"/>
+		<result property="zf_file_fee" column="zf_file_fee"/>
+		<result property="zf_fee_bj" column="zf_fee_bj"/>
+		<result property="fee_formula" column="fee_formula"/>
+		<result property="original_trans_info" column="original_trans_info"/>
+		<result property="instType" column="instType"/>
+		<result property="gate" column="gate"/>
+		<result property="settle_code" column="settle_code"/>
+		<result property="inst_name" column="inst_name"/>
+		<result property="dy_mer_name" column="dy_mer_name"/>
+		<result property="oid" column="oid"/>
+		<result property="additional_response_data" column="additional_response_data"/>
+		<result property="sys_date" column="sys_date"/>
+		<result property="bank_id" column="bank_id"/>
+		<result property="js_date" column="js_date"/>
+		<result property="out_user_id" column="out_user_id"/>
+		<result property="in_user_id" column="in_user_id"/>
+		<result property="bind_mid" column="bind_mid"/>
+		<result property="totalAmount" column="totalAmount"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+	
+	<!-- 结算制表、结算制表确认、商户结算单查询(明细查询) -->
+	<select id="queryPageChannelDzCollect" parameterType="Map" resultMap="ChannelDzCollectMap">
+		select 
+			req_mer_code, 
+			dy_mer_name, 
+			inst_name,  
+			substring(deduct_sys_time,1,8) as deduct_sys_time, 
+			deduct_stlm_date,
+			deduct_sys_stance,
+			trade_amount,
+			mer_fee,
+			trade_type,
+			oid,
+			in_user_id
+		from channel_dz_collect where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and js_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and js_date &lt; #{endDate}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and settle_code = #{merCode}
+		</if>
+		and whetherQs = 1 
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from channel_dz_collect where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and js_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and js_date &lt; #{endDate}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and settle_code = #{merCode}
+		</if>
+		and whetherQs = 1 
+	</select>
+	
+	<!-- 商户结算单明细下载 -->
+	<select id="queryChannelDzCollectDataLst" parameterType="Map" resultMap="ChannelDzCollectMap">
+		select 
+			req_mer_code, 
+			dy_mer_name, 
+			inst_name,  
+			substring(deduct_sys_time,1,8) as deduct_sys_time, 
+			deduct_stlm_date,
+			deduct_sys_stance,
+			trade_amount,
+			mer_fee,
+			trade_type,
+			oid,
+			in_user_id,
+			substring(trade_time,1,8) as trade_time,
+			req_sys_stance 
+		from channel_dz_collect where 1 = 1 
+		<if test="startDate != null and startDate != ''">
+			and js_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and js_date &lt; #{endDate}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and settle_code = #{merCode}
+		</if>
+		and whetherQs = 1
+	</select>
+	
+	<update id="updateChannelDzCollectDataQsStatus" parameterType="Map" >
+		update channel_dz_collect set whetherQs = 1 , js_date = #{js_date} where trade_id = #{trade_id}
+	</update>
+	
+	
+	
+	<!-- 对账明细下载查询-->
+	<select id="queryPageChannelDzData" parameterType="Map" resultMap="ChannelDzCollectMap">
+		select deduct_sys_stance,oid,req_mer_code,DATE_FORMAT(deduct_sys_time,'%Y-%m-%d %H:%m:%s') as deduct_sys_time,
+		trade_amount,mer_fee,trade_result,trade_type,inst_name,whetherQs,bk_chk,whetherRiqie,remark
+		from channel_dz_collect where 1=1
+		<if test="bank_id != null and bank_id != ''">
+			and bank_id = #{bank_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and deduct_sys_time &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and deduct_sys_time &lt;= #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and IFNULL(SUBSTRING_INDEX(oid,'|',1),oid) = #{additional_data}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="trade_result != null">
+		    and trade_result = #{trade_result} 
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageCountChannelDzData" parameterType="Map" resultType="int">
+		select count(*) from channel_dz_collect where 1=1
+		<if test="bank_id != null and bank_id != ''">
+			and bank_id = #{bank_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and deduct_sys_time &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and deduct_sys_time &lt;= #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and IFNULL(SUBSTRING_INDEX(oid,'|',1),oid) = #{additional_data}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="trade_result != null">
+		    and trade_result = #{trade_result}
+		</if>
+		order by trade_time desc 
+	</select>
+	<!-- 对账明细下载查询-->
+	<select id="queryChannelDzDataList" parameterType="Map" resultMap="ChannelDzCollectMap">
+		select deduct_sys_stance,oid,req_mer_code,DATE_FORMAT(deduct_sys_time,'%Y-%m-%d %H:%m:%s') as deduct_sys_time,trade_amount,mer_fee,
+				trade_result,trade_type,inst_name,whetherQs,bk_chk,whetherRiqie,req_sys_stance,dy_mer_name
+		from channel_dz_collect where 1=1
+		<if test="bank_id != null and bank_id != ''">
+			and bank_id = #{bank_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and deduct_sys_time &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and deduct_sys_time &lt;= #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and IFNULL(SUBSTRING_INDEX(oid,'|',1),oid) = #{additional_data}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="trade_result != null">
+		    and trade_result = #{trade_result}
+		</if>
+		order by trade_time desc 
+	</select>
+	<!-- 对账数据金额统计-->
+	<select id="queryChannelDzDataTradeAmount" parameterType="Map" resultMap="ChannelDzCollectMap">
+		select bk_chk,SUM(CONVERT(trade_amount,DECIMAL(20,2))) as totalAmount,SUM(CONVERT(mer_fee,DECIMAL(20,2))) as mer_fee from channel_dz_collect where bk_chk != 3 
+		<if test="bank_id != null and bank_id != ''">
+			and bank_id = #{bank_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and deduct_sys_time &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and deduct_sys_time &lt;= #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and IFNULL(SUBSTRING_INDEX(oid,'|',1),oid) = #{additional_data}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="trade_result != null">
+		    and trade_result = #{trade_result}
+		</if>
+		GROUP BY bk_chk
+	</select>
+	
+	<!-- 线上成功交易未对账数据，手动移至差错的同时也将该笔数据保存至对账总表 -->
+	<insert id="addNoDzDataToChannelDzCollect" parameterType="ChannelDzCollect">
+		insert into channel_dz_collect(
+			trade_id,
+			out_account,
+			trade_amount,
+			trade_result,
+			req_sys_stance,
+			req_mer_code,
+			deduct_sys_id,
+			deduct_sys_stance,
+			deduct_mer_code,
+			trade_time,
+			deduct_sys_time,
+			deduct_stlm_date,
+			deduct_roll_bk,
+			trade_type,
+			bk_chk,
+			whetherErroeHandle,
+			whetherQs,
+			mer_fee,
+			zf_fee,
+			zf_file_fee,
+			zf_fee_bj,
+			instType,
+			gate,
+			settle_code,
+			inst_name,
+			oid,
+			sys_date,
+			bank_id,
+			js_date,
+			out_user_id,
+			in_user_id,
+			remark,
+			whetherValid
+		) values(
+			#{trade_id},
+			#{out_account},
+			#{trade_amount},
+			#{trade_result},
+			#{req_sys_stance},
+			#{req_mer_code},
+			#{deduct_sys_id},
+			#{deduct_sys_stance},
+			#{deduct_mer_code},
+			#{trade_time},
+			#{deduct_sys_time},
+			#{deduct_stlm_date},
+			#{deduct_roll_bk},
+			#{trade_type},
+			#{bk_chk},
+			#{whetherErroeHandle},
+			#{whetherQs},
+			#{mer_fee},
+			#{zf_fee},
+			#{zf_file_fee},
+			#{zf_fee_bj},
+			#{instType},
+			#{gate},
+			#{settle_code},
+			#{inst_name},
+			#{oid},
+			#{sys_date},
+			#{bank_id},
+			#{js_date},
+			#{out_user_id},
+			#{in_user_id},
+			#{remark},
+			#{whetherValid}
+		)
+	</insert>
+</mapper>

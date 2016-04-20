@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CheckBox Tree - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+</head>
+<style>
+*{ font-size:14px;}
+body { background:#DCDFE1;font-family: "微软雅黑",Arial,Helvetica,sans-serif;font-size: 14px;margin: 0; padding: 20px;}
+a{ text-decoration:none;}
+.tree {background:#fff; border-radius: 0 0 5px 5px;box-shadow: 1px 1px 3px #999;list-style-type: none;margin: 0;overflow: hidden;padding: 0;}
+.tree li {border-bottom: 1px solid #DCDFE1;white-space: nowrap;}
+.tree li ul {list-style-type: none; margin: 0 0 -1px;padding: 0;}
+.tree-node-hover { background: #be1d21; color: #fff;}
+.tree-node {cursor: pointer;padding: 5px;white-space: nowrap;}
+.tree-title {display: inline-block;font-size: 14px;height: 18px;line-height: 18px;padding: 0 2px;text-decoration: none;vertical-align: top;white-space: nowrap;}
+.tree-expanded, .tree-collapsed, .tree-folder, .tree-file, .tree-checkbox, .tree-indent {
+display: inline-block;height: 18px;margin-right: 2px;overflow: hidden;vertical-align: top;width: 16px;}
+.tree-node-selected {background:#BE1D21;color: #FEFCFC;}
+.tree li ul li ul{ overflow:hidden;background:#EFEFEF;}
+.tree li ul li ul li{ width:50%; float:left;}
+
+.position{ margin-bottom:12px;}
+.position a{ margin-right:5px; color:#000;}
+.position span{ color:#be1d21; text-decoration:underline; margin-left:5px;}
+</style>
+<body>
+	<div class="position">当前位置：<a href="机构操作员新增.html">操作员管理</a>&gt;<span>操作员权限修改</span></div>    
+	<div style="margin:10px 0 0 0; background:#9e9f9f; padding:5px;color:#fefcfc; border-radius:5px 5px 0 0;">
+		<input type="checkbox" checked onchange="$('#tt').tree({cascadeCheck:$(this).is(':checked')})">CascadeCheck 
+		<input type="checkbox" onchange="$('#tt').tree({onlyLeafCheck:$(this).is(':checked')})">OnlyLeafCheck
+	</div>
+	<ul id="tt" class="easyui-tree" data-options="url:'../tree/tree_data1.json',animate:true,checkbox:true"></ul>
+	<script type="text/javascript">
+		function getChecked(){
+			var nodes = $('#tt').tree('getChecked');
+			var s = '';
+			for(var i=0; i<nodes.length; i++){
+				if (s != '') s += ',';
+				s += nodes[i].text;
+			}
+			alert(s);
+		}
+	</script>
+    <a class="icon_normal" href="#" onclick="getChecked()"">确认分配</a>
+</body>
+</html>

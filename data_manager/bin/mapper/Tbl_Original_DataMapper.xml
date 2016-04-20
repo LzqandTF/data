@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Original_Data">
+	<resultMap type="OriginalData" id="OriginalDataMap">
+		<id property="trade_id" column="trade_id"/>
+		<result property="terminal_id" column="terminal_id"/>
+		<result property="terminal_info" column="terminal_info"/>
+		<result property="terminal_type" column="terminal_type"/>
+		<result property="trade_time" column="trade_time"/>
+		<result property="out_account" column="out_account"/>
+		<result property="out_account_type" column="out_account_type"/>
+		<result property="out_acc_valid_time" column="out_acc_valid_time"/>
+		<result property="out_account_info2" column="out_account_info2"/>
+		<result property="out_account_desc" column="out_account_desc"/>
+		<result property="in_account" column="in_account"/>
+		<result property="in_card_name" column="in_card_name"/>
+		<result property="in_bank_id" column="in_bank_id"/>
+		<result property="trade_amount" column="trade_amount"/>
+		<result property="trade_fee" column="trade_fee"/>
+		<result property="trade_currency" column="trade_currency"/>
+		<result property="trade_result" column="trade_result"/>
+		<result property="req_sys_id" column="req_sys_id"/>
+		<result property="req_sys_stance" column="req_sys_stance"/>
+		<result property="req_mer_code" column="req_mer_code"/>
+		<result property="req_mer_term_id" column="req_mer_term_id"/>
+		<result property="req_response" column="req_response"/>
+		<result property="deduct_sys_id" column="deduct_sys_id"/>
+		<result property="deduct_sys_stance" column="deduct_sys_stance"/>
+		<result property="deduct_mer_code" column="deduct_mer_code"/>
+		<result property="deduct_mer_term_id" column="deduct_mer_term_id"/>
+		<result property="deduct_result" column="deduct_result"/>
+		<result property="deduct_sys_response" column="deduct_sys_response"/>
+		<result property="deduct_roll_bk" column="deduct_roll_bk"/>
+		<result property="deduct_roll_bk_result" column="deduct_roll_bk_result"/>
+		<result property="deduct_roll_bk_reason" column="deduct_roll_bk_reason"/>
+		<result property="deduct_roll_bk_response" column="deduct_roll_bk_response"/>
+		<result property="deduct_roll_bk_stance" column="deduct_roll_bk_stance"/>
+		<result property="trade_type" column="trade_type"/>
+		<result property="msg_num" column="msg_num"/>
+		<result property="pass_wd_mode" column="pass_wd_mode"/>
+		<result property="req_type" column="req_type"/>
+		<result property="req_input_type" column="req_input_type"/>
+		<result property="req_time" column="req_time"/>
+		<result property="trade_req_method" column="trade_req_method"/>
+		<result property="trade_desc" column="trade_desc"/>
+		<result property="in_account_type" column="in_account_type"/>
+		<result property="trade_other_info" column="trade_other_info"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="deduct_sys_time" column="deduct_sys_time"/>
+		<result property="gain_sys_id" column="gain_sys_id"/>
+		<result property="gain_sys_stance" column="gain_sys_stance"/>
+		<result property="gain_mer_code" column="gain_mer_code"/>
+		<result property="gain_mer_term_id" column="gain_mer_term_id"/>
+		<result property="gain_sys_response" column="gain_sys_response"/>
+		<result property="gain_result" column="gain_result"/>
+		<result property="gain_trade_amount" column="gain_trade_amount"/>
+		<result property="gain_sys_reference" column="gain_sys_reference"/>
+		<result property="nii" column="nii"/>
+		<result property="authorization_code" column="authorization_code"/>
+		<result property="additional_response_data" column="additional_response_data"/>
+		<result property="additional_data" column="additional_data"/>
+		<result property="boc" column="boc"/>
+		<result property="custom_define_info" column="custom_define_info"/>
+		<result property="original_trans_info" column="original_trans_info"/>
+		<result property="req_process" column="req_process"/>
+		<result property="deduct_sys_reference" column="deduct_sys_reference"/>
+		<result property="trademsg_type" column="trademsg_type"/>
+		<result property="deduct_rollbk_sys_reference" column="deduct_rollbk_sys_reference"/>
+		<result property="mer_name" column="mer_name"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="whetherJs" column="whetherJs"/>
+		<result property="whetherValid" column="whetherValid"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="whetherRiqie" column="whetherRiqie"/>
+		<result property="acqInstIdCode" column="acqInstIdCode"/>
+		<result property="fwdInstIdCode" column="fwdInstIdCode"/>
+		<result property="deduct_rollbk_sys_time" column="deduct_rollbk_sys_time"/>
+		<result property="agentId" column="agentId"/>
+		<result property="whetherzero" column="whetherzero"/>
+		<result property="whtherInnerJs" column="whtherInnerJs"/>
+		<result property="inst_name" column="inst_name"/>
+		<result property="receivi_name" column="receivi_name"/>
+		<result property="reqTime" column="reqTime"/>
+		<!-- 银联UPMP线上交易数据关联原始收款交易需要显示的字段 -->
+		<result property="tseq" column="tseq"/>
+		<result property="sys_date" column="sys_date"/>
+		<result property="sys_time" column="sys_time"/>
+		<result property="tstat" column="tstat"/>
+		<result property="bk_resp" column="bk_resp"/>
+		<result property="ic_card_ser_no" column="ic_card_ser_no"/>
+		<result property="ic_read_and_condition" column="ic_read_and_condition"/>
+		<result property="whetherQs" column="whetherQs"/>
+		<result property="mer_fee" column="mer_fee"/>
+		<result property="whetherTk" column="whetherTk"/>
+		<result property="zf_fee" column="zf_fee"/>
+		<result property="zf_file_fee" column="zf_file_fee"/>
+		<result property="zf_fee_bj" column="zf_fee_bj"/>
+		<result property="fee_formula" column="fee_formula"/>
+		<result property="bank_id" column="bank_id"/>
+		<result property="whetherAccessStance" column="whetherAccessStance"/>
+		<result property="whtherInnerDz" column="whtherInnerDz"/>
+	</resultMap>
+	
+	<!-- 扣款渠道数据查询 -->
+	<select id="queryPageOriginalData" parameterType="Map" resultMap="OriginalDataMap">
+		select 
+			i.name_,
+			i.receivi_name,
+			o.trade_id,
+			o.req_mer_code,
+			o.trade_time,
+			o.trade_amount,
+			o.out_account,
+			o.trade_result,
+			o.req_process,
+			o.trademsg_type,
+			o.terminal_info,
+			<choose>
+		 		<when test="original_data_tableName != 'original_shengjingbank_lst'">
+		 			o.deduct_sys_id,
+		 		</when>
+		 		<otherwise>
+		 			o.gain_sys_id as deduct_sys_id,
+		 		</otherwise>
+		 	</choose>
+			o.deduct_sys_time,
+			o.whtherInnerJs,
+			o.deduct_roll_bk,
+			o.gain_sys_response,
+			o.deduct_roll_bk_response,
+			o.deduct_result,
+			o.deduct_roll_bk_result,
+			o.deduct_sys_response,
+			o.deduct_rollbk_sys_time,
+			o.deduct_roll_bk_stance
+		from inst_info i inner join ${original_data_tableName} o
+		<if test="original_data_tableName == 'original_shengjingbank_lst'">
+			on i.inst_id = o.gain_sys_id
+		</if>
+		<if test="original_data_tableName != 'original_shengjingbank_lst'">
+			on i.inst_id = o.deduct_sys_id
+		</if>
+		<if test="inst_type != null and inst_type != ''">
+			and i.inst_type = #{inst_type}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and i.inst_id = #{deduct_sys_id}
+		</if>
+		where 1 = 1 
+		<if test="startTime != null and startTime != ''">
+			and o.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and o.req_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and o.out_account = #{out_account}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and o.req_mer_code = #{req_mer_code}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and o.deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and SUBSTRING_INDEX(o.additional_data,'|',1) = #{additional_data}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(o.deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and o.whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and o.req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="deduct_roll_bk_stance != null and deduct_roll_bk_stance != ''">
+			and o.deduct_roll_bk_stance = #{deduct_roll_bk_stance} and deduct_roll_bk = 1
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from ${original_data_tableName}
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and req_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			<if test="original_data_tableName == 'original_shengjingbank_lst'">
+				and gain_sys_id = #{deduct_sys_id}
+			</if>
+			<if test="original_data_tableName != 'original_shengjingbank_lst'">
+				and deduct_sys_id = #{deduct_sys_id}
+			</if>
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and SUBSTRING_INDEX(additional_data,'|',1) = #{additional_data}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="deduct_result != null and deduct_result != ''">
+			and deduct_result = #{deduct_result}
+		</if>
+	</select>
+	
+	<!-- 详情查询 -->
+	<select id="queryDetail" parameterType="Map" resultMap="OriginalDataMap">
+		select * from ${original_data_tableName} where trade_id = #{trade_id}
+	</select>
+	
+	<!-- 对账明细查询 -->
+	<select id="queryPageDuizhangOriginalData" parameterType="Map" resultMap="OriginalDataMap">
+		select 
+			i.name_,
+			o.trade_id,
+			o.deduct_sys_stance,
+			o.deduct_result,
+			o.req_mer_code,
+			substring_index(o.additional_data, "|", 1) AS additional_data,
+			o.trade_amount,
+			o.mer_fee,
+			o.trade_result,
+			o.terminal_info,
+			o.deduct_sys_id,
+			o.deduct_sys_time,
+			o.deduct_roll_bk,
+			o.deduct_roll_bk_response,
+			o.deduct_roll_bk_stance,
+			o.deduct_roll_bk_result,
+			o.deduct_sys_response,
+			o.deduct_rollbk_sys_time,
+			o.whetherQs,
+			o.bk_chk,
+			o.whetherRiqie
+		from inst_info i inner join ${original_data_tableName} o on i.inst_id = o.deduct_sys_id AND i.inst_type = 0 
+		where 1 = 1 
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and o.deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and o.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and o.deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and o.out_account = #{out_account}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(o.deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and o.deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and o.req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and SUBSTRING_INDEX(o.additional_data,'|',1) = #{additional_data}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and o.req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and o.whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and o.bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and o.whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and o.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="deduct_result != null">
+		    and (o.deduct_result = #{deduct_result} or o.deduct_roll_bk_result = #{deduct_result})
+		</if>
+		order by o.trade_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryDuizhangCount" parameterType="Map" resultType="int">
+		select count(*) from ${original_data_tableName}
+		where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and req_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and SUBSTRING_INDEX(additional_data,'|',1) = #{additional_data}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="deduct_result != null">
+		   and (deduct_result = #{deduct_result} or deduct_roll_bk_result = #{deduct_result})
+		</if>
+	</select>
+	
+	<!-- 对账结果查询(线下对账笔数统计) -->
+	<parameterMap type="map" id="dzResult">    
+	   <parameter property="original_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="dz_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="original_table_name" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="duizhang_table_name" jdbcType="VARCHAR" mode="IN"/>  
+	   <parameter property="flag" jdbcType="INTEGER" mode="IN"/>
+	   <parameter property="deduct_sys_id" jdbcType="INTEGER" mode="IN"/>
+	   <parameter property="original_trade_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="original_dz_success" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="original_dz_error" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="original_dz_no" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="duizhang_trade_count" jdbcType="INTEGER" mode="OUT"/>
+	   <parameter property="original_dz_noNeed" jdbcType="INTEGER" mode="OUT"/>  
+ 	</parameterMap>
+	<select id="queryResult" statementType="CALLABLE" parameterMap="dzResult">
+		{CALL proce_duizhang_result_query(?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+	
+	<!-- 线上对账笔数统计 -->
+	<parameterMap type="map" id="rytUpmpResult">
+	 	<parameter property="original_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	    <parameter property="dz_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	    <parameter property="receipttablename" jdbcType="VARCHAR" mode="IN"/>    
+	    <parameter property="duizhang_table_name" jdbcType="VARCHAR" mode="IN"/> 
+	    <parameter property="flag" jdbcType="INTEGER" mode="IN"/>
+	    <parameter property="deduct_sys_id" jdbcType="INTEGER" mode="IN"/>
+	    <parameter property="original_trade_count" jdbcType="INTEGER" mode="OUT"/>    
+	    <parameter property="original_dz_success" jdbcType="INTEGER" mode="OUT"/>    
+	    <parameter property="original_dz_error" jdbcType="INTEGER" mode="OUT"/>    
+	    <parameter property="original_dz_no" jdbcType="INTEGER" mode="OUT"/>    
+	    <parameter property="original_dz_noNeed" jdbcType="INTEGER" mode="OUT"/>
+	    <parameter property="duizhang_trade_count" jdbcType="INTEGER" mode="OUT"/> 
+	</parameterMap>
+	<select id="queryRytUpmpDzResult" statementType="CALLABLE" parameterMap="rytUpmpResult">
+		{CALL proce_ryt_duizhang_result_query(?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+	
+	<select id="queryMoney" parameterType="Map" resultType="String">
+		select CONCAT(IFNULL(sum(trade_amount),0),"")+
+			(select CONCAT(IFNULL(sum(o.trade_amount),0),"") 
+ 				from (
+					select distinct 
+							req_sys_stance,
+							trade_amount 
+					from ${original_data_tableName} 
+					where deduct_roll_bk = 1 
+					<if test="startTime != null and startTime != ''">
+						and trade_time between #{startTime}
+					</if>
+					<if test="endTime != null and endTime != ''">
+						and #{endTime}
+					</if>
+					<if test="deduct_sys_id != null and deduct_sys_id != ''">
+						and deduct_sys_id = #{deduct_sys_id}
+					</if>
+					<if test="bk_chk == 1">
+						and deduct_roll_bk_response in('00','N1')
+					</if>
+					<if test="trade_date != null and trade_date != ''">
+						and substring(trade_time,1,10) = #{trade_date}
+					</if>
+					<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+						and deduct_sys_stance = #{deduct_sys_stance}
+					</if>
+					<if test="out_account != null and out_account != ''">
+						and out_account = #{out_account}
+					</if>
+					<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+						and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+					</if>
+					<if test="deduct_mer_code != null and deduct_mer_code != ''">
+						and deduct_mer_code = #{deduct_mer_code}
+					</if>
+					<if test="req_mer_code != null and req_mer_code != ''">
+						and req_mer_code = #{req_mer_code}
+					</if>
+					<if test="additional_data != null and additional_data != ''">
+						and additional_data = #{additional_data}
+					</if>
+					<if test="req_mer_term_id != null and req_mer_term_id != ''">
+						and req_mer_term_id = #{req_mer_term_id}
+					</if>
+					<if test="whetherRiqie != null and whetherRiqie != ''">
+						and whetherRiqie = #{whetherRiqie}
+					</if>
+					<if test="whtherInnerJs != null and whtherInnerJs != ''">
+						and whetherQs = #{whtherInnerJs}
+					</if>
+					<if test="bk_chk != null">
+						and bk_chk = #{bk_chk}
+					</if>
+					<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+						and deduct_sys_reference = #{deduct_sys_reference}
+					</if>
+					<if test="deduct_result != null">
+						and deduct_roll_bk_result = #{deduct_result}
+					</if>
+			group by req_sys_stance having count(*) >= 1 order by req_sys_stance) o) 
+		from ${original_data_tableName} 
+		where deduct_roll_bk = 0 
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="trade_date != null and trade_date != ''">
+			and substring(trade_time,1,10) = #{trade_date}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="deduct_result != null">
+			and deduct_result = #{deduct_result}
+		</if>
+	</select>
+	
+	<select id="queryMerFee" parameterType="Map" resultType="String">
+		select CONCAT(IFNULL(sum(mer_fee),0),"")+
+			(select CONCAT(IFNULL(sum(o.mer_fee),0),"") 
+ 				from (
+					select distinct 
+							req_sys_stance,
+							mer_fee 
+					from ${original_data_tableName} 
+					where deduct_roll_bk = 1 
+					<if test="startTime != null and startTime != ''">
+						and trade_time between #{startTime}
+					</if>
+					<if test="endTime != null and endTime != ''">
+						and #{endTime}
+					</if>
+					<if test="deduct_sys_id != null and deduct_sys_id != ''">
+						and deduct_sys_id = #{deduct_sys_id}
+					</if>
+					<if test="bk_chk == 1">
+						and deduct_roll_bk_response in('00','N1')
+					</if>
+					<if test="trade_date != null and trade_date != ''">
+						and substring(trade_time,1,10) = #{trade_date}
+					</if>
+					<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+						and deduct_sys_stance = #{deduct_sys_stance}
+					</if>
+					<if test="out_account != null and out_account != ''">
+						and out_account = #{out_account}
+					</if>
+					<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+						and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+					</if>
+					<if test="deduct_mer_code != null and deduct_mer_code != ''">
+						and deduct_mer_code = #{deduct_mer_code}
+					</if>
+					<if test="req_mer_code != null and req_mer_code != ''">
+						and req_mer_code = #{req_mer_code}
+					</if>
+					<if test="additional_data != null and additional_data != ''">
+						and additional_data = #{additional_data}
+					</if>
+					<if test="req_mer_term_id != null and req_mer_term_id != ''">
+						and req_mer_term_id = #{req_mer_term_id}
+					</if>
+					<if test="whetherRiqie != null and whetherRiqie != ''">
+						and whetherRiqie = #{whetherRiqie}
+					</if>
+					<if test="whtherInnerJs != null and whtherInnerJs != ''">
+						and whetherQs = #{whtherInnerJs}
+					</if>
+					<if test="bk_chk != null">
+						and bk_chk = #{bk_chk}
+					</if>
+					<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+						and deduct_sys_reference = #{deduct_sys_reference}
+					</if>
+					<if test="deduct_result != null">
+						and deduct_roll_bk_result = #{deduct_result}
+					</if>
+			group by req_sys_stance having count(*) >= 1 order by req_sys_stance) o) 
+		from ${original_data_tableName} 
+		where deduct_roll_bk = 0 
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="trade_date != null and trade_date != ''">
+			and substring(trade_time,1,10) = #{trade_date}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="deduct_result != null">
+			and deduct_result = #{deduct_result}
+		</if>
+	</select>
+	
+	<select id="queryByReqSysStanceAndTradeTime" parameterType="Map" resultMap="OriginalDataMap">
+		SELECT terminal_info, trade_time, trade_amount, req_sys_stance, deduct_sys_stance, deduct_sys_time, 
+				deduct_roll_bk_stance, deduct_rollbk_sys_time, req_process, trademsg_type, deduct_roll_bk,
+				deduct_roll_bk_response, deduct_sys_response 
+		FROM ${original_data_tableName} WHERE trade_time BETWEEN #{tradeTime} AND #{endTime} AND 
+		(req_sys_stance = #{reqSysStance} OR 
+		req_sys_stance = #{deductSysReference} OR 
+		req_sys_stance = #{originalTransInfo} OR 
+		RIGHT(original_trans_info,6) = #{reqSysStance} OR 
+		RIGHT(original_trans_info,10) like CONCAT('%','${reqSysStance}','%'))
+	</select>
+	
+	<select id="queryTradeNoDzHandlerCount" parameterType="Map" resultType="int">
+		select count(*) from ${original_data_tableName} where bk_chk = 0 and whetherQs != 1
+		<if test="inst_type != null">
+			<if test="inst_type == 0">
+				<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+					and deduct_stlm_date &lt; #{deduct_stlm_date}
+				</if>
+				<if test="lastSettleDate != '' and lastSettleDate != null">
+					and deduct_stlm_date &gt;= #{lastSettleDate}
+				</if>
+				<if test="mer_code != null and mer_code != ''">
+					and req_mer_code = #{mer_code}
+				</if>
+			</if>
+			<if test="inst_type == 1">
+				and tstat = 2
+				<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+					and sys_date &lt; #{deduct_stlm_date}
+				</if>
+				<if test="lastSettleDate != '' and lastSettleDate != null">
+					and sys_date &gt;= #{lastSettleDate}
+				</if>
+				<if test="mer_code != null and mer_code != ''">
+					and mid = #{mer_code}
+				</if>
+			</if>
+		</if>
+	</select>
+	
+	<!-- 结算单明细下载 -->
+	<select id="queryMerSettleDetailDataList" parameterType="Map" resultMap="OriginalDataMap">
+		SELECT * FROM ${originalDataTableName}
+	</select>
+	
+	<!-- 结算单明细查询 -->
+	<select id="queryMerSettleDetailList" parameterType="Map" resultMap="OriginalDataMap">
+		SELECT * FROM ${originalDataTableName} limit #{startRow},#{limit}
+	</select>
+	<select id="queryMerSettleDetailCount" parameterType="Map" resultType="int">
+		SELECT count(*) FROM ${originalDataTableName}
+	</select>
+	<update id="updateOriginalDataJsStatus" parameterType="Map">
+		update ${originalDataTableName} set whetherJs = #{whether_js} where whetherQs = 1
+		<if test="inst_type != null">
+			<if test="inst_type == 0">
+				<if test="mer_code != null and mer_code != ''">
+					and req_mer_code = #{mer_code}
+				</if>
+				<if test="lastSettleDate != '' and lastSettleDate != null ">
+				 	and deduct_stlm_date &gt;= #{lastSettleDate} 
+				</if>
+				<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+				 	and deduct_stlm_date &lt;= #{deduct_stlm_date} 
+				</if>
+			</if>
+			<if test="inst_type == 1">
+				<if test="mer_code != null and mer_code != ''">
+					and mid = #{mer_code}
+				</if>
+				<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+					and deduct_stlm_date &lt;= #{deduct_stlm_date}
+				</if>
+				<if test="lastSettleDate != '' and lastSettleDate != null">
+					and deduct_stlm_date &gt;= #{lastSettleDate}
+				</if>
+			</if>
+		</if>
+	</update>
+	<update id="updateOriginalDataQsStatus" parameterType="Map">
+		update ${originalDataTableName} set whetherQs = #{whetherQs} where 1=1
+		<if test="inst_type != null">
+			<if test="inst_type == 0">
+				<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+					and deduct_sys_stance = #{deduct_sys_stance}
+				</if>
+				<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+				 	and deduct_stlm_date = #{deduct_stlm_date} 
+				</if>
+				<if test="deduct_roll_bk != null and deduct_roll_bk != ''">
+					and deduct_roll_bk = #{deduct_roll_bk}
+				</if>
+			</if>
+			<if test="inst_type == 1">
+				<if test="tseq != 0 and tseq != null">
+					and tseq = #{deduct_sys_stance}
+				</if>
+			</if>
+		</if>
+	</update>
+	
+	<!-- 对账结果明细查询下载 -->
+	<select id="queryChannelDzResultDataLst" parameterType="Map" resultMap="OriginalDataMap">
+		select 
+			i.name_,
+			o.req_sys_stance,
+			o.deduct_result,
+			o.req_mer_code,
+			o.trade_time,
+			o.trade_amount,
+			o.trade_result,
+			o.terminal_info,
+			o.bk_chk,
+			o.mer_fee,
+			o.zf_fee,
+			o.deduct_sys_stance,
+			m.mer_abbreviation as mer_name,
+			o.additional_data,
+			o.deduct_roll_bk,
+			o.deduct_roll_bk_stance,
+			o.deduct_sys_reference 
+		from inst_info i inner join ${original_data_tableName} o on i.inst_id = o.deduct_sys_id AND i.inst_type = 0 
+		LEFT JOIN mer_basic m ON o.req_mer_code = m.mer_code
+		where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and o.deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and o.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_stance != null and deduct_sys_stance != ''">
+			and o.deduct_sys_stance = #{deduct_sys_stance}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and o.out_account = #{out_account}
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and substring(o.deduct_stlm_date, 1, 10) = #{deduct_stlm_date}
+		</if>
+		<if test="deduct_mer_code != null and deduct_mer_code != ''">
+			and o.deduct_mer_code = #{deduct_mer_code}
+		</if>
+		<if test="req_mer_code != null and req_mer_code != ''">
+			and o.req_mer_code = #{req_mer_code}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and SUBSTRING_INDEX(o.additional_data,'|',1) = #{additional_data}
+		</if>
+		<if test="req_mer_term_id != null and req_mer_term_id != ''">
+			and o.req_mer_term_id = #{req_mer_term_id}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and o.whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and o.bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and o.whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and o.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="deduct_result != null">
+		  and (o.deduct_result = #{deduct_result} or o.deduct_roll_bk_result = #{deduct_result})
+		</if>
+		order by o.trade_time desc
+	</select>
+	
+	<!-- 统计对账成功数据总数 -->
+	<select id="queryDzSucessDataTotalCount" parameterType="Map" resultType="int">
+		select count(*) from ${tradeDataTable} where bk_chk = 1 
+		<if test="bankType != null">
+			<if test="bankType == 0">
+				<if test="deduct_stlm_date_error != '' and deduct_stlm_date_error != null">
+				 	and deduct_stlm_date = #{deduct_stlm_date_error} 
+				</if>
+				<if test="deduct_sys_id != null and deduct_sys_id != 0">
+					and deduct_sys_id = #{deduct_sys_id}
+				</if>
+			</if>
+			<if test="bankType == 1">
+				<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+					and deduct_stlm_date = #{deduct_stlm_date}
+				</if>
+				<if test="deduct_sys_id != null and deduct_sys_id != 0">
+					and gid = #{deduct_sys_id}
+				</if>
+			</if>
+		</if>
+	</select>
+	
+	<!-- 线下成功交易未对账进入差错后修改对账状态为无需对账 -->
+	<update id="updateBkchkByTradeId" parameterType="Map">
+		update  ${original_data_tableName} set bk_chk = 3, whetherValid = 0 where trade_id = #{trade_id}
+	</update>
+</mapper>

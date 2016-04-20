@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PoliceType">
+	<resultMap type="PoliceType" id="PoliceTypeMap">
+		<id property="police_id" column="police_id"/>
+		<result property="police_name" column="police_name"/>
+		<result property="desc" column="desc"/>
+	</resultMap>
+	
+	<!-- 查询 -->
+	<select id="queryPoliceTypeList" resultMap="PoliceTypeMap">
+		select * from police_type
+	</select>
+</mapper>

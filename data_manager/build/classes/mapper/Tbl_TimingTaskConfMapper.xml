@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TimingTaskConf">
+	<resultMap type="TimingTaskConf" id="TimingTaskConfMap">
+		<id property="instId" column="inst_id" />
+		<result property="acquisitionTime" column="acquisition_time" />
+		<result property="gatherDataTime" column="gather_data_time" />
+		<result property="dzHandlerTime" column="dz_handler_time" />
+		<result property="acquisitionTimeDesc" column="acquisition_time_desc" />
+		<result property="gatherDataTimeDesc" column="gather_data_time_desc" />
+		<result property="dzHandlerTimeDesc" column="dz_handler_time_desc" />
+		<result property="acquisitionTimeName" column="acquisition_time_name" />
+		<result property="gatherDataTimeName" column="gather_data_time_name" />
+		<result property="dzHandlerTimeName" column="dz_handler_time_name" />
+		<result property="gatherDataIntervalTime" column="gather_data_interval_time" />
+		<result property="acquisitionIntervalTime" column="acquisition_interval_time" />
+		<result property="dzIntervalTime" column="dz_interval_time" />
+		<result property="gatherDataMostTimes" column="gather_data_most_times" />
+		<result property="acquisitionMostTimes" column="acquisition_most_times" />
+		<result property="dzMostTimes" column="dz_most_times" />
+		<result property="dzHandlerEndTime" column="dz_handler_end_time" />
+		<result property="dzFileType" column="dz_file_type" />
+		<result property="dzFileCreateTime" column="dz_file_create_time" />
+		<result property="dzFileCreateTimeName" column="dz_file_create_time_name" />
+		<result property="channel_id" column="channel_id" />
+		<result property="inst_type" column="inst_type" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageTimingTaskConf" parameterType="Map" resultMap="TimingTaskConfMap">
+		select * from timing_task_conf 
+		where 1 = 1
+		<if test="acquisitionTime != null and acquisitionTime !=''">
+			and acquisition_time = #{acquisitionTime}
+		</if>
+		<if test="gatherDataTime != null and gatherDataTime !=''">
+			and gather_data_time = #{gatherDataTime}
+		</if>
+		<if test="dzHandlerTime != null and dzHandlerTime !=''">
+			and dz_handler_time = #{dzHandlerTime}
+		</if>
+		<if test="acquisitionTimeName != null and acquisitionTimeName !=''">
+			and acquisition_time_name = #{acquisitionTimeName}
+		</if>
+		<if test="gatherDataTimeName != null and gatherDataTimeName !=''">
+			and gather_data_time_name = #{gatherDataTimeName}
+		</if>
+		<if test="dzHandlerTimeName != null and dzHandlerTimeName !=''">
+			and dz_handler_time_name = #{dzHandlerTimeName}
+		</if>
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageTimingTaskConfCount" parameterType="Map" resultType="int">
+		select count(*) from timing_task_conf
+		where 1 = 1
+		<if test="acquisitionTime != null and acquisitionTime !=''">
+			and acquisition_time = #{acquisitionTime}
+		</if>
+		<if test="gatherDataTime != null and gatherDataTime !=''">
+			and gather_data_time = #{gatherDataTime}
+		</if>
+		<if test="dzHandlerTime != null and dzHandlerTime !=''">
+			and dz_handler_time = #{dzHandlerTime}
+		</if>
+		<if test="acquisitionTimeName != null and acquisitionTimeName !=''">
+			and acquisition_time_name = #{acquisitionTimeName}
+		</if>
+		<if test="gatherDataTimeName != null and gatherDataTimeName !=''">
+			and gather_data_time_name = #{gatherDataTimeName}
+		</if>
+		<if test="dzHandlerTimeName != null and dzHandlerTimeName !=''">
+			and dz_handler_time_name = #{dzHandlerTimeName}
+		</if>
+	</select>
+	
+	<!-- 添加交易金额配置信息 -->
+	<insert id="addTimingTaskConf" parameterType="TimingTaskConf">
+		insert into timing_task_conf 
+		(inst_id,acquisition_time,gather_data_time,dz_handler_time,acquisition_time_desc,
+		gather_data_time_desc,dz_handler_time_desc,acquisition_time_name,
+		gather_data_time_name,dz_handler_time_name,gather_data_interval_time,acquisition_interval_time,
+		dz_interval_time,gather_data_most_times,acquisition_most_times,dz_most_times,dz_handler_end_time,dz_file_type
+		,dz_file_create_time,dz_file_create_time_name,inst_type)
+		values(#{instId},#{acquisitionTime},#{gatherDataTime},#{dzHandlerTime},#{acquisitionTimeDesc},
+		#{gatherDataTimeDesc},#{dzHandlerTimeDesc},#{acquisitionTimeName},
+		#{gatherDataTimeName},#{dzHandlerTimeName},#{gatherDataIntervalTime},#{acquisitionIntervalTime},
+		#{dzIntervalTime},#{gatherDataMostTimes},#{acquisitionMostTimes},#{dzMostTimes},#{dzHandlerEndTime},#{dzFileType}
+		,#{dzFileCreateTime},#{dzFileCreateTimeName},#{inst_type})
+	</insert>
+	<!-- 修改交易金额配置信息 -->
+	<update id="updateTimingTaskConf" parameterType="TimingTaskConf">
+		update timing_task_conf
+			<set>
+				<if test="acquisitionTime != null and acquisitionTime !=''">
+					acquisition_time = #{acquisitionTime},
+				</if>
+				<if test="gatherDataTime != null and gatherDataTime !=''">
+					gather_data_time = #{gatherDataTime},
+				</if>
+				<if test="dzHandlerTime != null and dzHandlerTime !=''">
+					dz_handler_time = #{dzHandlerTime},
+				</if>
+				<if test="acquisitionTimeDesc != null and acquisitionTimeDesc !=''">
+					acquisition_time_desc = #{acquisitionTimeDesc},
+				</if>
+				<if test="gatherDataTimeDesc != null and gatherDataTimeDesc !=''">
+					gather_data_time_desc = #{gatherDataTimeDesc},
+				</if>
+				<if test="dzHandlerTimeDesc != null and dzHandlerTimeDesc !=''">
+					dz_handler_time_desc = #{dzHandlerTimeDesc},
+				</if>
+				<if test="acquisitionTimeName != null and acquisitionTimeName !=''">
+					acquisition_time_name = #{acquisitionTimeName},
+				</if>
+				<if test="gatherDataTimeName != null and gatherDataTimeName !=''">
+					gather_data_time_name = #{gatherDataTimeName},
+				</if>
+				<if test="dzHandlerTimeName != null and dzHandlerTimeName !=''">
+					dz_handler_time_name = #{dzHandlerTimeName},
+				</if>
+				<if test="gatherDataIntervalTime != null and gatherDataIntervalTime !=''">
+					gather_data_interval_time = #{gatherDataIntervalTime},
+				</if>
+				<if test="acquisitionIntervalTime != null and acquisitionIntervalTime !=''">
+					acquisition_interval_time = #{acquisitionIntervalTime},
+				</if>
+				<if test="dzIntervalTime != null and dzIntervalTime !=''">
+					dz_interval_time = #{dzIntervalTime},
+				</if>
+				<if test="gatherDataMostTimes != null and gatherDataMostTimes !=''">
+					gather_data_most_times = #{gatherDataMostTimes},
+				</if>
+				<if test="acquisitionMostTimes != null and acquisitionMostTimes !=''">
+					acquisition_most_times = #{acquisitionMostTimes},
+				</if>
+				<if test="dzMostTimes != null and dzMostTimes !=''">
+					dz_most_times = #{dzMostTimes},
+				</if>
+				<if test="dzHandlerEndTime != null and dzHandlerEndTime !=''">
+					dz_handler_end_time = #{dzHandlerEndTime},
+				</if>
+				<if test="dzFileType != null and dzFileType != ''">
+					dz_file_type = #{dzFileType},
+				</if>
+				<if test="dzFileCreateTime != null and dzFileCreateTime !=''">
+					dz_file_create_time = #{dzFileCreateTime},
+				</if>
+				<if test="dzFileCreateTimeName != null and dzFileCreateTimeName != ''">
+					dz_file_create_time_name = #{dzFileCreateTimeName},
+				</if>
+				<if test="inst_type != null">
+					inst_type = #{inst_type},
+				</if>
+			</set>
+			where inst_id = #{instId}
+	</update>
+	<!-- 删除交易金额配置信息 -->
+	<delete id="deleteTimingTaskConf">
+		delete from timing_task_conf where inst_id = #{instId}
+	</delete>
+	
+	<select id="queryTimingTaskByName" parameterType="String" resultMap="TimingTaskConfMap">
+		select inst_id,gather_data_time_name,gather_data_time,gather_data_time_desc,gather_data_interval_time,gather_data_most_times,channel_id,inst_type from timing_task_conf where gather_data_time_name = #{gatherDataTimeName}
+	</select>
+	<select id="queryDzTimingTask" resultMap="TimingTaskConfMap">
+		select inst_id,dz_handler_time,dz_handler_end_time,dz_handler_time_desc,dz_handler_time_name,channel_id,inst_type from timing_task_conf where 1=1
+	</select>
+	<select id="queryDzTimingTaskByChannelInfo" parameterType="Map" resultMap="TimingTaskConfMap">
+		select inst_id,dz_handler_time,dz_handler_end_time,dz_handler_time_desc,dz_handler_time_name,channel_id,inst_type from timing_task_conf where channel_id = #{channel_id} and inst_type = #{inst_type}
+	</select>
+	<select id="queryAcquisitionTimingTask" resultMap="TimingTaskConfMap">
+		select inst_id,acquisition_time,acquisition_time_desc,acquisition_time_name,acquisition_interval_time,acquisition_most_times,dz_file_type,channel_id,inst_type from timing_task_conf where 1=1
+	</select>
+	<select id="queryAcquisitionTimingTaskByName" parameterType="String" resultMap="TimingTaskConfMap">
+		select inst_id,acquisition_time,acquisition_time_desc,acquisition_time_name,acquisition_interval_time,acquisition_most_times,dz_file_type,channel_id,inst_type from timing_task_conf where  acquisition_time_name = #{acquisitionTimeName}
+	</select>
+	<select id="queryDzFileCreateTimingTask" parameterType="String" resultMap="TimingTaskConfMap">
+		select inst_id,dz_file_create_time,dz_file_create_time_name,channel_id,inst_type from timing_task_conf where dz_file_create_time_name = #{dzFileCreateTimeName}
+	</select>
+</mapper>

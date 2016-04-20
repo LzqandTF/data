@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReasonCode">
+	<resultMap type="ReasonCode" id="ReasonCodeMap">
+		<id property="reason_id" column="reason_id" />
+		<result property="reason_desc" column="reason_desc" />
+		<result property="id" column="id" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageReasonCode" parameterType="Map" resultMap="ReasonCodeMap">
+		select * from reason_code where 1 = 1 
+		<if test="id != null and id != 0">
+			and id = #{id} 
+		</if>
+		<if test="reason_id != null and reason_id != ''">
+			and reason_id = #{reason_id} 
+		</if>
+		<if test="reason_desc != null and reason_desc != ''">
+			and reason_desc = #{reason_desc}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="queryReasonCodeList" parameterType="ReasonCode" resultMap="ReasonCodeMap">
+		select * from reason_code where 1 = 1 
+		<if test="id != null and id != 0">
+			and id = #{id} 
+		</if>
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from reason_code 
+	</select>
+	<select id="queryAll" parameterType="Map" resultMap="ReasonCodeMap">
+		select * from reason_code 
+	</select>
+	
+	<delete id="deleteReasonCode" parameterType="string">
+		delete from reason_code where reason_id = #{reason_id}
+	</delete>
+	
+	<update id="updateReasonCode" parameterType="ReasonCode">
+		update reason_code set reason_desc = #{reason_desc},id = #{id} where reason_id = #{reason_id}
+	</update>
+	<insert id="addReasonCode" parameterType="ReasonCode">
+		insert into reason_code(reason_id,reason_desc,id) value(#{reason_id},#{reason_desc},#{id})
+	</insert>
+</mapper>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clay-model clay-version="1.4.2">
+<database-model alias="" author="" begin-script="" end-script="" name="channel_dz_collect" remarks="" sql-dialect-id="jp.azzurri.clay.dialect.HSQLDB_1_7_0_Dialect" uid="1fc99aa:14e768f4f0a:-7ff4" version="1.0">
+<database-model-description/>
+<schema-list>
+<schema alias="" name="DEFAULT_SCHEMA" remarks="" uid="1fc99aa:14e768f4f0a:-7ff1">
+<schema-description/>
+<domain-list/>
+<table-list>
+<table alias="" name="channel_trade_collect" remarks="线上线下交易数据汇总" uid="1fc99aa:14e768f4f0a:-7ff3">
+<table-description/>
+<table-figure-bounds height="-1" width="-1" x="100" y="23"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="true" name="trade_id" remarks="主键ID" uid="1fc99aa:14e768f4f0a:-7fe7">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="19" decimal-digits="0" default-value="" mandatory="true" name="out_account" remarks="交易卡号(转出)" uid="1fc99aa:14e768f4f0a:-7fe2">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="1" decimal-digits="0" default-value="" mandatory="false" name="out_account_type" remarks="交易卡号  卡类型  C:信用卡、D:借机卡" uid="1fc99aa:14e768f4f0a:-7fdb">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="64" decimal-digits="0" default-value="" mandatory="false" name="in_account" remarks="交易卡号(转入)" uid="1fc99aa:14e768f4f0a:-7fdf">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="8" decimal-digits="0" default-value="" mandatory="false" name="in_card_name" remarks="转入卡号-持卡人姓名" uid="1fc99aa:14e768f4f0a:-7fdc">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="trade_amount" remarks="交易金额" uid="1fc99aa:14e768f4f0a:-7fd8">
+<column-description/>
+<data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
+<variant type-name-pattern="DOUBLE"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="40" decimal-digits="0" default-value="" mandatory="false" name="trade_fee" remarks="交易手续费" uid="1fc99aa:14e768f4f0a:-7fd7">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="2" decimal-digits="0" default-value="" mandatory="false" name="trade_currency" remarks="币种  01:人民币、02:英镑、03:港币、04:美元、05:瑞士法郎、06:日元、07:加拿大元、08:澳大利亚元、09:欧元" uid="1fc99aa:14e768f4f0a:-7fd2">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="24" decimal-digits="0" default-value="" mandatory="false" name="trade_currency_name" remarks="币种名称" uid="1fc99aa:14e768f4f0a:-7fcf">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="trade_result" remarks="交易结果  0:初始状态、1:待支付、2:成功、3:失败、4:请求银行失败、5:撤销、6:超时、7:未知" uid="1fc99aa:14e768f4f0a:-7fca">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="req_sys_id" remarks="请求交易系统id" uid="1fc99aa:14e768f4f0a:-7fc9">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="false" name="req_sys_stance" remarks="请求流水号" uid="1fc99aa:14e768f4f0a:-7fc8">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="15" decimal-digits="0" default-value="" mandatory="false" name="req_mer_code" remarks="请求商户号(电银商户号/内部商户号)" uid="1fc99aa:14e768f4f0a:-7fc7">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="8" decimal-digits="0" default-value="" mandatory="false" name="req_mer_term_id" remarks="请求终端号" uid="1fc99aa:14e768f4f0a:-7fc6">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="deduct_sys_id" remarks="扣款渠道ID" uid="1fc99aa:14e768f4f0a:-7fc5">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="true" name="deduct_sys_stance" remarks="扣款流水号" uid="1fc99aa:14e768f4f0a:-7fc4">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="15" decimal-digits="0" default-value="" mandatory="true" name="deduct_mer_code" remarks="扣款商户号" uid="1fc99aa:14e768f4f0a:-7fc1">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="8" decimal-digits="0" default-value="" mandatory="false" name="deduct_mer_term_id" remarks="扣款终端号" uid="1fc99aa:14e768f4f0a:-7fc0">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="trade_time" remarks="交易日期" uid="6a53f3:14e8b9ca42b:-7ff8">
+<column-description/>
+<data-type jdbc-type="-5" name="BIGINT" selected-variant-pattern="BIGINT">
+<variant type-name-pattern="BIGINT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="deduct_sys_time" remarks="扣款时间" uid="1fc99aa:14e768f4f0a:-7fbd">
+<column-description/>
+<data-type jdbc-type="-5" name="BIGINT" selected-variant-pattern="BIGINT">
+<variant type-name-pattern="BIGINT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="deduct_stlm_date" remarks="" uid="1fc99aa:14e768f4f0a:-7f8b">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="deduct_roll_bk" remarks="冲正标识" uid="1fc99aa:14e768f4f0a:-7fba">
+<column-description/>
+<data-type jdbc-type="-6" name="TINYINT" selected-variant-pattern="TINYINT">
+<variant type-name-pattern="TINYINT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="trade_type" remarks="交易类型 消费:19、消费冲正:20、消费撤销:21、消费撤销冲正:22、退货:23、预授权完成:24、预授权完成撤销:25、预授权完成冲正:26、预授权完成撤销冲正:27、脱机消费:28、转账汇款:29、账户支付:30、未知:31" uid="1fc99aa:14e768f4f0a:-7fb3">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="6" decimal-digits="0" default-value="" mandatory="false" name="authorization_code" remarks="授权码" uid="1fc99aa:14e768f4f0a:-7faf">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="12" decimal-digits="0" default-value="" mandatory="false" name="deduct_sys_reference" remarks="参考号" uid="1fc99aa:14e768f4f0a:-7fae">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="60" decimal-digits="0" default-value="" mandatory="false" name="mer_name" remarks="商户名称" uid="1fc99aa:14e768f4f0a:-7fab">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="mer_fee" remarks="商户手续费" uid="1fc99aa:14e768f4f0a:-7fa4">
+<column-description/>
+<data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
+<variant type-name-pattern="DOUBLE"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="whetherTk" remarks="是否退款" uid="1fc99aa:14e768f4f0a:-7fa3">
+<column-description/>
+<data-type jdbc-type="-6" name="TINYINT" selected-variant-pattern="TINYINT">
+<variant type-name-pattern="TINYINT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="zf_fee" remarks="支付手续费=根据渠道费率配置 渠道手续费公式计算得出" uid="1fc99aa:14e768f4f0a:-7fa2">
+<column-description/>
+<data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
+<variant type-name-pattern="DOUBLE"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="12" decimal-digits="0" default-value="0" mandatory="false" name="zf_file_fee" remarks="对账文件手续费  = 银行手续费" uid="1fc99aa:14e768f4f0a:-7f9b">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="zf_fee_bj" remarks="支付手续费与银行手续费比较   1:计较成功、2:比较失败、3:无需比较" uid="1fc99aa:14e768f4f0a:-7f98">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="25" decimal-digits="0" default-value="" mandatory="false" name="fee_formula" remarks="商户手续费公式(线下使用)" uid="1fc99aa:14e768f4f0a:-7f95">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="35" decimal-digits="0" default-value="" mandatory="false" name="original_trans_info" remarks="原笔交易流水号" uid="1fc99aa:14e768f4f0a:-7f80">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="instType" remarks="渠道类型  0:线下渠道、1:线上渠道" uid="1fc99aa:14e768f4f0a:-7f7d">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="0" mandatory="false" name="gate" remarks="网关号" uid="ef6082:14e8a21634d:-7ffb">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="15" decimal-digits="0" default-value="" mandatory="true" name="settle_code" remarks="结算商户号" uid="ef6082:14e8a21634d:-7ff7">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="64" decimal-digits="0" default-value="" mandatory="true" name="inst_name" remarks="渠道名称" uid="6a53f3:14e8b9ca42b:-7ffd">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="128" decimal-digits="0" default-value="" mandatory="false" name="dy_mer_name" remarks="电银商户名称" uid="6a53f3:14e8b9ca42b:-7ffc">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="false" name="oid" remarks="订单号" uid="996453:14f4e2923c4:-7f98">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="3" decimal-digits="0" default-value="" mandatory="false" name="additional_response_data" remarks="原交易流水" uid="1f26c80:15097e840c2:-7ffd">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="sys_date" remarks="" uid="1f26c80:15097e840c2:-7ffc">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="bank_id" remarks="银行网关ID" uid="1f26c80:15097e840c2:-7ffb">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="false" name="out_user_id" remarks="出账用户ID" uid="5642b0:150d61ef0dd:-7fef">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="false" name="in_user_id" remarks="入账用户ID" uid="5642b0:150d61ef0dd:-7fee">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="20" decimal-digits="0" default-value="" mandatory="false" name="bind_mid" remarks="快捷卡绑定商户号" uid="5642b0:150d61ef0dd:-7fed">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="32" decimal-digits="0" default-value="" mandatory="false" name="remark" remarks="备注" uid="dfea1a:151d6c39dab:-7ff4">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="32672" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_CHANNEL_TRADE_COLLECT" remarks="" uid="1fc99aa:14e768f4f0a:-7ff2">
+<primary-key-description/>
+<primary-key-column name="trade_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list/>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+</clay-model>

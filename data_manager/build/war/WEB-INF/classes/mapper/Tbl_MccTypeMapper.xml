@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MccType">
+	<resultMap type="MccType" id="MccTypeMap">
+		<id property="id" column="type_id" />
+		<result property="big_type_id" column="big_type_id" />
+		<result property="type_name" column="type_name" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageMccType" parameterType="Map" resultMap="MccTypeMap">
+		select * from mcc_type where 1 = 1 
+		<if test="id != null and id != 0">
+			and type_id = #{id} 
+		</if>
+		<if test="type_name != null and type_name != ''">
+			and type_name = #{type_name}
+		</if>
+		<if test="big_type_id != null and big_type_id != ''">
+			and big_type_id = #{big_type_id}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryMccTypeById" parameterType="int" resultType="MccType">
+		select * from mcc_type where type_id = #{id} 
+	</select>
+	
+	<select id="queryMccTypeByParentId" parameterType="int" resultMap="MccTypeMap">
+		select type_id,type_name from mcc_type where big_type_id = #{big_type_id} 
+	</select>
+	
+	<select id="queryAllMccType" resultMap="MccTypeMap">
+		select * from mcc_type
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from mcc_type where 1=1 
+		<if test="id != null and id != 0">
+			and type_id = #{id} 
+		</if>
+		<if test="type_name != null and type_name != ''">
+			and type_name = #{type_name}
+		</if>
+	</select>
+	
+	<delete id="deleteMccType" parameterType="int">
+		delete from mcc_type where type_id = #{id}
+	</delete>
+	
+	<delete id="deleteMccTypeByParentId" parameterType="int">
+		delete from mcc_type where big_type_id = #{big_type_id}
+	</delete>
+	
+	<update id="updateMccType" parameterType="MccType">
+		update mcc_type 
+		<set>
+			<if test="type_name != null and type_name != ''">
+				type_name = #{type_name},
+			</if>
+			<if test="big_type_id != null">
+				big_type_id = #{big_type_id},
+			</if>
+		</set>
+		where type_id = #{id}
+	</update>
+	<insert id="addMccType" parameterType="MccType">
+		<if test="type_name != null and type_name != '' and big_type_id != null ">
+			insert into mcc_type(type_name,big_type_id) value(#{type_name},#{big_type_id})
+		</if>
+	</insert>
+</mapper>

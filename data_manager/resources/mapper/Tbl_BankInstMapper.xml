@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BankInst">
+	<resultMap type="BankInst" id="BankInstMap">
+		<id property="bank_id" column="bank_id"/>
+		<result property="bank_name" column="bank_name"/>
+		<result property="parse_dz_file_class" column="parse_dz_file_class"/>
+		<result property="trade_dz_impl_class" column="trade_dz_impl_class"/>
+		<result property="dz_data_tableName" column="dz_data_tableName"/>
+		<result property="ftp_dz_file_path" column="ftp_dz_file_path"/>
+		<result property="dz_file_name_pattern" column="dz_file_name_pattern"/>
+		<result property="dz_file_path" column="dz_file_path"/>
+		<result property="original_data_tableName" column="original_data_tableName"/>
+		<result property="riqie_original_tableName" column="riqie_original_tableName"/>
+		<result property="tk_tableName" column="tk_tableName"/>
+		<result property="inst_entity_name" column="inst_entity_name"/>
+		<result property="bank_entity_name" column="bank_entity_name"/>
+		<result property="start_row" column="start_row"/>
+		<result property="isTk" column="isTk"/>
+		<result property="tk_type" column="tk_type"/>
+		<result property="tk_context" column="tk_context"/>
+		<result property="tk_column" column="tk_column"/>
+		<result property="bank_type" column="bank_type"/>
+		<result property="whether_outer_dz" column="whether_outer_dz"/>
+	</resultMap>
+	
+	<!-- 银行机构维护分页查询 -->
+	<select id="queryPageBankInst" parameterType="Map" resultMap="BankInstMap">
+		select * from bank_inst where 1 = 1
+		<if test="bank_name != null and bank_name != ''">
+			and bank_name LIKE CONCAT('%', '${bank_name}', '%')
+		</if>
+		<if test="bank_type != null and bank_type != ''">
+			and bank_type = #{bank_type}
+		</if>
+		order by bank_id asc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from bank_inst where 1 = 1
+		<if test="bank_name != null and bank_name != ''">
+			and bank_name LIKE CONCAT('%', '${bank_name}', '%')
+		</if>
+		<if test="bank_type != null and bank_type != ''">
+			and bank_type = #{bank_type}
+		</if>
+	</select>
+	
+	<!-- 根据机构名称查询银行机构信息 -->
+	<select id="queryBankInstByBankName" parameterType="String" resultMap="BankInstMap">
+		select * from bank_inst where bank_name = #{bankName}
+	</select>
+	
+	<!-- 添加银行机构 -->
+	<select id="addBankInst" parameterType="BankInst">
+		insert into bank_inst(
+			bank_name,
+			parse_dz_file_class,
+			dz_data_tableName,
+			ftp_dz_file_path,
+			dz_file_name_pattern,
+			dz_file_path,
+			start_row,
+			isTk,
+			tk_type,
+			tk_context,
+			tk_column,
+			original_data_tableName,
+			riqie_original_tableName,
+			inst_entity_name,
+			bank_entity_name,
+			bank_type,
+			whether_outer_dz,
+			trade_dz_impl_class,
+			tk_tableName
+		) values (
+			#{bank_name},
+			#{parse_dz_file_class},
+			#{dz_data_tableName},
+			#{ftp_dz_file_path},
+			#{dz_file_name_pattern},
+			#{dz_file_path},
+			#{start_row},
+			#{isTk},
+			#{tk_type},
+			#{tk_context},
+			#{tk_column},
+			#{original_data_tableName},
+			#{riqie_original_tableName},
+			#{inst_entity_name},
+			#{bank_entity_name},
+			#{bank_type},
+			#{whether_outer_dz},
+			#{trade_dz_impl_class},
+			#{tk_tableName}
+		)
+	</select>
+	
+	<!-- 修改银行机构 -->
+	<update id="updateBankInstByBankId" parameterType="Map">
+		update bank_inst 
+		<set>
+			<if test="bank_name != null and bank_name != ''">
+				bank_name = #{bank_name},
+			</if>
+			<if test="parse_dz_file_class != null and parse_dz_file_class != ''">
+				parse_dz_file_class = #{parse_dz_file_class},
+			</if>
+			<if test="trade_dz_impl_class != null and trade_dz_impl_class != ''">
+				trade_dz_impl_class = #{trade_dz_impl_class},
+			</if>
+			<if test="dz_data_tableName != null and dz_data_tableName != ''">
+				dz_data_tableName = #{dz_data_tableName},
+			</if>
+			<if test="ftp_dz_file_path != null and ftp_dz_file_path != ''">
+				ftp_dz_file_path = #{ftp_dz_file_path},
+			</if>
+			<if test="dz_file_name_pattern != null and dz_file_name_pattern != ''">
+				dz_file_name_pattern = #{dz_file_name_pattern},
+			</if>
+			<if test="dz_file_path != null and dz_file_path != ''">
+				dz_file_path = #{dz_file_path},
+			</if>
+			<if test="start_row != null and start_row != ''">
+				start_row = #{start_row},
+			</if>
+			<if test="isTk != null and isTk != ''">
+				isTk = #{isTk},
+			</if>
+			<if test="tk_type != null and tk_type != ''">
+				tk_type = #{tk_type},
+			</if>
+			<if test="tk_context != null and tk_context != ''">
+				tk_context = #{tk_context},
+			</if>
+			<if test="tk_column != null and tk_column != ''">
+				tk_column = #{tk_column},
+			</if>
+			<if test="original_data_tableName != null and original_data_tableName != ''">
+				original_data_tableName = #{original_data_tableName},
+			</if>
+			<if test="riqie_original_tableName != null and riqie_original_tableName != ''">
+				riqie_original_tableName = #{riqie_original_tableName},
+			</if>
+			<if test="tk_tableName != null and tk_tableName != ''">
+				tk_tableName = #{tk_tableName},
+			</if>
+			<if test="inst_entity_name != null and inst_entity_name != ''">
+				inst_entity_name = #{inst_entity_name},
+			</if>
+			<if test="bank_entity_name != null and bank_entity_name != ''">
+				bank_entity_name = #{bank_entity_name},
+			</if>
+			<if test="bank_type != null and bank_type != ''">
+				bank_type = #{bank_type},
+			</if>
+			<if test="whether_outer_dz != null and whether_outer_dz != ''">
+				whether_outer_dz = #{whether_outer_dz},
+			</if>
+		</set>
+		where bank_id = #{bank_id}
+	</update>
+	
+	<!-- 删除银行机构信息 -->
+	<delete id="deleteBankInstByBankId" parameterType="String">
+		delete from bank_inst where bank_id = #{bank_id}
+	</delete>
+	
+	<!-- 获取所有银行机构的机构ID和机构名称 -->
+	<select id="queryAllBankInst" resultMap="BankInstMap">
+		select * from bank_inst
+	</select>
+</mapper>

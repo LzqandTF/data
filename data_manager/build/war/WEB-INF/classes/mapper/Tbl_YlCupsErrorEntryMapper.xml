@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="YlCupsErrorEntry">
+	<resultMap type="YlCupsErrorEntry" id="YlCupsErrorEntryMap">
+		<id property="id" column="id" />
+		<result property="out_account" column="out_account" />
+		<result property="mer_name" column="mer_name" />
+		<result property="trade_time" column="trade_time" />
+		<result property="trade_result" column="trade_result" />
+		<result property="deduct_sys_reference" column="deduct_sys_reference" />
+		<result property="reqSysStance" column="reqSysStance" />
+		<result property="tradeAmount" column="tradeAmount" />
+		<result property="handling_id" column="handling_id" />
+		<result property="acqInstIdCode" column="acqInstIdCode" />
+		<result property="reason_code" column="reason_code" />
+		<result property="deductStlmDate" column="deductStlmDate" />
+		<result property="trade_category" column="trade_category" />
+		<result property="deduct_sys_id" column="deduct_sys_id" />
+		<result property="trade_source" column="trade_source" />
+		<result property="trade_status" column="trade_status" />
+		<result property="turnDown_remark" column="turnDown_remark" />
+		<result property="entering_time" column="entering_time" />
+		<result property="operator" column="operator" />
+		<result property="audit_operator" column="audit_operator"/>
+		<result property="commit_time" column="commit_time" />
+		<result property="process" column="process" />
+		<result property="tradeMsgType" column="tradeMsgType" />
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="inst_type" column="inst_type"/>
+	</resultMap>
+	
+	<!-- 银联差错录入  分页  查询未提交的数据 -->
+	<select id="queryPageNoCommitData" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select * from ylcups_error_entry where 1 = 1 and trade_status = 0
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account} 
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 银联差错录入  分页查询  查询总条数 -->
+	<select id="selectNoCommitCount" parameterType="Map" resultType="int">
+		select count(*) from ylcups_error_entry where 1 = 1 and trade_status = 0
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account} 
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageYlCupsErrorEntry" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select
+			id,
+			reqSysStance,
+			deductStlmDate,
+			tradeAmount,
+			trade_result,
+			trade_time,
+			out_account,
+			deduct_sys_reference,
+			process,
+			tradeMsgType,
+			handling_id,
+			trade_source,
+			bk_chk,
+			trade_status,
+			turnDown_remark
+		from ylcups_error_entry
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="entering_time != null and entering_time != ''">
+			and substring(trade_time,1,10) = #{entering_time}
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="trade_status != null">
+			and trade_status = #{trade_status}
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 银联差错查询数据下载 -->
+	<select id="queryDataForDownExcel" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select
+			id,
+			reqSysStance,
+			deductStlmDate,
+			tradeAmount,
+			trade_result,
+			trade_time,
+			out_account,
+			deduct_sys_reference,
+			process,
+			tradeMsgType,
+			handling_id,
+			trade_source,
+			bk_chk,
+			trade_status,
+			turnDown_remark
+		from ylcups_error_entry
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		order by trade_time desc
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from ylcups_error_entry 
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="entering_time != null and entering_time != ''">
+			and substring(trade_time,1,10) = #{entering_time}
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="trade_status != null">
+			and trade_status = #{trade_status}
+		</if>
+	</select>
+	
+	<!-- 查询银联差错需要审批的数据 -->
+	<select id="queryNeedApprovalData" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select  
+			id,
+			reqSysStance,
+			deductStlmDate,
+			out_account,
+			trade_time,
+			tradeAmount,
+			trade_result,
+			process,
+			tradeMsgType,
+			handling_id,
+			trade_source,
+			operator,
+			trade_status
+		from ylcups_error_entry where trade_status = 1
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account} 
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 银联差错审批  分页 查询待审核的总条数 -->
+	<select id="queryNeedApprovalCount" parameterType="Map" resultType="int">
+		select count(*) from ylcups_error_entry where trade_status = 1
+				<if test="deductStlmDate != null and deductStlmDate != ''">
+			and substring(deductStlmDate,1,10) = #{deductStlmDate}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="process != null and process != ''">
+			and process = #{process}
+		</if>
+		<if test="tradeMsgType != null and tradeMsgType != ''">
+			and tradeMsgType = #{tradeMsgType}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="out_account != null and out_account != ''">
+			and out_account = #{out_account} 
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+	</select>
+	
+	<select id="queryYlCupsErrorEntry" resultMap="YlCupsErrorEntryMap">
+		select id,dy_column_name,channel_column_name from ylcups_error_entry 
+	</select>
+	
+	<insert id="insertYlCupsErrorEntry" parameterType="DzColumnConf">
+		insert into ylcups_error_entry(dy_column_name,dy_column_property,channel_column_name,channel_column_property) 
+		values(#{dyColumnName},#{dyColumnProperty},#{channelColumnName},#{channelColumnProperty})
+	</insert>
+	
+	<delete id="deleteDzColumnConf" parameterType="int">
+		delete from ylcups_error_entry where id = #{id}
+	</delete>
+	<update id="updateYlCupsErrorEntry" parameterType="DzColumnConf">
+		update ylcups_error_entry
+			<set>
+				<if test="dyColumnName != null and dyColumnName != ''">
+					dy_column_name = #{dyColumnName},
+				</if>
+				<if test="dyColumnProperty != null and dyColumnProperty != ''">
+					dy_column_property = #{dyColumnProperty},
+				</if>
+				<if test="channelColumnName != null and channelColumnName != ''">
+					channel_column_name = #{channelColumnName},
+				</if>
+				<if test="channelColumnProperty != null and channelColumnProperty != ''">
+					channel_column_property = #{channelColumnProperty},
+				</if>
+			</set>
+			where id = #{id}
+	</update>
+	<select id="queryYlCupsErrorEntryList" resultMap="YlCupsErrorEntryMap">
+		select dy_column_name,dy_column_property from ylcups_error_entry 
+	</select>
+	
+	<!-- 无原交易录入 -->
+	<insert id="addOriginalData" parameterType="YlcupsErrorEntry">
+		insert into ylcups_error_entry(
+			id,
+			out_account,
+			trade_time,
+			trade_result,
+			reqSysStance,
+			tradeAmount,
+			handling_id,
+			acqInstIdCode,
+			reason_code,
+			deductStlmDate,
+			trade_category,
+			deduct_sys_id,
+			trade_source,
+			trade_status,
+			operator,
+			process,
+			tradeMsgType
+		) 
+		value(
+			#{id},
+			#{out_account},
+			#{trade_time},
+			0,
+			#{reqSysStance},
+			#{tradeAmount},
+			#{handling_id},
+			#{acqInstIdCode},
+			#{reason_code},
+			#{deductStlmDate},
+			#{trade_category},
+			#{deduct_sys_id},
+			"直接录入",
+			0,
+			#{operator},
+			#{process},
+			#{tradeMsgType}
+		)
+	</insert>
+	
+	<insert id="addYlcupsErrorEntry" parameterType="YlcupsErrorEntry">
+		insert into ylcups_error_entry(
+			id,
+			out_account,
+			mer_name,
+			trade_time,
+			trade_result,
+			deduct_sys_reference,
+			reqSysStance,
+			tradeAmount,
+			handling_id,
+			acqInstIdCode,
+			reason_code,
+			deductStlmDate,
+			trade_category,
+			deduct_sys_id,
+			trade_source,
+			trade_status,
+			<!-- turnDown_remark, -->
+			entering_time,
+			operator,
+			process,
+			tradeMsgType,
+			inst_type
+		) 
+		value(
+			#{id},
+			#{out_account},
+			#{mer_name},
+			#{trade_time},
+			#{trade_result},
+			#{deduct_sys_reference},
+			#{reqSysStance},
+			#{tradeAmount},
+			#{handling_id},
+			#{acqInstIdCode},
+			#{reason_code},
+			#{deductStlmDate},
+			#{trade_category},
+			#{deduct_sys_id},
+			#{trade_source},
+			#{trade_status},
+			<!-- #{turnDown_remark}, -->
+			#{entering_time},
+			#{operator},
+			#{process},
+			#{tradeMsgType},
+			#{inst_type}
+		)
+	</insert>
+	
+	<select id="queryCupsErrorInputDetail" resultMap="YlCupsErrorEntryMap">
+		select * from ylcups_error_entry where id = #{id}
+	</select>
+	
+	<!-- 提交 -->
+	<update id="updateTradeStatus" parameterType="Map">
+		update ylcups_error_entry set trade_status = 1, commit_time = #{commit_time}, operator = #{operator} where id = #{id}
+	</update>
+	
+	<!-- 通过 -->
+	<update id="updatePass" parameterType="Map">
+		update ylcups_error_entry set trade_status = 2, entering_time = #{entering_time}, audit_operator = #{audit_operator} where id = #{id}
+	</update>
+	
+	<!-- 驳回 -->
+	<update id="updateReject" parameterType="Map">
+		update ylcups_error_entry set trade_status = 3,audit_operator = #{audit_operator},turnDown_remark= #{turnDown_remark} where id = #{id}
+	</update>
+	
+	<update id="updateData" parameterType="YlCupsErrorEntry">
+		update ylcups_error_entry set
+			out_account = #{out_account},
+			reqSysStance = #{reqSysStance},
+			tradeAmount = #{tradeAmount},
+			handling_id = #{handling_id},
+			acqInstIdCode = #{acqInstIdCode},
+			reason_code = #{reason_code},
+			trade_time = #{trade_time},
+			deductStlmDate = #{deductStlmDate},
+			deduct_sys_id = #{deduct_sys_id},
+			entering_time = #{entering_time},
+			operator = #{operator},
+			process = #{process},
+			tradeMsgType = #{tradeMsgType} 
+		where id = #{id}
+	</update>
+	
+	<select id="queryDataByReqSysStance" parameterType="java.lang.String" resultType="int">
+		select count(*) from ylcups_error_entry where reqSysStance = #{reqSysStance}
+	</select>
+	
+	
+	<!-- 差错原始数据查询 -->
+	<select id="queryPageErrorOriginalData" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select * from ${error_original_data_tableName} 
+		where trade_status = 2
+		<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 电银差错对账明细查询数据下载 -->
+	<select id="queryDataDownExcel" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select * from ${error_original_data_tableName}
+		where trade_status = 2
+			<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		order by trade_time desc
+	</select>
+	
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from ${error_original_data_tableName}
+		where trade_status = 2
+		<if test="startTime != null and startTime != ''">
+			and substring(trade_time,1,10) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(trade_time,1,10) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+	</select>
+	
+	<!-- 查询明细 -->
+	<select id="queryDetail" parameterType="Map" resultMap="YlCupsErrorEntryMap">
+		select * from ${error_original_data_tableName} where id = #{id}
+	</select>
+</mapper>

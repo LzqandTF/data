@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DataInterfaceConfig">
+	<resultMap type="DataInterfaceConfig" id="DataInterfaceConfigMap">
+		<id property="id" column="id" />
+		<result property="object_name" column="object_name" />
+		<result property="object_id" column="object_id" />
+		<result property="value" column="value" />
+		<result property="operation_time" column="operation_time" />
+		<result property="name" column="name" />
+		<result property="status" column="status" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageDataInterfaceConfig" parameterType="Map" resultMap="DataInterfaceConfigMap">
+		select * from mer_tradecode where 1 = 1 
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id} 
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and value = #{merCode} 
+		</if>
+		<if test="tradeCode != null and tradeCode != ''">
+			and value = #{tradeCode} 
+		</if>
+		<if test="operation_time != null ">
+			and substring(operation_time,1,10) = #{operation_time} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from mer_tradecode where 1 = 1
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id} 
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and value = #{merCode} 
+		</if>
+		<if test="tradeCode != null and tradeCode != ''">
+			and value = #{tradeCode} 
+		</if>
+		<if test="operation_time != null ">
+			and substring(operation_time,1,10) = #{operation_time} 
+		</if>
+	</select>
+	
+	<insert id="insertDataInterfaceConfig" parameterType="DataInterfaceConfig">
+		insert into mer_tradecode(object_name,object_id,value,operation_time,name,status) 
+		values(#{object_name},#{object_id},#{value},#{operation_time},#{name},#{status})
+	</insert>
+	
+	<delete id="deleteDataInterfaceConfig" parameterType="int">
+		delete from mer_tradecode where id = #{id}
+	</delete>
+	<delete id="deleteDataInterfaceConfigByObjectId" parameterType="int">
+		delete from mer_tradecode where object_id = #{object_id}
+	</delete>
+	
+	<select id="queryDataInterfaceConfigByObjectId" parameterType="int" resultMap="DataInterfaceConfigMap">
+		select * from mer_tradecode where object_id = #{object_id}
+	</select>
+	
+	<select id="queryDataInterfaceConfigList" resultMap="DataInterfaceConfigMap">
+		select object_name,object_id,value,operation_time,name,status from mer_tradecode
+	</select>
+	
+	<select id="queryDataInterfaceConfigNumberByValueOrName" parameterType="Map" resultType="int" >
+		select count(*) from mer_tradecode where object_id = #{object_id} and value = #{value} 
+	</select>
+	
+</mapper>

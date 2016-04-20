@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RuleTemplate">
+	<resultMap type="RuleTemplate" id="RuleTemplateMap">
+		<id property="template_id" column="template_id" />
+		<result property="template_name" column="template_name" />
+		<result property="template_function" column="template_function" />
+		<result property="template_descripe" column="template_descripe" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageRuleTemplate" parameterType="Map" resultMap="RuleTemplateMap">
+		select * from rule_template where 1 = 1 
+		<if test="template_id != null and template_id != 0">
+			and template_id = #{template_id} 
+		</if>
+		<if test="template_name != null and template_name != ''">
+			and template_name = #{template_name} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from rule_template where 1 = 1
+		<if test="template_id != null and template_id != 0">
+			and template_id = #{template_id} 
+		</if>
+		<if test="template_name != null and template_name != ''">
+			and template_name = #{template_name} 
+		</if>
+	</select>
+	
+	<insert id="insertRuleTemplate" parameterType="RuleTemplate">
+		insert into rule_template(template_name,template_function,template_descripe) 
+		values(#{template_name},#{template_function},#{template_descripe})
+	</insert>
+	
+	<delete id="deleteRuleTemplate" parameterType="int">
+		delete from rule_template where template_id = #{template_id}
+	</delete>
+	<update id="updateRuleTemplate" parameterType="RuleTemplate">
+		update rule_template
+			<set>
+				<if test="template_name != null and template_name != ''">
+					template_name = #{template_name},
+				</if>
+				<if test="template_function != null and template_function != ''">
+					template_function = #{template_function},
+				</if>
+				<if test="template_descripe != null and template_descripe != ''">
+					template_descripe = #{template_descripe},
+				</if>
+			</set>
+			where template_id = #{template_id}
+	</update>
+	
+	<select id="queryRuleTemplateById" parameterType="int" resultMap="RuleTemplateMap">
+		select template_id,template_name,template_function,template_descripe from rule_template where template_id = #{template_id}
+	</select>
+	
+	<select id="queryRuleTemplateList" resultMap="RuleTemplateMap">
+		select template_id,template_name,template_function,template_descripe from rule_template
+	</select>
+</mapper>

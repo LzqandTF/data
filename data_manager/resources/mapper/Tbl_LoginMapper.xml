@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Login">
+	<resultMap type="Login" id="LoginMap">
+		<id property="id" column="id" />
+		<result property="loginName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="loginDate" column="login_date" />
+		<result property="status" column="status" />
+		<result property="chineseName" column="chineseName" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageLogin" parameterType="Map" resultMap="LoginMap">
+		select * from login 
+		where 1 = 1
+		<if test="chineseName != null and chineseName != '' ">
+			and chineseName = #{chineseName}
+		</if>	
+		<if test="userName != null and userName != ''">
+			and user_name like CONCAT('%',#{userName},'%')
+		</if> 
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageLoginCount" parameterType="Map" resultType="int">
+		select count(*) from login
+		where 1 = 1
+		<if test="chineseName != null and chineseName != '' ">
+			and chineseName = #{chineseName}
+		</if>		
+		<if test="userName != null and userName != ''">
+			and user_name like CONCAT('%',#{userName},'%')
+		</if> 
+	</select>
+	<!-- 登录验证 -->
+	<select id="queryLogin" parameterType="Map" resultMap="LoginMap">
+		select * from login 
+		where 1 = 1
+		<if test="userName != null and userName != ''">
+			and user_name = #{userName}
+		</if> 
+		<if test="password != null and password != ''">
+			and password = #{password}
+		</if>		 
+	</select>
+	<!-- 查询所有系统操作员 -->
+	<select id="queryAll" resultMap="LoginMap">
+		select id,user_name,chineseName from login
+	</select>
+	<!-- 查询所有为关闭的系统操作员 -->
+	<select id="queryAvailableUser" resultMap="LoginMap">
+		select id,user_name,chineseName from login where status = 1
+	</select>
+	<!-- 添加验证 -->
+	<select id="checkAddLogin" resultType="int" parameterType="String">
+		select count(*) from login 
+		where user_name = #{loginName}
+	</select>
+	<!-- 添加系统操作员 -->
+	<insert id="addLogin" parameterType="Login">
+		insert into login 
+		(user_name,password,status,chineseName)
+		values(#{loginName},#{password},1,#{chineseName})
+	</insert>
+	<!-- 修改系统操作员 -->
+	<update id="updateLogin" parameterType="Login">
+		update login set
+		<if test="loginName != null and loginName != ''">
+			user_name = #{loginName},
+		</if>
+		<if test="password != null and password != ''">
+			password = #{password},
+		</if>
+		<if test="loginDate != null and loginDate != ''">
+			login_date = #{loginDate},
+		</if>
+		<if test="chineseName != null and chineseName != ''">
+			chineseName = #{chineseName},
+		</if>
+		<if test="status != 0">
+			status = #{status},
+		</if>
+		id = #{id} where id = #{id}
+	</update>
+	<update id="updateChineseName" parameterType="Map" >
+		update login set chineseName = #{chineseName} where id = #{id}
+	</update>
+</mapper>

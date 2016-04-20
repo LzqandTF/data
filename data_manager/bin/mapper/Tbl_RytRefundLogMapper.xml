@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RytRefundLog">
+	<resultMap type="RytRefundLog" id="RytRefundLogMap">
+		<id property="id" column="id"/>
+		<result property="tseq" column="tseq"/>
+		<result property="mdate" column="mdate"/>
+		<result property="mid" column="mid"/>
+		<result property="oid" column="oid"/>
+		<result property="org_mdate" column="org_mdate"/>
+		<result property="org_oid" column="org_oid"/>
+		<result property="ref_amt" column="ref_amt"/>
+		<result property="sys_date" column="sys_date"/>
+		<result property="gate" column="gate"/>
+		<result property="card_no" column="card_no"/>
+		<result property="user_name" column="user_name"/>
+		<result property="req_date" column="req_date"/>
+		<result property="pro_date" column="pro_date"/>
+		<result property="ref_date" column="ref_date"/>
+		<result property="stat" column="stat"/>
+		<result property="reason" column="reason"/>
+		<result property="etro_reason" column="etro_reason"/>
+		<result property="refund_reason" column="refund_reason"/>
+		<result property="batch" column="batch"/>
+		<result property="bgRetUrl" column="bgRetUrl"/>
+		<result property="vstate" column="vstate"/>
+		<result property="author_type" column="author_type"/>
+		<result property="mer_fee" column="mer_fee"/>
+		<result property="bk_fee" column="bk_fee"/>
+		<result property="bk_fee_real" column="bk_fee_real"/>
+		<result property="org_amt" column="org_amt"/>
+		<result property="org_bk_seq" column="org_bk_seq"/>
+		<result property="gid" column="gid"/>
+		<result property="pre_amt" column="pre_amt"/>
+		<result property="org_pay_amt" column="org_pay_amt"/>
+		<result property="pre_amt1" column="pre_amt1"/>
+		<result property="mer_priv" column="mer_priv"/>
+		<result property="p1" column="p1"/>
+		<result property="online_refund_id" column="online_refund_id"/>
+		<result property="online_refund_state" column="online_refund_state"/>
+		<result property="online_refund_reason" column="online_refund_reason"/>
+		<result property="refund_type" column="refund_type"/>
+		<result property="sys_time" column="sys_time"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="whetherJs" column="whetherJs"/>
+		<result property="whetherValid" column="whetherValid"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="whetherRiqie" column="whetherRiqie"/>
+	</resultMap>
+	
+	<!-- 线上交易数据查询(退款交易数据查询) -->
+	<select id="queryPageRytRefundLog" parameterType="Map" resultMap="RytRefundLogMap">
+		select 
+			i.name_ as name,
+			r.id,
+			r.tseq,
+			r.mid,
+			r.oid,
+			r.ref_amt,
+			r.ref_date,
+			r.stat,
+			r.org_oid,
+			r.gid
+		from inst_info i inner join ${tkTableName} r on i.inst_id = r.gid AND i.inst_type = 1 
+		where 1 = 1
+		<if test="tseq != null and tseq != ''">
+			and id = #{tseq}
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid ${deduct_sys_id}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and ref_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and ref_date &lt;= #{endDate}
+		</if>
+		order by r.ref_date desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="map" resultType="int">
+		select count(*) from ${tkTableName} 
+		where 1 = 1
+		<if test="tseq != null and tseq != ''">
+			and id = #{tseq}
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid ${deduct_sys_id}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and ref_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and ref_date &lt;= #{endDate}
+		</if>
+	</select>
+	
+	<!-- 退款交易明细查询 -->
+	<select id="queryDetail" parameterType="Map" resultMap="RytRefundLogMap">
+		select * from ${tkTableName} where 1 = 1 
+		<if test="id != null and id != ''">
+			and id = #{id}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and tseq = #{tseq}
+		</if>
+	</select>
+	
+	<!-- 联机退款(查询) -->
+	<select id="queryPageOnlineTkDataLst" parameterType="Map" resultMap="RytRefundLogMap">
+		select 
+			r.id,
+			r.online_refund_id,
+			r.tseq, 
+			r.mid, 
+			m.mer_abbreviation as mer_abbreviation,
+			r.org_oid,
+			i.name_ as name,
+			b.bank_name as bankName,
+			r.ref_amt,
+			r.mer_fee,
+			r.sys_date,
+			r.req_date,
+			r.online_refund_state,
+			r.reason,
+			r.refund_reason
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		LEFT JOIN inst_info i ON r.gid = i.inst_id left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and r.stat = 1 and r.refund_type = 1
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					and r.req_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and r.pro_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="onlineRefundState != null and onlineRefundState != ''">
+			<choose>
+				<when test="onlineRefundState == 3">
+					and r.online_refund_state in (3, 4)
+				</when>
+				<otherwise>
+					and r.online_refund_state = #{onlineRefundState}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="onlineRefundId != null and onlineRefundId != ''">
+			and r.id = #{onlineRefundId}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryOnlineTkDataCount" parameterType="Map" resultType="int">
+		select count(*) from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		LEFT JOIN inst_info i ON r.gid = i.inst_id
+		where i.inst_type = 1 and r.stat = 1 and r.refund_type = 1
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					and r.req_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and r.pro_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="onlineRefundState != null and onlineRefundState != ''">
+			<choose>
+				<when test="onlineRefundState == 3">
+					and r.online_refund_state in (3, 4)
+				</when>
+				<otherwise>
+					and r.online_refund_state = #{onlineRefundState}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="onlineRefundId != null and onlineRefundId != ''">
+			and r.id = #{onlineRefundId}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<!-- 联机退款(下载) -->
+	<select id="queryOnlineTkDataLstForExcel" parameterType="Map" resultMap="RytRefundLogMap">
+		select 
+			r.id,
+			r.tseq, 
+			r.mid, 
+			m.mer_abbreviation as mer_abbreviation,
+			r.org_oid,
+			i.name_ as name,
+			b.bank_name as bankName,
+			r.ref_amt,
+			r.mer_fee,
+			r.sys_date,
+			r.req_date,
+			r.online_refund_state,
+			r.reason,
+			r.refund_reason
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		LEFT JOIN inst_info i ON r.gid = i.inst_id left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and r.stat = 1 and r.refund_type = 1
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					and r.req_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and r.pro_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="onlineRefundState != null and onlineRefundState != ''">
+			and r.online_refund_state = #{onlineRefundState}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="onlineRefundId != null and onlineRefundId != ''">
+			and r.id = #{onlineRefundId}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<!-- 联机退款金额统计 -->
+	<select id="queryOnlineTkTotalMoney" parameterType="Map" resultMap="RytRefundLogMap">
+		select sum(r.ref_amt) as ref_amt , sum(r.mer_fee) as mer_fee 
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		LEFT JOIN inst_info i ON r.gid = i.inst_id left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and r.stat = 1 and r.refund_type = 1
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					and r.req_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and r.pro_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="onlineRefundState != null and onlineRefundState != ''">
+			and r.online_refund_state = #{onlineRefundState}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="onlineRefundId != null and onlineRefundId != ''">
+			and r.id = #{onlineRefundId}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<!-- 退款审核查询 -->
+	<select id="queryPageTkCheckDataLst" parameterType="Map" resultMap="RytRefundLogMap">
+		select 
+			r.id,
+			r.online_refund_id,
+			r.tseq, 
+			r.mid, 
+			m.mer_abbreviation, 
+			r.org_oid, 
+			i.name_ as name, 
+			b.bank_name as bankName,
+			r.ref_amt, 
+			r.mer_fee, 
+			r.stat, 
+			r.vstate, 
+			r.pro_date, 
+			r.ref_date 
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code LEFT JOIN inst_info i ON r.gid = i.inst_id  
+		left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and (r.stat = 2 or r.stat = 3)
+		<if test="startTime != null and startTime != ''">
+			and r.pro_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="refundType != null and refundType != ''">
+			and r.refund_type = #{refundType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="vState != null and vState != ''">
+			and r.vstate = #{vState}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryTkCheckDataCount" parameterType="Map" resultType="int">
+		select count(*) from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		LEFT JOIN inst_info i ON r.gid = i.inst_id where i.inst_type = 1 and (r.stat = 2 or r.stat = 3)
+		<if test="startTime != null and startTime != ''">
+			and r.pro_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="refundType != null and refundType != ''">
+			and r.refund_type = #{refundType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="vState != null and vState != ''">
+			and r.vstate = #{vState}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<!-- 退款审核(下载) -->
+	<select id="queryTkCheckDataLstForExcel" parameterType="Map" resultMap="RytRefundLogMap">
+		select 
+			r.id,
+			r.online_refund_id,
+			r.tseq, 
+			r.mid, 
+			r.org_oid, 
+			i.name_ as name, 
+			b.bank_name as bankName,
+			r.sys_date,
+			r.org_amt,
+			r.org_pay_amt,
+			r.ref_amt, 
+			r.mer_fee, 
+			r.pre_amt1,
+			r.ref_date 
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code LEFT JOIN inst_info i ON r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and (r.stat = 2 or r.stat = 3)
+		<if test="startTime != null and startTime != ''">
+			and r.pro_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="refundType != null and refundType != ''">
+			and r.refund_type = #{refundType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="vState != null and vState != ''">
+			and r.vstate = #{vState}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<select id="queryTkMoney" parameterType="Map" resultMap="RytRefundLogMap">
+		select sum(r.ref_amt) as ref_amt , sum(r.mer_fee) as mer_fee 
+		from refund_log r LEFT JOIN mer_basic m ON r.mid = m.mer_code LEFT JOIN inst_info i ON r.gid = i.inst_id  
+		left join bank_inst b on i.bank_id = b.bank_id
+		where i.inst_type = 1 and (r.stat = 2 or r.stat = 3)
+		<if test="startTime != null and startTime != ''">
+			and r.pro_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="refundType != null and refundType != ''">
+			and r.refund_type = #{refundType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and r.mid = #{merCode}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="merState != null and merState != ''">
+			and m.mer_state = #{merState}
+		</if>
+		<if test="vState != null and vState != ''">
+			and r.vstate = #{vState}
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+	</select>
+	
+	<!-- 退款查询sql -->
+	<select id="queryPageRefundData" parameterType="Map" resultMap="RytRefundLogMap">
+		select r.id,r.tseq,r.mid,m.mer_abbreviation as mer_abbreviation,r.org_oid,i.name_ as name,b.bank_name as bankName,r.ref_amt,r.mer_fee,r.req_date,r.stat from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		left join mer_basic m on r.mid = m.mer_code
+		where i.inst_type = 1 
+		<if test="tk_date != null and tk_date != '' ">
+			<if test="tk_date == 0">
+				and r.mdate between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 3">
+				and r.ref_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null and mer_status != ''">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="refund_type != null and refund_type != ''">
+			and r.refund_type = #{refund_type}
+		</if>
+		order by r.ref_date desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageCountRedundData" parameterType="Map" resultType="int">
+		select count(*) from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join mer_basic m on r.mid = m.mer_code
+		where i.inst_type = 1 
+		<if test="tk_date != null and tk_date != '' ">
+			<if test="tk_date == 0">
+				and r.mdate between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 3">
+				and r.ref_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null and mer_status != ''">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="refund_type != null and refund_type != ''">
+			and r.refund_type = #{refund_type}
+		</if>
+	</select>
+	<select id="queryRedundDataDetail" parameterType="String" resultMap="RytRefundLogMap">
+		select r.id,r.tseq,r.mid,r.oid,r.org_oid,r.mdate,i.name_ as name,b.bank_name as bankName,r.ref_amt,r.mer_fee,r.org_bk_seq,r.req_date,r.stat,r.org_amt
+		,r.org_pay_amt,r.pre_amt1,r.pro_date,r.ref_date,r.etro_reason,r.reason,r.refund_type from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		where r.id = #{id}
+	</select>
+	<select id="queryPageRefundAmount" parameterType="Map" resultMap="RytRefundLogMap">
+		select sum(r.ref_amt) as ref_amt , sum(r.mer_fee) as mer_fee from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join mer_basic m on r.mid = m.mer_code
+		where i.inst_type = 1 
+		<if test="tk_date != null and tk_date != '' ">
+			<if test="tk_date == 0">
+				and r.mdate between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 3">
+				and r.ref_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null and mer_status != ''">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="refund_type != null and refund_type != ''">
+			and r.refund_type = #{refund_type}
+		</if>
+	</select>
+	<select id="queryRedundDataList" parameterType="Map" resultMap="RytRefundLogMap">
+		select r.id,r.tseq,r.mid,m.mer_abbreviation as mer_abbreviation,r.org_oid,i.name_ as name,b.bank_name as bankName,r.ref_amt,r.mer_fee,r.req_date,r.stat,r.refund_type,r.org_amt,r.org_pay_amt,r.sys_date from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		left join mer_basic m on r.mid = m.mer_code
+		where i.inst_type = 1 
+		<if test="tk_date != null and tk_date != ''">
+			<if test="tk_date == 0">
+				and r.mdate between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 3">
+				and r.ref_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="gate != null and gate != 0">
+			and r.gid = #{gate}
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null and mer_status != ''">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="refund_type != null and refund_type != ''">
+			and r.refund_type = #{refund_type}
+		</if>
+		order by r.ref_date desc 
+	</select>
+	
+	<!--退款经办查询sql  -->	
+	<select id="queryPageRedundHandleData" parameterType="Map" resultMap="RytRefundLogMap">
+		select r.id,r.tseq,r.mid,m.mer_abbreviation as mer_abbreviation,r.org_oid,i.name_ as name,b.bank_name as bankName,r.ref_amt,r.mer_fee,r.req_date,r.stat,r.sys_date,r.refund_reason from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		left join mer_basic m on r.mid = m.mer_code
+		where r.refund_type != 1 and r.stat in (1,2) AND i.inst_type = 1  
+		<if test="tk_date != null and tk_date != ''">
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="id != null and id != 0">
+			and r.id = #{id}
+		</if>
+		order by r.ref_date desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageCountRedundHandleData" parameterType="Map" resultType="int">
+		select count(*) from refund_log r
+		left join inst_info i on r.gid = i.inst_id 
+		left join mer_basic m on r.mid = m.mer_code
+		where r.refund_type != 1 and r.stat in (1,2) AND i.inst_type = 1 
+		<if test="tk_date != null and tk_date != ''">
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="id != null and id != 0">
+			and r.id = #{id}
+		</if>
+	</select>
+	<select id="queryPageRedundHandleAmount" parameterType="Map" resultMap="RytRefundLogMap">
+		select sum(r.ref_amt) as ref_amt,sum(r.mer_fee) as mer_fee from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join mer_basic m on r.mid = m.mer_code
+		where r.refund_type != 1 and r.stat in (1,2) AND i.inst_type = 1  
+		<if test="tk_date != null and tk_date != ''">
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="id != null and id != 0">
+			and r.id = #{id}
+		</if>
+	</select>
+	<select id="queryRedundHandleDataList" parameterType="Map" resultMap="RytRefundLogMap">
+		select r.id,r.tseq,r.mid,m.mer_abbreviation as mer_abbreviation,r.org_oid,i.name_ as name,b.bank_name as bankName,r.ref_amt,r.mer_fee,r.req_date,r.stat,r.sys_date,r.refund_reason,r.org_amt,r.org_pay_amt,r.pre_amt1,r.pro_date from refund_log r 
+		left join inst_info i on r.gid = i.inst_id 
+		left join bank_inst b on i.bank_id = b.bank_id
+		left join mer_basic m on r.mid = m.mer_code
+		where r.refund_type != 1 and r.stat in (1,2) AND i.inst_type = 1 
+		<if test="tk_date != null and tk_date != ''">
+			<if test="tk_date == 1">
+				and r.req_date between #{startTime} and #{endTime}
+			</if>
+			<if test="tk_date == 2">
+				and r.pro_date between #{startTime} and #{endTime}
+			</if>
+		</if>
+		<if test="stat != null and stat != 0">
+			and r.stat = #{stat}
+		</if>
+		<if test="mid != null and mid != 0">
+			and r.mid = #{mid}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			and r.tseq = #{tseq}
+		</if>
+		<if test="mer_status != null">
+			and m.mer_state = #{mer_status}
+		</if>
+		<if test="id != null and id != 0">
+			and r.id = #{id}
+		</if>
+		order by r.ref_date desc 
+	</select>
+	
+	<!-- 修改退款数据为撤销退款，并标明撤销退款原因 -->
+	<update id="updateRefundDataTkFail" parameterType="Map">
+		update refund_log set stat=6,etro_reason=#{etro_reason} where id = #{id}
+	</update>
+	
+	<!-- 退款经办操作，查询商户号、原交易日期、退款金额及退还商户手续费 -->
+	<select id="queryRefundLogDataInfoById" parameterType="String" resultMap="RytRefundLogMap">
+		select id,mid,sys_date,ref_amt,mer_fee,gate,gid, online_refund_state,stat from refund_log where id in ${ids}		
+	</select>
+	
+	<!-- 修改退看数据为经办成功，图款类型修改为人工经办 -->
+	<update id="updateRefundDataHandelSucess" parameterType="Map">
+		update refund_log set refund_type=0,stat=2,pro_date=#{pro_date} where id = #{id}
+	</update>
+	
+	<!-- 联机退款 -->
+	<update id="updateRefundLogDataToOnlineTk" parameterType="Map">
+		update refund_log set stat = 2, vstate = 1, pro_date = #{pro_date}, ref_date = #{ref_date} where id = #{id}
+	</update>
+	
+	<!-- 退款撤销 -->
+	<update id="updateRefundLogDataToChexiaoById" parameterType="Map">
+		update refund_log set stat = 6 where id in ${id}
+	</update>
+	
+	<!-- 人工经办 -->
+	<update id="updateRefundLogDataToRGJB" parameterType="Map">
+		update refund_log set refund_type = 2, stat = #{stat}, pro_date = #{pro_date} where id = #{id}
+	</update>
+	
+	<!-- 审核完成 -->
+	<update id="updateRefundLogDataToCheckedById" parameterType="Map">
+		update refund_log set vstate = 1, ref_date = #{ref_date} where id in ${id}
+	</update>
+	<select id="queryDataById" parameterType="Map" resultMap="RytRefundLogMap">
+		select * from refund_log where id in ${id}	
+	</select>
+</mapper>

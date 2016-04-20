@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FtpUploadRecord">
+	<resultMap type="FtpUploadRecord" id="FtpUploadRecordMap">
+		<id property="id" column="id" />
+		<result property="deduct_stlm_date" column="deduct_stlm_date" />
+		<result property="object_id" column="object_id" />
+		<result property="object_name" column="object_name" />
+		<result property="upload_content" column="upload_content" />
+		<result property="generate_time" column="generate_time" />
+		<result property="upload_status" column="upload_status" />
+	</resultMap>
+	
+	<!-- 分页查询银联差错对账文件数据 -->
+	<select id="queryPageFtpUploadRecord" parameterType="Map" resultMap="FtpUploadRecordMap">
+		select * from ftp_upload_record
+		where 1=1
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id}
+		</if>
+		<if test="upload_status != null and upload_status != 0">
+			and upload_status = #{upload_status}
+		</if>
+		order by id desc limit #{startRow},#{limit}
+	</select>
+	
+	<select id="selectCount" parameterType="Map" resultType="int">
+		select count(*) from ftp_upload_record
+		where 1=1
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id}
+		</if>
+		<if test="upload_status != null and upload_status != 0">
+			and upload_status = #{upload_status}
+		</if>
+	</select>
+	<select id="queryFtpUploadRecordById" parameterType="int" resultMap="FtpUploadRecordMap">
+		select * from ftp_upload_record where id = #{id }
+	</select>
+	<insert id="insertFtpUploadRecord" parameterType="FtpUploadRecord">
+		insert into ftp_upload_record(id,deduct_stlm_date,object_id,object_name,upload_content,generate_time,upload_status) 
+		values(#{id},#{deduct_stlm_date},#{object_id},#{object_name},#{upload_content},#{generate_time},#{upload_status})
+	</insert>
+	
+	<delete id="deleteFtpUploadRecord" parameterType="int">
+		delete from ftp_upload_record where id = #{id}
+	</delete>
+	<update id="updateFtpUploadRecord" parameterType="FtpUploadRecord">
+		update ftp_upload_record
+			<set>
+				<if test="upload_status != null and upload_status != 0">
+					upload_status = #{upload_status},
+				</if>
+				<if test="upload_content != null and upload_content != ''">
+					upload_content = #{upload_content},
+				</if>
+				<if test="generate_time != null">
+					generate_time = #{generate_time},
+				</if>
+			</set>
+			where object_id = #{object_id} and deduct_stlm_date = #{deduct_stlm_date}
+	</update>
+	<select id="queryFtpUploadRecordByObjectIdAndDate" parameterType="Map" resultMap="FtpUploadRecordMap">
+		select * from ftp_upload_record where object_id = #{object_id} and deduct_stlm_date = #{deduct_stlm_date}
+	</select>
+</mapper>

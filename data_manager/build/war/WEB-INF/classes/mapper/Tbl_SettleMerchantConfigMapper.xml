@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SettleMerchantConfig">
+	<resultMap type="SettleMerchantConfig" id="SettleMerchantConfigMap">
+		<id property="settle_mer_code" column="settle_mer_code" />
+		<result property="settle_mer_name" column="settle_mer_name" />
+		<result property="operate_time" column="operate_time" />
+		<result property="user_id" column="user_id" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageSettleMerchantConfig" parameterType="Map" resultMap="SettleMerchantConfigMap">
+		select *,(@rownum:=@rownum+1) as rownum from settle_merchant_config,(SELECT @rownum := 0) r where 1 = 1 
+		<if test="settle_mer_code != null and settle_mer_code != ''">
+			and settle_mer_code = #{settle_mer_code} 
+		</if>
+		<if test="settle_mer_name != null and settle_mer_name != ''">
+			and settle_mer_name = #{settle_mer_name} 
+		</if>
+		<if test="operate_time != null and operate_time != ''">
+			and operate_time = #{operate_time} 
+		</if>
+		<if test="user_id != null and user_id != ''">
+			and user_id = #{user_id} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from settle_merchant_config where 1 = 1
+		<if test="settle_mer_code != null and settle_mer_code != ''">
+			and settle_mer_code = #{settle_mer_code} 
+		</if>
+		<if test="settle_mer_name != null and settle_mer_name != ''">
+			and settle_mer_name = #{settle_mer_name} 
+		</if>
+		<if test="operate_time != null and operate_time != ''">
+			and operate_time = #{operate_time} 
+		</if>
+		<if test="user_id != null and user_id != ''">
+			and user_id = #{user_id} 
+		</if>
+	</select>
+	
+	<insert id="insertSettleMerchantConfig" parameterType="SettleMerchantConfig">
+		insert into settle_merchant_config(settle_mer_code,settle_mer_name,operate_time,user_id) 
+		values(#{settle_mer_code},#{settle_mer_name},#{operate_time},#{user_id})
+	</insert>
+	
+	<delete id="deleteSettleMerchantConfig" parameterType="string">
+		delete from settle_merchant_config where settle_mer_code = #{settle_mer_code}
+	</delete>
+
+	
+	<select id="queryConfigCountBySettleMerCode" parameterType="string" resultType="int">
+		select count(*) from settle_merchant_config where settle_mer_code = #{settle_mer_code}
+	</select>
+	
+</mapper>

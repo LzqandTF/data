@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Email_Police">
+	<resultMap type="EmailPolice" id="EmailPoliceMap">
+		<id property="email_id" column="email_id"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="email_theme" column="email_theme"/>
+		<result property="email_content" column="email_content"/>
+		<result property="phone_content" column="phone_content"/>
+		<result property="data_type" column="data_type"/>
+		<result property="email_remark" column="email_remark"/>
+		<result property="phone_remark" column="phone_remark"/>
+		<result property="police_id" column="police_id"/>
+		<result property="police_name" column="police_name"/>
+	</resultMap>
+	
+	<!-- 查询 -->
+	<select id="queryPageEmailPolice" parameterType="Map" resultMap="EmailPoliceMap">
+		select 
+			e.police_id, 
+			p.police_name,
+			GROUP_CONCAT(DISTINCT(e.data_type) separator '') as data_type
+		from email_police e left join police_type p on e.police_id = p.police_id 
+		where 1 = 1 
+		<if test="police_id != null and police_id != ''">
+			and e.police_id = #{police_id}
+		</if>
+		group by police_id 
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from email_police where 1 = 1
+		<if test="police_id != null and police_id != ''">
+			and police_id = #{police_id}
+		</if>
+	</select>
+	
+	<!-- 增加 -->
+	<insert id="addEmailPolice" parameterType="EmailPolice">
+		insert into email_police(
+			email,
+			phone,
+			email_theme,
+			email_content,
+			phone_content,
+			data_type,
+			email_remark,
+			phone_remark,
+			police_id
+		) values (
+			#{email},
+			#{phone},
+			#{email_theme},
+			#{email_content},
+			#{phone_content},
+			#{data_type},
+			#{email_remark},
+			#{phone_remark},
+			#{police_id}
+		)
+	</insert>
+
+	<!-- 修改  -->
+	<update id="updateEmailPolice" parameterType="EmailPolice">
+		update email_police 
+		<set>
+			<if test="email != null and email != ''">
+				email = #{email},
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone},
+			</if>
+			<if test="email_theme != null and email_theme != ''">
+				email_theme = #{email_theme},
+			</if>
+			<if test="email_content != null and email_content != ''">
+				email_content = #{email_content},
+			</if>
+			<if test="phone_content != null and phone_content != ''">
+				phone_content = #{phone_content},
+			</if>
+			<if test="data_type != null and data_type != ''">
+				data_type = #{data_type},
+			</if>
+			<if test="email_remark != null and email_remark != ''">
+				email_remark = #{email_remark},
+			</if>
+			<if test="phone_remark != null and phone_remark != ''">
+				phone_remark = #{phone_remark},
+			</if>
+			<if test="police_id != null and police_id != ''">
+				police_id = #{police_id}
+			</if>
+		</set>
+		where email_id = #{email_id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteEmailPolice" parameterType="int">
+		delete from email_police where email_id = #{email_id}
+	</delete>
+	
+	<!-- 根据ID查询详情 -->
+	<select id="queryAllByPoliceId" parameterType="int" resultMap="EmailPoliceMap">
+		select 
+			e.email_id,
+			e.email,
+			e.phone,
+			e.email_theme,
+			e.email_content,
+			e.phone_content,
+			e.data_type,
+			e.police_id,
+			e.email_remark,
+			e.phone_remark,
+			p.police_name
+		from email_police e left join police_type p on e.police_id = p.police_id where e.police_id = #{police_id}
+	</select>
+	
+	<!-- 通过邮件地址和手机号码查询数据 -->
+	<select id="queryDataByEmailOrPhone" parameterType="map" resultType="int">
+		select count(*) from email_police where (email = #{email} or phone = #{phone}) and police_id = #{police_id}
+	</select>
+</mapper>

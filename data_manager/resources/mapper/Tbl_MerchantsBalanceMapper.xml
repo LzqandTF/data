@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MerchantsBalance">
+	<resultMap type="MerchantsBalance" id="MerchantsBalance">
+		<id property="id" column="id"/>
+		<result property="mer_code" column="mer_code"/>
+		<result property="mer_category" column="mer_category"/>
+		<result property="mer_balance" column="mer_balance"/>
+		<result property="mer_state" column="mer_state"/>
+		<result property="merName" column="merName"/>
+	</resultMap>
+	
+	<!-- 分页查询商户信息 -->
+	<select id="queryPageMerchantsBalanceList" parameterType="Map" resultMap="MerchantsBalance">
+		select mer.mer_code, sic.mer_abbreviation as merName,mer.mer_balance,
+			   mer.mer_state from mer_balance mer,mer_basic sic
+		where mer.mer_code=sic.mer_code
+		<if test="merCode !=null and  merCode !=''">
+			and mer.mer_code = #{merCode}
+		</if>
+		<if test="merName !=null and merName !=''">
+			and sic.mer_abbreviation = #{merName}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from  mer_balance mer,mer_basic sic
+		where mer.mer_code=sic.mer_code
+		<if test="merCode !=null and  merCode !=''">
+			and mer.mer_code = #{merCode}
+		</if>
+		<if test="merName !=null and merName !=''">
+			and sic.mer_abbreviation = #{merName}
+		</if>
+	</select>
+	
+	<select id="queryMerBalanceByMerCode" parameterType="String" resultMap="MerchantsBalance">
+		select mer_code,mer_balance from mer_balance where mer_code = #{mer_code} 
+	</select>
+	
+	<insert id="addMerchantsBalance" parameterType="MerchantsBalance">
+		insert into mer_balance(mer_code,mer_balance,mer_category,mer_state) values(#{mer_code},#{mer_balance},#{mer_category},#{mer_state})
+	</insert>
+	
+	<update id="updateMerchantsBalance" parameterType="MerchantsBalance">
+		update mer_balance
+		<set>
+			<if test="mer_balance != null and mer_balance != ''">
+				mer_balance = #{mer_balance}
+			</if>
+		</set>
+		where mer_code = #{mer_code}
+	</update>
+	
+</mapper>

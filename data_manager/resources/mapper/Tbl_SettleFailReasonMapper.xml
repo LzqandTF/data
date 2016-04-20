@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SettleFailReason">
+	<resultMap type="SettleFailReason" id="SettleFailReasonMap">
+		<id property="reason_id" column="reason_id" />
+		<result property="reason" column="reason" />
+	</resultMap>
+	
+	<!-- 添加结算发起失败原因配置 -->
+	<insert id="addSettleFailReason" parameterType="SettleFailReason">
+		insert into settle_fail_reason 
+		(reason)
+		values(#{reason})
+	</insert>
+	
+	<!-- 修改结算发起失败原因配置 -->
+	<update id="updateSettleFailReason" parameterType="SettleFailReason">
+		update settle_fail_reason
+		<set>
+			<if test="reason != null and reason != ''">
+				reason = #{reason},
+			</if>
+		</set>
+		where reason_id = #{reason_id}
+	</update>
+	
+	<!-- 删除结算发起失败原因配置 -->
+	<delete id="deleteSettleFailReason" parameterType="int">
+		delete from settle_fail_reason where reason_id = #{reason_id}
+	</delete>
+	
+	<!-- 分页查询 结算发起失败原因-->
+	<select id="queryPageSettleFailReason" parameterType="Map" resultMap="SettleFailReasonMap">
+		select * from settle_fail_reason 
+		where 1 = 1
+		<if test="reason_id != null and reason_id != 0">
+			and reason_id = #{reason_id}
+		</if>	
+		<if test="reason != null and reason != ''">
+			and reason = #{reason}
+		</if>
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageSettleFailReasonCount" parameterType="Map" resultType="int">
+		select count(*) from settle_fail_reason
+		where 1 = 1
+		<if test="reason_id != null and reason_id != 0">
+			and reason_id = #{reason_id}
+		</if>	
+		<if test="reason != null and reason != ''">
+			and reason = #{reason}
+		</if>	
+	</select>
+	
+	<!-- 通过主键ID查询结算发起失败原因对象 -->
+	<select id="querySettleFailReasonById" parameterType="int" resultMap="SettleFailReasonMap">
+		select * from settle_fail_reason where reason_id = #{reason_id}
+	</select>
+	
+	<select id="getSettleFailReasonList" resultMap="SettleFailReasonMap">
+		select * from settle_fail_reason 
+	</select>
+</mapper>

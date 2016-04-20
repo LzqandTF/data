@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Duizhang_Data">
+	<resultMap type="DuizhangData" id="DuizhangDataMap">
+		<id property="id" column="id"/>
+		<result property="acqInstIdCode" column="acqInstIdCode"/>
+		<result property="fwdInstIdCode" column="fwdInstIdCode"/>
+		<result property="reqSysStance" column="reqSysStance"/>
+		<result property="reqTime" column="reqTime"/>
+		<result property="tradeTime" column="tradeTime"/>
+		<result property="outAccount" column="outAccount"/>
+		<result property="tradeAmount" column="tradeAmount"/>
+		<result property="portionAmount" column="portionAmount"/>
+		<result property="tradeFee" column="tradeFee"/>
+		<result property="msgType" column="msgType"/>
+		<result property="process" column="process"/>
+		<result property="merType" column="merType"/>
+		<result property="termId" column="termId"/>
+		<result property="merCode" column="merCode"/>
+		<result property="deductSysReference" column="deductSysReference"/>
+		<result property="reqType" column="reqType"/>
+		<result property="authorizationCode" column="authorizationCode"/>
+		<result property="rcvgInstIdCode" column="rcvgInstIdCode"/>
+		<result property="origDataStance" column="origDataStance"/>
+		<result property="deductSysResponse" column="deductSysResponse"/>
+		<result property="reqInputType" column="reqInputType"/>
+		<result property="acceptorReceiveFee" column="acceptorReceiveFee"/>
+		<result property="acceptorPayFee" column="acceptorPayFee"/>
+		<result property="throughServiceFee" column="throughServiceFee"/>
+		<result property="convertShow" column="convertShow"/>
+		<result property="cardNumber" column="cardNumber"/>
+		<result property="termReadAbility" column="termReadAbility"/>
+		<result property="idConditionCode" column="idConditionCode"/>
+		<result property="origDataTime" column="origDataTime"/>
+		<result property="issuingBankCode" column="issuingBankCode"/>
+		<result property="tradeAdress" column="tradeAdress"/>
+		<result property="terminalType" column="terminalType"/>
+		<result property="eci" column="eci"/>
+		<result property="byStagesFee" column="byStagesFee"/>
+		<result property="otherInfo" column="otherInfo"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="dz_file_name" column="dz_file_name"/>
+		<result property="inst_name" column="inst_name"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		
+		<!-- 线上网关对账文件表中特有的字段 -->
+		<result property="orderId" column="orderId"/>
+		<result property="trade_code" column="trade_code"/>
+	</resultMap>
+	
+	<!-- 分页查询原始交易数据 -->
+	<select id="queryPageDuizhangData" parameterType="Map" resultMap="DuizhangDataMap">
+		 select
+			id,
+			deduct_stlm_date,
+			reqSysStance,
+			tradeAmount,
+			outAccount,
+			deductSysReference,
+			bk_chk
+		from ${dz_data_tableName}
+		where bk_chk = 0
+		<if test="startTime != null and startTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{startTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{startTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{endTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{endTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and substring(deduct_stlm_date,1,8) = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+	 		and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="outAccount != null and outAccount != ''">
+			and outAccount = #{outAccount}
+		</if>
+		<if test="instType == 1">
+			<if test="deductSysReference != null and deductSysReference != ''">
+				and deductSysReference = #{deductSysReference}
+			</if>
+		</if>
+		order by deduct_stlm_date desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from ${dz_data_tableName} 
+		where bk_chk = 0 
+		<if test="startTime != null and startTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{startTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{startTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{endTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{endTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and substring(deduct_stlm_date,1,8) = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+	 		and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="outAccount != null and outAccount != ''">
+			and outAccount = #{outAccount}
+		</if>
+		<if test="instType == 1">
+			<if test="deductSysReference != null and deductSysReference != ''">
+				and deductSysReference = #{deductSysReference}
+			</if>
+		</if>
+	</select>
+	
+	<select id="queryDetail" parameterType="Map" resultMap="DuizhangDataMap">
+		select * from ${dz_data_tableName} where id = #{id}
+	</select>
+	
+	<!-- 线下差错对账结果笔数统计 -->
+	<parameterMap type="map" id="homeVO">   
+	   <parameter property="original_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="dz_tradeTime" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="original_table_name" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="duizhang_table_name" jdbcType="VARCHAR" mode="IN"/>
+	   <parameter property="deduct_sys_id" jdbcType="INTEGER" mode="IN"/>
+	   <parameter property="flag" jdbcType="INTEGER" mode="IN"/>  
+	   <parameter property="original_trade_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="qingkuan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="daiji_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="tuihuo_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="again_qingkuan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="twice_duidan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="exception_changkuan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="error_channel_count" jdbcType="INTEGER" mode="OUT"/>    
+ 	</parameterMap>
+	<select id="queryErrorResult" statementType="CALLABLE" parameterMap="homeVO">
+		{CALL proce_error_duizhang_result_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+	
+	<!-- 线上差错对账结果笔数统计 -->
+	<parameterMap type="map" id="upmpErrorResult">   
+	   <parameter property="original_tradeTime" jdbcType="VARCHAR" mode="IN"/> 
+	   <parameter property="dz_tradeTime" jdbcType="VARCHAR" mode="IN"/> 
+	   <parameter property="original_table_name" jdbcType="VARCHAR" mode="IN"/>    
+	   <parameter property="duizhang_table_name" jdbcType="VARCHAR" mode="IN"/>
+	   <parameter property="deduct_sys_id" jdbcType="INTEGER" mode="IN"/>
+	   <parameter property="flag" jdbcType="INTEGER" mode="IN"/>  
+	   <parameter property="original_trade_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="qingkuan_count" jdbcType="INTEGER" mode="OUT"/>
+	   <parameter property="daiji_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="tuihuo_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="again_qingkuan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="twice_duidan_count" jdbcType="INTEGER" mode="OUT"/>    
+	   <parameter property="exception_changkuan_count" jdbcType="INTEGER" mode="OUT"/> 
+	   <parameter property="error_channel_count" jdbcType="INTEGER" mode="OUT"/>
+ 	</parameterMap>
+	<select id="queryUpmpErrorResult" statementType="CALLABLE" parameterMap="upmpErrorResult">
+		{CALL proce_ryt_error_duizhang_result_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+	
+	<!-- 内部差错审批 原始差错  (扣款渠道交易情况   根据扣款流水或冲正流水查询对账单是否存在交易数据) -->
+	<select id="queryByReqSysStance" parameterType="Map" resultMap="DuizhangDataMap">
+		select
+		 	<if test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+		 		reqTime,
+		 		process,
+		 	</if>
+		 	<if test="dz_data_tableName == 'duizhang_zhongxingbank_lst'">
+		 		tradeTime as reqTime,
+		 	</if>
+		 	tradeAmount
+		from ${dz_data_tableName} 
+		where 1 = 1
+		<if test="instType == 0">
+			<if test="reqSysStance != null and reqSysStance != ''">
+			 		<if test="dz_data_tableName == 'duizhang_szzh_lst'">
+			 			and deductSysReference = #{reqSysStance}
+			 			<if test="REFICode != null and REFICode != ''">
+			 				and trade_code = #{REFICode} or trade_code = #{REFPCode}
+			 			</if>
+			 		</if>
+			 		<if test="dz_data_tableName != 'duizhang_szzh_lst'">
+			 			and reqSysStance = #{reqSysStance}
+			 		</if>
+			</if>
+			<if test="reqTime != null and reqTime != ''">
+				and deduct_stlm_date = #{reqTime}
+			</if>
+		</if>
+		<if test="instType == 1">
+			<if test="id != null and id != ''">
+				and id = #{id} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据流水号查询没有消费的 -->
+	<select id="queryDataByReqSysStance1" parameterType="Map" resultMap="DuizhangDataMap">
+		select 
+			<choose>
+		 		<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+		 			reqTime,
+		 			msgType,
+		 			process,
+		 		</when>
+		 		<otherwise>
+		 			tradeTime as reqTime,
+		 		</otherwise>
+		 	</choose>
+		 	tradeAmount 
+		from ${dz_data_tableName} 
+		where 1 = 1 
+		<choose>
+		 	<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+		 		and msgType = '0200' and process = '000000'
+		 	</when>
+		 	<otherwise>
+		 	</otherwise>
+		</choose>
+		<if test="instType == 0">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="instType == 1">
+			and deductSysReference = #{reqSysStance}
+		</if>
+		limit 1
+	</select>
+	
+	<!-- 差错调整、审批原始差错时查找对账文件相关交易(相关交易显示->针对线下) -->
+	<select id="queryDuizhangDataByReqSysStance" parameterType="Map" resultMap="DuizhangDataMap">
+		select
+			<if test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+				reqTime,
+			</if>
+			<if test="dz_data_tableName == 'duizhang_zhongxingbank_lst'">
+				tradeTime as reqTime,
+			</if>
+		 	reqSysStance
+		from ${dz_data_tableName} where 1 = 1
+		<if test="reqSysStance != null and reqSysStance != ''">
+			<if test="dz_data_tableName == 'duizhang_cups_lst'">
+					and reqSysStance = #{reqSysStance} 
+				<if test="origDataStance != null and origDataStance != ''">
+					or reqSysStance = #{origDataStance}
+				</if>
+				<if test="deductSysReference != null and deductSysReference != ''">
+					or deductSysReference = #{deductSysReference}
+				</if> 
+			</if>
+			<if test="dz_data_tableName == 'duizhang_beijingbank_lst'">
+	 				and reqSysStance = #{reqSysStance}
+		 		<if test="origDataStance != null and origDataStance != ''">
+					or reqSysStance = #{origDataStance}
+				</if>
+ 			</if>
+ 			<if test="dz_data_tableName == 'duizhang_zhongxingbank_lst'">
+		 			and reqSysStance = #{reqSysStance} 
+		 		<if test="origDataStance != null and origDataStance != ''">
+					or originalReference = #{origDataStance}
+				</if>
+				<if test="deductSysReference != null and deductSysReference != ''">
+					or deductSysReference = #{deductSysReference}
+				</if>
+ 			</if>
+ 			<if test="dz_data_tableName == 'duizhang_szzh_lst'">
+	 			and deductSysReference = #{reqSysStance} 
+	 			<if test="origDataStance != null and origDataStance != ''">
+					or reqSysStance = #{origDataStance}
+				</if>
+	 		</if>
+ 			<if test="dz_data_tableName == 'duizhang_dljh_lst'">
+		 		and reqSysStance = #{reqSysStance} or origDataStance = #{reqSysStance}
+		 	</if>
+		 	<if test="dz_data_tableName == 'duizhang_szgh_lst'">
+		 		and reqSysStance = #{reqSysStance}
+		 	</if>
+		</if>
+		<if test="tradeTime != null and tradeTime != ''">
+	 		and deduct_stlm_date = #{tradeTime}
+	 	</if>
+	</select>
+	
+	<!-- 分页查询对账文件数据 -->
+	<select id="queryPageDuizData" parameterType="Map" resultMap="DuizhangDataMap">
+		 select
+			id,
+			reqSysStance,
+			tradeAmount,
+			deductSysReference,
+			outAccount,
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					termId,
+				</when>
+				<otherwise>
+					deductMerTermId as termId,
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					merCode,
+				</when>
+				<otherwise>
+					deductMerCode as merCode,
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					reqTime,
+				</when>
+				<otherwise>
+					tradeTime as reqTime,
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					process,
+				</when>
+				<otherwise>
+					reqResponse as reqTime,
+				</otherwise>
+			</choose>
+			dz_file_name,
+			inst_name
+		from ${dz_data_tableName}
+		where 1=1
+		<if test="startTime != null and startTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{startTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{startTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &lt;= #{endTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &lt;= #{endTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merCode != null">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and merCode = #{merCode}
+				</when>
+				<otherwise>
+					and deductMerCode = #{merCode}
+				</otherwise>
+			</choose> 
+		</if>
+		<if test="termId != null">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and termId = #{termId} 
+				</when>
+				<otherwise>
+					and deductMerTermId = #{termId}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merType != null">
+			and merType = #{merType} 
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and substring(deduct_stlm_date,1,8) = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+	 		and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="outAccount != null and outAccount != ''">
+			and outAccount = #{outAccount}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		order by <choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					reqTime
+				</when>
+				<otherwise>
+					tradeTime
+				</otherwise>
+			</choose> desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryDuizDataCount" parameterType="Map" resultType="int">
+		select count(*) from ${dz_data_tableName} 
+		where  1=1
+		<if test="startTime != null and startTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &gt;= #{startTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &gt;= #{startTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and substring(reqTime,1,8) &lt;= #{endTime}
+				</when>
+				<otherwise>
+					and substring(tradeTime,1,8) &lt;= #{endTime}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merCode != null">
+			and merCode = #{merCode} 
+		</if>
+		<if test="termId != null">
+			<choose>
+				<when test="dz_data_tableName != 'duizhang_zhongxingbank_lst'">
+					and termId = #{termId} 
+				</when>
+				<otherwise>
+					and deductMerTermId = #{termId}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="merType != null">
+			and merType = #{merType} 
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+		 	and substring(deduct_stlm_date,1,8) = #{deduct_stlm_date}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+	 		and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="outAccount != null and outAccount != ''">
+			and outAccount = #{outAccount}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+	</select>
+	
+	<!-- 根据交易流水查询对账文件数据信息-->
+	<select id="queryDzFileDataByReqSysStance" parameterType="Map" resultMap="DuizhangDataMap">
+		select
+			reqSysStance,
+			reqTime,
+			outAccount,
+			tradeAmount,
+			tradeFee,
+			process,
+			merCode,
+			termId,
+			deductSysReference,
+			deduct_stlm_date 
+		from ${dz_data_tableName} where 1 = 1
+		<if test="instType == 0">
+			<if test="reqSysStance != null and reqSysStance != ''">
+				<if test="dz_data_tableName != 'duizhang_szzh_lst'">
+					and reqSysStance = #{reqSysStance} 
+				</if>
+				<if test="dz_data_tableName == 'duizhang_szzh_lst'">
+					and deductSysReference = #{reqSysStance} 
+				</if>
+			</if>
+			<if test="tradeTime != null and tradeTime != ''">
+			and deduct_stlm_date = #{tradeTime}
+		</if>
+		</if>
+		<if test="instType == 1">
+			<if test="reqSysStance != null and reqSysStance != ''">
+				and id = #{reqSysStance}
+			</if>
+		</if>
+	</select>
+	
+	<!-- 内部差错调整、审批页面，详情(该笔交易是线上交易)查询时根据差错表(error_data_lst)中的字段(req_sys_stance)的值获取对账文件中相关的交易 -->
+	<!-- 注意：查询对账文件相关交易时，查询条件字段从渠道信息表中获取(dz_data_column) -->
+	<select id="queryOnlineDzFileData" parameterType="Map" resultMap="DuizhangDataMap">
+		select 
+			reqSysStance,
+			orderId,
+			reqTime 
+		from ${dz_data_tableName} where 1 = 1
+		<if test="id != null and id != ''">
+			and id = #{id}
+		</if>
+	</select>
+	
+	<select id="queryBankErrorData" parameterType="Map" resultMap="DuizhangDataMap">
+		select reqSysStance,
+			<if test="bankType != 0">
+		 		orderId,
+		 	</if>
+		tradeAmount,dz_file_name from ${bankTable}  where bk_chk != 1 and whetherTk = 0
+		<if test="deduct_stlm_date != null and deduct_stlm_date != '' ">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryBankErrorDataCount" parameterType="Map" resultType="int">
+		select count(*) from  ${bankTable}  where bk_chk != 1 and whetherTk = 0
+		<if test="deduct_stlm_date != null and deduct_stlm_date != '' ">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+	
+	<select id="queryBankDataCountOfAll" parameterType="Map" resultType="int">
+		select count(*) from  ${bankTable}  where whetherTk = 0
+		<if test="deduct_stlm_date != null and deduct_stlm_date != '' ">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+	
+	<select id="queryBankDataCountOfDzSucess" parameterType="Map" resultType="int">
+		select count(*) from  ${bankTable}  where bk_chk = 1 and whetherTk = 0
+		<if test="deduct_stlm_date != null and deduct_stlm_date != '' ">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+	
+	<select id="queryBankErrorDataList" parameterType="Map" resultMap="DuizhangDataMap">
+		select reqSysStance,
+			<if test="bankType != 0">
+		 		orderId,
+		 	</if>
+		 	tradeAmount,dz_file_name from ${bankTable}  where bk_chk != 1 and whetherTk = 0
+		<if test="deduct_stlm_date != null and deduct_stlm_date != '' ">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+</mapper>

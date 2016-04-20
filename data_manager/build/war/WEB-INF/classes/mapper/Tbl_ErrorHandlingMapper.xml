@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ErrorHandling">
+	<resultMap type="ErrorHandling" id="ErrorHandlingMap">
+		<id property="id" column="id" />
+		<result property="handling_name" column="handling_name" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageErrorHandling" parameterType="Map" resultMap="ErrorHandlingMap">
+		select * from error_handling where 1 = 1 
+		<if test="id != null and id != 0">
+			and id = #{id} 
+		</if>
+		<if test="handling_name != null and handling_name != ''">
+			and handling_name = #{handling_name}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryErrorHandling" parameterType="int" resultType="ErrorHandling">
+		select * from error_handling where id = #{id} 
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from error_handling 
+	</select>
+	
+	<delete id="deleteErrorHandling" parameterType="int">
+		delete from error_handling where id = #{id}
+	</delete>
+	
+	<update id="updateErrorHandling" parameterType="ErrorHandling">
+		<if test="handling_name != null and handling_name != ''">
+			update error_handling set handling_name = #{handling_name} where id = #{id}
+		</if>
+	</update>
+	<insert id="addErrorHandling" parameterType="ErrorHandling">
+		<if test="handling_name != null and handling_name != ''">
+			insert into error_handling(handling_name) value(#{handling_name})
+		</if>
+	</insert>
+	
+	<!-- 获取差错处理方式列表 -->
+	<select id="getErrorHandleList" resultMap="ErrorHandlingMap">
+		select * from error_handling
+	</select>
+</mapper>

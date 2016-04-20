@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RytUpmp">
+	<resultMap type="RytUpmp" id="RytUpmpMap">
+		<id property="tseq" column="tseq"/>
+		<result property="version" column="version"/>
+		<result property="ip" column="ip"/>
+		<result property="mdate" column="mdate"/>
+		<result property="mid" column="mid"/>
+		<result property="bid" column="bid"/>
+		<result property="oid" column="oid"/>
+		<result property="amount" column="amount"/>
+		<result property="pay_amt" column="pay_amt"/>
+		<result property="type" column="type"/>
+		<result property="gate" column="gate"/>
+		<result property="sys_date" column="sys_date"/>
+		<result property="init_sys_date" column="init_sys_date"/>
+		<result property="sys_time" column="sys_time"/>
+		<result property="batch" column="batch"/>
+		<result property="fee_amt" column="fee_amt"/>
+		<result property="bank_fee" column="bank_fee"/>
+		<result property="tstat" column="tstat"/>
+		<result property="bk_flag" column="bk_flag"/>
+		<result property="org_seq" column="org_seq"/>
+		<result property="ref_seq" column="ref_seq"/>
+		<result property="refund_amt" column="refund_amt"/>
+		<result property="mer_priv" column="mer_priv"/>
+		<result property="bk_send" column="bk_send"/>
+		<result property="bk_recv" column="bk_recv"/>
+		<result property="bk_url" column="bk_url"/>
+		<result property="fg_url" column="fg_url"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="bk_date" column="bk_date"/>
+		<result property="bk_seq1" column="bk_seq1"/>
+		<result property="bk_seq2" column="bk_seq2"/>
+		<result property="bk_resp" column="bk_resp"/>
+		<result property="mobile_no" column="mobile_no"/>
+		<result property="trans_period" column="trans_period"/>
+		<result property="card_no" column="card_no"/>
+		<result property="error_code" column="error_code"/>
+		<result property="author_type" column="author_type"/>
+		<result property="phone_no" column="phone_no"/>
+		<result property="oper_id" column="oper_id"/>
+		<result property="gid" column="gid"/>
+		<result property="pre_amt" column="pre_amt"/>
+		<result property="bk_fee_model" column="bk_fee_model"/>
+		<result property="pre_amt1" column="pre_amt1"/>
+		<result property="error_msg" column="error_msg"/>
+		<result property="p1" column="p1"/>
+		<result property="p2" column="p2"/>
+		<result property="p3" column="p3"/>
+		<result property="p4" column="p4"/>
+		<result property="p5" column="p5"/>
+		<result property="p6" column="p6"/>
+		<result property="p7" column="p7"/>
+		<result property="p8" column="p8"/>
+		<result property="p9" column="p9"/>
+		<result property="p10" column="p10"/>
+		<result property="p11" column="p11"/>
+		<result property="p12" column="p12"/>
+		<result property="p13" column="p13"/>
+		<result property="p14" column="p14"/>
+		<result property="p15" column="p15"/>
+		<result property="is_liq" column="is_liq"/>
+		<result property="is_notice" column="is_notice"/>
+		<result property="data_source" column="data_source"/>
+		<result property="currency" column="currency"/>
+		<result property="exchange_rate" column="exchange_rate"/>
+		<result property="againPay_status" column="againPay_status"/>
+		<result property="againPay_date" column="againPay_date"/>
+		<result property="whetherJs" column="whetherJs"/>
+		<result property="whetherValid" column="whetherValid"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="whetherRiqie" column="whetherRiqie"/>
+		<result property="whetherQs" column="whetherQs"/>
+		<result property="mer_fee" column="mer_fee"/>
+		<result property="zf_fee" column="zf_fee"/>
+		<result property="zf_file_fee" column="zf_file_fee"/>
+		<result property="zf_fee_bj" column="zf_fee_bj"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="whetherAccessStance" column="whetherAccessStance"/>
+		<result property="bank_id" column="bank_id"/>
+		<result property="whtherInnerJs" column="whtherInnerJs"/>
+		<result property="out_user_id" column="out_user_id"/>
+		<result property="in_user_id" column="in_user_id"/>
+		<result property="bind_mid" column="bind_mid"/>
+		
+		<result property="name" column="name"/>
+	</resultMap>
+	
+	<select id="queryPageRtyUpmp" parameterType="Map" resultMap="RytUpmpMap">
+		select 
+			i.name_ as name,
+			r.tseq,
+			r.mid,
+			r.bk_seq1,
+			r.oid,
+			r.sys_date,
+			r.sys_time,
+			r.amount,
+			r.tstat,
+			r.type,
+			r.gid
+		from inst_info i inner join ${skTableName} r on i.inst_id = r.gid AND i.inst_type = 1 
+		where 1 = 1 
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and r.bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and r.tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and r.oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and r.mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and r.gid = #{deduct_sys_id}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and r.sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and r.sys_date &lt;= #{endDate}
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and r.tstat = #{tstat}
+		</if>
+		order by r.sys_date desc,r.sys_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from ${skTableName} 
+		where 1 = 1
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid = #{deduct_sys_id}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and sys_date &lt;= #{endDate}
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and tstat = #{tstat}
+		</if>
+	</select>
+	
+	<select id="queryPageRtyUpmpForDz" parameterType="Map" resultMap="RytUpmpMap">
+		select 
+			i.name_ as name,
+			r.tseq,
+			r.mid,
+			r.oid,
+			r.sys_date,
+			r.sys_time,
+			r.amount,
+			r.mer_fee,
+			r.tstat,
+			r.type,
+			r.gid,
+			r.bk_chk,
+			r.whetherQs,
+			r.whetherRiqie,
+			r.card_no,
+			r.deduct_stlm_date,
+			r.zf_fee,
+			r.zf_file_fee,
+			r.zf_fee_bj,
+			r.whetherErroeHandle,
+			r.bank_id,
+			r.p14,
+			r.gate,
+			r.out_user_id,
+			r.in_user_id,
+			r.whetherValid
+		from inst_info i inner join ${skTableName} r on i.inst_id = r.gid AND i.inst_type = 1
+		where 1 = 1 
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and r.bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and r.tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and r.oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and r.mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and r.gid = #{deduct_sys_id}
+		</if>
+		<if test="card_no != null and card_no != ''">
+			and r.card_no = #{card_no}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and r.sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and r.sys_date &lt;= #{endDate}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and r.deduct_stlm_date = #{deductStlmDate}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and r.whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and r.bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and r.whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and r.tstat = #{tstat}
+		</if>
+		order by r.sys_date desc,r.sys_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCountForDz" parameterType="Map" resultType="int">
+		select count(*) from ${skTableName} 
+		where 1 = 1
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid = #{deduct_sys_id}
+		</if>
+		<if test="card_no != null and card_no != ''">
+			and card_no = #{card_no}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and sys_date &lt;= #{endDate}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and deduct_stlm_date = #{deductStlmDate}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and tstat = #{tstat}
+		</if>
+	</select>
+	
+	<!-- 对账明细数据下载 -->
+	<select id="queryRytDzDetailDataList" parameterType="Map" resultMap="RytUpmpMap">
+		select 
+			i.name_ as name,
+			r.tseq,
+			r.mid,
+			r.oid,
+			r.sys_date,
+			r.sys_time,
+			r.amount,
+			r.mer_fee,
+			r.zf_fee,
+			r.tstat,
+			r.type,
+			r.gid,
+			r.bk_chk,
+			r.whetherRiqie,
+			m.mer_abbreviation as mer_abbreviation
+		from inst_info i inner join ${skTableName} r on i.inst_id = r.gid AND i.inst_type = 1 
+		LEFT JOIN mer_basic m ON r.mid = m.mer_code 
+		where 1 = 1 
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and r.bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and r.tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and r.oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and r.mid = #{mid}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and r.gid = #{deduct_sys_id} 
+		</if>
+		<if test="card_no != null and card_no != ''">
+			and r.card_no = #{card_no}
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and r.sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and r.sys_date &lt;= #{endDate}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and r.deduct_stlm_date = #{deductStlmDate}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and r.whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and r.bk_chk = #{bk_chk}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and r.whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and r.tstat = #{tstat}
+		</if>
+		order by r.sys_date desc,r.sys_time desc
+	</select>
+	
+	<select id="queryTotalMoneyOfDz" parameterType="Map" resultType="String">
+		select sum(amount) from ${skTableName} 
+		where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and sys_date &lt;= #{endDate}
+		</if>
+		<if test="trade_date != null and trade_date != ''">
+			and sys_date = #{trade_date}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid = #{deduct_sys_id}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="card_no != null and card_no != ''">
+			and card_no = #{card_no}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and deduct_stlm_date = #{deductStlmDate}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="bk_chk == null or bk_chk == ''">
+			and bk_chk = 0
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and tstat = #{tstat}
+		</if>
+	</select>
+	
+	<select id="queryRtyTotalMerFee" parameterType="Map" resultType="String">
+		select sum(mer_fee) from ${skTableName} 
+		where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and sys_date &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and sys_date &lt;= #{endDate}
+		</if>
+		<if test="trade_date != null and trade_date != ''">
+			and sys_date = #{trade_date}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and gid = #{deduct_sys_id}
+		</if>
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and tseq = #{tseq}
+			</if>
+		</if>
+		<if test="oid != null and oid != ''">
+			and oid = #{oid}
+		</if>
+		<if test="mid != null and mid != ''">
+			and mid = #{mid}
+		</if>
+		<if test="card_no != null and card_no != ''">
+			and card_no = #{card_no}
+		</if>
+		<if test="deductStlmDate != null and deductStlmDate != ''">
+			and deduct_stlm_date = #{deductStlmDate}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whetherQs = #{whtherInnerJs}
+		</if>
+		<if test="whetherRiqie != null and whetherRiqie != ''">
+			and whetherRiqie = #{whetherRiqie}
+		</if>
+		<if test="bk_chk != null and bk_chk != ''">
+			and bk_chk = #{bk_chk}
+		</if>
+		<if test="bk_chk == null or bk_chk == ''">
+			and bk_chk = 0
+		</if>
+		<if test="tstat != null and tstat != ''">
+			and tstat = #{tstat}
+		</if>
+	</select>
+	
+	<select id="queryDetail" parameterType="Map" resultMap="RytUpmpMap">
+		select * from ${skTableName} where tseq = #{tseq}
+	</select>
+	
+	<!-- 内部差错调整、审批详情中的相关交易-->
+	<select id="queryByTseqAndSysDate" parameterType="Map" resultMap="RytUpmpMap">
+		select 
+			<if test="skTableName != 'ryt_yl'">
+				tseq,
+			</if>
+			<if test="skTableName == 'ryt_yl'">
+				bk_seq1 as tseq,
+			</if>
+			amount, pay_amt, type, sys_date, sys_time, fee_amt, tstat, bank_fee, pre_amt1 from ${original_data_tableName} where 1 = 1 
+		<if test="tseq != null and tseq != ''">
+			<if test="skTableName == 'ryt_yl'">
+				and bk_seq1 = #{tseq}
+			</if>
+			<if test="skTableName != 'ryt_yl'">
+				and (tseq = #{tseq} or oid = #{tseq})
+			</if>
+		</if>
+		<if test="tradeTime != null and tradeTime != ''">
+			and sys_date = #{tradeTime}
+		</if>
+	</select>
+	
+	<!-- 结算单明细下载 -->
+	<select id="queryOnLineMerSettleDetailDataList" parameterType="Map" resultMap="RytUpmpMap">
+		SELECT * FROM ${originalDataTableName}
+	</select>
+	
+	<!-- 结算单明细查询 -->
+	<select id="queryOnLineMerSettleDetailList" parameterType="Map" resultMap="RytUpmpMap">
+		SELECT * FROM ${originalDataTableName} limit #{startRow},#{limit}
+	</select>
+	<select id="queryOnLineMerSettleDetailCount" parameterType="Map" resultType="int">
+		SELECT count(*) FROM ${originalDataTableName}
+	</select>
+	
+	<!-- 线上成功交易未对账进入差错后修改该笔交易状态为无需处理 -->
+	<update id="updateDataByTesq" parameterType="Map">
+		update ${skTableName} set bk_chk = 3, p14 = '已进入差错', whetherValid = 0 where tseq = #{tseq}
+	</update>
+</mapper>

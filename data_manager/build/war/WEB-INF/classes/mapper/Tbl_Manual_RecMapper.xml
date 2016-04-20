@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Manual_Rec">
+	<resultMap type="ManualRec" id="ManualRecMap">
+		<id property="id" column="id"/>
+		<result property="mer_code" column="mer_code"/>
+		<result property="mer_abbreviation" column="mer_abbreviation"/>
+		<result property="rec_amount" column="rec_amount"/>
+		<result property="mer_balance" column="mer_balance"/>
+		<result property="addorsub" column="addorsub"/>
+		<result property="handler_time" column="handler_time"/>
+		<result property="settle_time" column="settle_time"/>
+		<result property="audit_time" column="audit_time"/>
+		<result property="send_user_name" column="send_user_name"/>
+		<result property="auditor_user_name" column="auditor_user_name"/>
+		<result property="data_status" column="data_status"/>
+		<result property="request_desc" column="request_desc"/>
+		<result property="audit_desc" column="audit_desc"/>
+	</resultMap>
+	
+	<!-- 手工调账请求 -->
+	<insert id="addManualRec" parameterType="ManualRec">
+		insert into manual_rec(
+			id,
+			mer_code,
+			mer_abbreviation,
+			rec_amount,
+			mer_balance,
+			addorsub,
+			handler_time,
+			send_user_name,
+			request_desc
+		)
+		value(
+			#{id},
+			#{mer_code},
+			#{mer_abbreviation},
+			#{rec_amount},
+			#{mer_balance},
+			#{addorsub},
+			#{handler_time},
+			#{send_user_name},
+			#{request_desc}
+		)
+	</insert>
+	
+	<!-- 手工调账审核  分页查询 -->
+	<select id="queryPageDataLst" parameterType="Map" resultMap="ManualRecMap">
+		select * from manual_rec where 1 = 1
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code}
+		</if>
+		<if test="addorsub != null and addorsub != ''">
+			and addorsub = #{addorsub}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and handler_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="data_status != null and data_status != ''">
+			and data_status = #{data_status}
+		</if>
+		order by handler_time asc limit #{startRow},#{limit}
+	</select>
+	<!-- 手工调账查询 -->
+	<select id="queryPageAllData" parameterType="Map" resultMap="ManualRecMap">
+		select * from manual_rec where 1 = 1
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code}
+		</if>
+		<if test="addorsub != null and addorsub != ''">
+			and addorsub = #{addorsub}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and handler_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="data_status != null and data_status != ''">
+			and data_status = #{data_status}
+		</if>
+		order by audit_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from manual_rec where 1 = 1
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code}
+		</if>
+		<if test="addorsub != null and addorsub != ''">
+			and addorsub = #{addorsub}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and handler_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="data_status != null and data_status != ''">
+			and data_status = #{data_status}
+		</if>
+	</select>
+	
+	<!-- 手工调账审核  审核成功 -->
+	<update id="updateDataById" parameterType="Map" >
+		update manual_rec
+		<set>
+			<if test="audit_time != null and audit_time != ''">
+				audit_time = #{audit_time},
+			</if>
+			<if test="auditor_user_name != null and auditor_user_name != ''">
+				auditor_user_name = #{auditor_user_name},
+			</if>
+			<if test="data_status != null and data_status != ''">
+				data_status = #{data_status}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 手工调账审核  审核失败 -->
+	<update id="updateDataToFail" parameterType="Map" >
+		update manual_rec
+		<set>
+			<if test="audit_time != null and audit_time != ''">
+				audit_time = #{audit_time},
+			</if>
+			<if test="auditor_user_name != null and auditor_user_name != ''">
+				auditor_user_name = #{auditor_user_name},
+			</if>
+			<if test="data_status != null and data_status != ''">
+				data_status = #{data_status}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 手工调账查询  数据下载 -->
+	<select id="queryDataLst" parameterType="Map" resultMap="ManualRecMap">
+		select * from manual_rec where 1 = 1
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code}
+		</if>
+		<if test="addorsub != null and addorsub != ''">
+			and addorsub = #{addorsub}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and handler_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="data_status != null and data_status != ''">
+			and data_status = #{data_status}
+		</if>
+		order by audit_time desc
+	</select>
+	
+	<select id="queryMerManualRec" parameterType="string" resultMap="ManualRecMap">
+		select SUM(CONVERT(rec_amount,DECIMAL(20,2))) as rec_amount,mer_abbreviation,settle_time,count(*) as manual_count,addorsub
+			from manual_rec where mer_code = #{mer_code} and whetherJs = 0 and data_status = 2 GROUP BY addorsub ORDER BY addorsub ASC;
+	</select>
+	
+	<update id="updateMerManualRecJsStatus" parameterType="Map">
+		update manual_rec set whetherJs = #{whether_js} where mer_code = #{mer_code} and whetherJs = 0 and data_status = 2
+	</update>
+</mapper>

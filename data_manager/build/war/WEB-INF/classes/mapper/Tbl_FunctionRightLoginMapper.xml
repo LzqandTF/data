@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FunctionRightLogin">
+	<resultMap type="FunctionRightLogin" id="FunctionRightLoginMap">
+		<id property="id" column="id" />
+		<result property="funcId" column="func_id" />
+		<result property="loginId" column="login_id" />
+	</resultMap>
+
+	<!-- 删除用户的权限 -->
+	<delete id="deleteByLoginId" parameterType="int">
+		delete from function_right_login 
+		where login_id = #{loginId}
+	</delete>
+	<!-- 添加用户权限 -->
+	<insert id="addFunctionRightLogin" parameterType="FunctionRightLogin">
+		insert into function_right_login 
+		(func_id,login_id)
+		values(#{funcId},#{loginId})
+	</insert>
+</mapper>

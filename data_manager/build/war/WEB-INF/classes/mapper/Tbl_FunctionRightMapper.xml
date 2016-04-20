@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FunctionRight">
+	<resultMap type="FunctionRight" id="FunctionRightMap">
+		<id property="id" column="id" />
+		<result property="funcName" column="func_name" />
+		<result property="url" column="url" />
+		<result property="level" column="level" />
+		<result property="parentId" column="parent_id" />
+	</resultMap>
+	
+	<!-- 全查权限 -->
+	<select id="queryAll" resultMap="FunctionRightMap">
+		select f.id,f.func_name,f.level,f.parent_id,f.url
+		from function_right f
+	</select>
+	<!-- 查询用户的权限 -->
+	<select id="queryByLoginId" parameterType="int" resultMap="FunctionRightMap">
+		select f.id,f.func_name,f.level,f.parent_id,f.url
+		from function_right f  
+		right join function_right_login fl on f.id = fl.func_id
+		where fl.login_id = #{loginId} order by f.id
+	</select>
+	<!-- 根据一级权限ID查询其子权限 -->
+	<select id="queryByParentId" parameterType="int" resultMap="FunctionRightMap">
+		select f.id,f.func_name
+		from function_right f  		
+		where f.parent_id = #{parentId}
+	</select>
+</mapper>

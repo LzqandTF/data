@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InnerErrorHandling">
+	<resultMap type="InnerErrorHandling" id="InnerErrorHandlingMap">
+		<id property="handling_id" column="handling_id" />
+		<result property="handling_name" column="handling_name" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageInnerErrorHandling" parameterType="Map" resultMap="InnerErrorHandlingMap">
+		select * from inner_error_handling where 1 = 1 
+		<if test="handling_id != null and handling_id != 0">
+			and handling_id = #{handling_id} 
+		</if>
+		<if test="handling_name != null and handling_name != ''">
+			and handling_name = #{handling_name}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryInnerErrorHandling" parameterType="int" resultType="InnerErrorHandling">
+		select * from inner_error_handling where handling_id = #{handling_id} 
+	</select>
+	
+	<select id="queryInnerErrorHandlingAll" resultMap="InnerErrorHandlingMap">
+		select * from inner_error_handling
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from inner_error_handling 
+	</select>
+	
+	<delete id="deleteInnerErrorHandling" parameterType="int">
+		delete from inner_error_handling where handling_id = #{handling_id}
+	</delete>
+	
+	<update id="updateInnerErrorHandling" parameterType="InnerErrorHandling">
+		<if test="handling_name != null and handling_name != ''">
+			update inner_error_handling set handling_name = #{handling_name} where handling_id = #{handling_id}
+		</if>
+	</update>
+	<insert id="addInnerErrorHandling" parameterType="InnerErrorHandling">
+		<if test="handling_name != null and handling_name != ''">
+			insert into inner_error_handling(handling_name) value(#{handling_name})
+		</if>
+	</insert>
+</mapper>

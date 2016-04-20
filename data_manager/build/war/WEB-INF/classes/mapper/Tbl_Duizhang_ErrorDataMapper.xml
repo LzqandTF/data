@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Duizhang_ErrorData">
+	<resultMap type="DuizhangErrorData" id="DuizhangErrorDataMap">
+		<id property="id" column="id" />
+		<result property="error_trade_flag" column="error_trade_flag" />
+		<result property="acqInstIdCode" column="acqInstIdCode" />
+		<result property="fwdInstIdCode" column="fwdInstIdCode" />
+		<result property="reqSysStance" column="reqSysStance" />
+		<result property="reqTime" column="reqTime" />
+		<result property="outAccount" column="outAccount" />
+		<result property="tradeAccount" column="tradeAccount" />
+		<result property="msgType" column="msgType" />
+		<result property="process" column="process" />
+		<result property="merType" column="merType" />
+		<result property="termId" column="termId" />
+		<result property="deductSysReference" column="deductSysReference" />
+		<result property="reqType" column="reqType" />
+		<result property="authorizationCode" column="authorizationCode" />
+		<result property="rcvgInstIdCode" column="rcvgInstIdCode" />
+		<result property="issuingBankCode" column="issuingBankCode" />
+		<result property="origDataStance" column="origDataStance" />
+		<result property="deductSysResponse" column="deductSysResponse" />
+		<result property="reqInputType" column="reqInputType" />
+		<result property="acceptorReceiveFee" column="acceptorReceiveFee" />
+		<result property="acceptorPayFee" column="acceptorPayFee" />
+		<result property="byStagesFee" column="byStagesFee" />
+		<result property="tradeFee" column="tradeFee" />
+		<result property="errorTradePayFee" column="errorTradePayFee" />
+		<result property="errorTradeReceiveFee" column="errorTradeReceiveFee" />
+		<result property="error_info" column="error_info" />
+		<result property="ReceiveRollOutCode" column="ReceiveRollOutCode" />
+		<result property="accountIdentification" column="accountIdentification" />
+		<result property="intoInstCode" column="intoInstCode" />
+		<result property="onTradeTime" column="onTradeTime" />
+		<result property="cardNumber" column="cardNumber" />
+		<result property="termReadAbility" column="termReadAbility" />
+		<result property="idConditionCode" column="idConditionCode" />
+		<result property="onDeduct_stlm_date" column="onDeduct_stlm_date" />
+		<result property="onTradeAccount" column="onTradeAccount" />
+		<result property="tradeAdress" column="tradeAdress" />
+		<result property="eci" column="eci" />
+		<result property="whetherErroeHandle" column="whetherErroeHandle" />
+		<result property="dz_file_name" column="dz_file_name"/>
+		<result property="inst_name" column="inst_name"/>
+		<result property="merchant_code" column="merchant_code"/>
+		<result property="sender_clearing_organizations" column="sender_clearing_organizations"/>
+		<result property="recipient_clearing_organization" column="recipient_clearing_organization"/>
+		<result property="transferee_clearing_organizations" column="transferee_clearing_organizations"/>
+		<result property="before_transation_ter_type" column="before_transation_ter_type"/>
+		<result property="merchant_name_address" column="merchant_name_address"/>
+		<result property="special_billing_type" column="special_billing_type"/>
+		<result property="special_charges_grade" column="special_charges_grade"/>
+		<result property="tac_logo" column="tac_logo"/>
+		<result property="card_product_info" column="card_product_info"/>
+		<result property="tran_code_caused_error" column="tran_code_caused_error"/>
+		<result property="tran_initiated_method" column="tran_initiated_method"/>
+		<result property="account_settle_type" column="account_settle_type"/>
+		<result property="reserved_for_use" column="reserved_for_use"/>
+		<result property="bk_chk" column="bk_chk" />
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+	</resultMap>
+	
+	<!-- 差错单查询 -->
+	<select id="queryPageDzErrorCupsLst" parameterType="Map" resultMap="DuizhangErrorDataMap">
+		select * from ${error_dz_data_tableName}
+		where 1=1
+		<if test="error_trade_flag != null and error_trade_flag != ''">
+			and error_trade_flag = #{error_trade_flag}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		<if test="outAccount != null and outAccount != ''">
+			and outAccount = #{outAccount}
+		</if>
+		<if test="origDataStance != null and origDataStance != ''">
+			and origDataStance = #{origDataStance}
+		</if>
+		<if test="startTime != null">
+			and substring(reqTime,1,8) &gt;=  #{startTime}
+		</if>
+		<if test="endTime != null">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		order by reqTime desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 查询总数 -->
+	<select id="count" parameterType="Map" resultType="int">
+		select count(*) from ${error_dz_data_tableName}
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+	</select>
+	
+	<!-- 查询明细 -->
+	<select id="queryDetailById" parameterType="Map" resultMap="DuizhangErrorDataMap">
+		select * from ${error_dz_data_tableName} where id = #{id}
+	</select>
+	
+	<select id="queryPageErrorDzData" parameterType="Map" resultMap="DuizhangErrorDataMap">
+		select * from ${error_dz_data_tableName}
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		<if test="origDataStance != null and origDataStance != ''">
+			and origDataStance = #{origDataStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		order by reqTime desc limit #{startRow},#{limit}
+	</select>
+	
+	<!-- 银联差错对账明细查询数据下载 -->
+	<select id="queryDataForDownExcel" parameterType="Map" resultMap="DuizhangErrorDataMap">
+		select * from ${error_dz_data_tableName}
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+		order by reqTime desc
+	</select>
+	
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from ${error_dz_data_tableName}
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and substring(reqTime,1,8) &gt;= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and substring(reqTime,1,8) &lt;= #{endTime}
+		</if>
+		<if test="reqSysStance != null and reqSysStance != ''">
+			and reqSysStance = #{reqSysStance}
+		</if>
+		<if test="deductSysReference != null and deductSysReference != ''">
+			and deductSysReference = #{deductSysReference}
+		</if>
+		<if test="origDataStance != null and origDataStance != ''">
+			and origDataStance = #{origDataStance}
+		</if>
+		<if test="bk_chk != null">
+			and bk_chk = #{bk_chk}
+		</if>
+	</select>
+</mapper>

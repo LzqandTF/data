@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DzFileColumnConf">
+	<resultMap type="DzFileColumnConf" id="DzFileColumnConfMap">
+		<id property="dz_column_id" column="dz_column_id" />
+		<result property="attribute_name" column="attribute_name" />
+		<result property="attribute_column" column="attribute_column" />
+		<result property="attribute_type" column="attribute_type" />
+		<result property="column_length" column="column_length" />
+		<result property="attribute_column_online" column="attribute_column_online" />
+		<result property="attribute_column_online_refund" column="attribute_column_online_refund" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageDzFileColumnConf" parameterType="Map" resultMap="DzFileColumnConfMap">
+		select * from dz_file_column_conf where 1 = 1 
+		<if test="dz_column_id != null and dz_column_id != 0">
+			and dz_column_id = #{dz_column_id} 
+		</if>
+		<if test="attribute_name != null and attribute_name != ''">
+			and attribute_name = #{attribute_name} 
+		</if>
+		<if test="attribute_column != null and attribute_column != ''">
+			and attribute_column = #{attribute_column} 
+		</if>
+		<if test="attribute_type != null and attribute_type != 0">
+			and attribute_type = #{attribute_type} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from dz_file_column_conf where 1 = 1
+		<if test="dz_column_id != null and dz_column_id != 0">
+			and dz_column_id = #{dz_column_id} 
+		</if>
+		<if test="attribute_name != null and attribute_name != ''">
+			and attribute_name = #{attribute_name} 
+		</if>
+		<if test="attribute_column != null and attribute_column != ''">
+			and attribute_column = #{attribute_column} 
+		</if>
+		<if test="attribute_type != null and attribute_type != 0">
+			and attribute_type = #{attribute_type} 
+		</if>
+	</select>
+	
+	<insert id="insertDzFileColumnConf" parameterType="DzFileColumnConf">
+		insert into dz_file_column_conf(attribute_name,attribute_column,attribute_type,column_length,attribute_column_online,attribute_column_online_refund) 
+		values(#{attribute_name},#{attribute_column},#{attribute_type},#{column_length},#{attribute_column_online},#{attribute_column_online_refund})
+	</insert>
+	
+	<delete id="deleteDzFileColumnConf" parameterType="int">
+		delete from dz_file_column_conf where dz_column_id = #{dz_column_id}
+	</delete>
+	<update id="updateDzFileColumnConf" parameterType="DzFileColumnConf">
+		update dz_file_column_conf
+			<set>
+				<if test="attribute_name != null and attribute_name != ''">
+					attribute_name = #{attribute_name},
+				</if>
+				<if test="attribute_column != null and attribute_column != ''">
+					attribute_column = #{attribute_column},
+				</if>
+				<if test="attribute_type != null">
+					attribute_type = #{attribute_type},
+				</if>
+				<if test="column_length != null">
+					column_length = #{column_length},
+				</if>
+				<if test="attribute_column_online != null ">
+					attribute_column_online = #{attribute_column_online},
+				</if>
+				<if test="attribute_column_online_refund != null ">
+					attribute_column_online_refund = #{attribute_column_online_refund},
+				</if>
+			</set>
+			where dz_column_id = #{dz_column_id}
+	</update>
+	
+	<select id="queryDzFileColumnConfById" parameterType="int" resultMap="DzFileColumnConfMap">
+		select attribute_name,attribute_column,attribute_type,column_length,attribute_column_online,attribute_column_online_refund from dz_file_column_conf where dz_column_id = #{dz_column_id}
+	</select>
+	
+	<select id="queryDzFileColumnConfList" resultMap="DzFileColumnConfMap">
+		select dz_column_id,attribute_name,attribute_column,attribute_type,column_length,attribute_column_online,attribute_column_online_refund from dz_file_column_conf
+	</select>
+	
+	<select id="queryDzFileColumnConfListByName" parameterType="Map" resultMap="DzFileColumnConfMap">
+		select dz_column_id,attribute_name,attribute_column,column_length,attribute_column_online,attribute_column_online_refund from dz_file_column_conf
+		where 1 = 1
+		
+		<if test="attribute_name != null and attribute_name != ''">
+			and attribute_name like CONCAT('%','${attribute_name}','%' )
+		</if>
+		<if test="attribute_type != '' and attribute_type != null ">
+			<choose>
+				<when test="attribute_type != 5">
+					and (attribute_type = 4 or attribute_type = #{attribute_type})
+				</when>
+				<otherwise>
+					and attribute_type = #{attribute_type}
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="queryUnionCheckDzColumnName" parameterType="DzFileColumnConf" resultType="int">
+		select count(*) from dz_file_column_conf where attribute_name = #{attribute_name}
+	</select>
+	
+	<select id="queryUnionCheckDzColumnattr" parameterType="DzFileColumnConf" resultType="int">
+		select count(*) from dz_file_column_conf where attribute_column = #{attribute_column}
+	</select>
+</mapper>

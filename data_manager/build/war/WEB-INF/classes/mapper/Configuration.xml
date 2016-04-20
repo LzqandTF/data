@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Login" type="com.chinaebi.entity.Login" />	
+		<typeAlias alias="FunctionRight" type="com.chinaebi.entity.FunctionRight" />		
+		<typeAlias alias="FunctionRightLogin" type="com.chinaebi.entity.FunctionRightLogin" />			
+	    <typeAlias alias="InstInfo" type="com.chinaebi.entity.InstInfo" />			
+	    <typeAlias alias="TradeAmountConf" type="com.chinaebi.entity.TradeAmountConf" />
+	    <typeAlias alias="TimingTaskConf" type="com.chinaebi.entity.TimingTaskConf"/>
+	    <typeAlias alias="TradeType" type="com.chinaebi.entity.TradeType"/>
+	    <typeAlias alias="DzColumnConf" type="com.chinaebi.entity.DzColumnConf"/>
+	    <typeAlias alias="FtpUploadRecord" type="com.chinaebi.entity.FtpUploadRecord"/>
+	   
+	    <!-- 差错处理模块 -->
+	    <typeAlias alias="ErrorDataLst" type="com.chinaebi.entity.ErrorDataLst"/>
+	    
+	    <!-- 差错处理方式 -->
+	    <typeAlias alias="ErrorHandling" type="com.chinaebi.entity.ErrorHandling"/>
+	    <!-- 原因码 -->
+	    <typeAlias alias="ReasonCode" type="com.chinaebi.entity.ReasonCode"/>
+	    
+	    <!-- 银联差错录入 -->
+	    <typeAlias alias="YlCupsErrorEntry" type="com.chinaebi.entity.YlCupsErrorEntry"/>
+	    <!-- 渠道工作流节点 -->
+	    <typeAlias alias="ExecuteNode" type="com.chinaebi.entity.ExecuteNode" />
+	    
+	    <!-- 银联差错对账文件 -->
+	    <typeAlias alias="DuizhangErrorData" type="com.chinaebi.entity.DuizhangErrorData"/>
+	    
+	    <!--短信配置  -->
+	    <typeAlias alias="MessageConfig" type="com.chinaebi.entity.MessageConfig"/>
+	    
+	    <!-- 对账文件生成配置 -->
+	    <typeAlias alias="DzFileInfo" type="com.chinaebi.entity.DzFileInfo"/>
+	    
+	    <!-- 原始交易数据 -->
+	    <typeAlias alias="OriginalData" type="com.chinaebi.entity.OriginalData"/>
+	    <!-- 对账数据 -->
+	    <typeAlias alias="DuizhangData" type="com.chinaebi.entity.DuizhangData"/>
+	    
+	    <!-- 收单机构数据 -->
+	    <typeAlias alias="ReceiviInst" type="com.chinaebi.entity.ReceiviInst"/>
+	    <!-- 内部差错处理方式数据 -->
+	    <typeAlias alias="InnerErrorHandling" type="com.chinaebi.entity.InnerErrorHandling"/>
+	    <!-- Mcc细类配置数据 -->
+	    <typeAlias alias="MccType" type="com.chinaebi.entity.MccType"/>
+	    <!-- Mcc大类配置数据 -->
+	    <typeAlias alias="MccBigType" type="com.chinaebi.entity.MccBigType"/>
+	    <!-- Mcc扣率计算方式数据 -->
+	    <typeAlias alias="MccDiscount" type="com.chinaebi.entity.MccDiscount"/>
+	    <!-- 渠道扣率配置数据 -->
+	    <typeAlias alias="ChannelMccCalculate" type="com.chinaebi.entity.ChannelMccCalculate"/>
+	    <!-- 差错审计 -->
+	    <typeAlias alias="ErrorAuditRecords" type="com.chinaebi.entity.ErrorAuditRecords"/>
+	    <!-- 系统接口配置数据 -->
+	    <typeAlias alias="CustomObject" type="com.chinaebi.entity.CustomObject"/>
+	    <!-- 对账字段配置数据 -->
+	    <typeAlias alias="DzFileColumnConf" type="com.chinaebi.entity.DzFileColumnConf"/>
+	    <!-- 规则模板配置数据 -->
+	    <typeAlias alias="RuleTemplate" type="com.chinaebi.entity.RuleTemplate"/>
+	    <!-- 规则配置数据 -->
+	    <typeAlias alias="RuleHandler" type="com.chinaebi.entity.RuleHandler"/>
+	    <!-- 自定义对账文件配置数据 -->
+	    <typeAlias alias="ObjectRelevanceColumn" type="com.chinaebi.entity.ObjectRelevanceColumn"/>
+	    <!-- 替换值配置数据 -->
+	    <typeAlias alias="ReplaceValue" type="com.chinaebi.entity.ReplaceValue"/>
+	    <!-- 接口数据配置 -->
+	    <typeAlias alias="DataInterfaceConfig" type="com.chinaebi.entity.DataInterfaceConfig"/>
+	    <!-- 报警类型配置数据 -->
+	    <typeAlias alias="PoliceType" type="com.chinaebi.entity.PoliceType"/>
+	    <!-- 报警配置数据 -->
+	    <typeAlias alias="EmailPolice" type="com.chinaebi.entity.EmailPolice"/>
+	    <!-- 融易通UPMP线上交易数据 -->
+	     <typeAlias alias="RytUpmp" type="com.chinaebi.entity.RytUpmp"/>
+	    <typeAlias alias="RytRefundLog" type="com.chinaebi.entity.RytRefundLog"/>
+	    
+	    <!-- 商户信息 -->
+	    <typeAlias alias="Merchants" type="com.chinaebi.entity.Merchants"/>
+	    <typeAlias alias="UnionpayAreaCode" type="com.chinaebi.entity.UnionpayAreaCode"/>
+	    
+	    <!-- 商户资金结算信息 -->
+	    <typeAlias alias="MerchantFundSettle" type="com.chinaebi.entity.MerchantFundSettle"/>
+	    <!-- 商户结算信息实体 -->
+	    <typeAlias alias="MerchantSettleStatistics" type="com.chinaebi.entity.MerchantSettleStatistics"/>
+	    <!-- 结算发起失败原因数据信息 -->
+	    <typeAlias alias="SettleFailReason" type="com.chinaebi.entity.SettleFailReason"/>
+	   	<!-- 结算发起失败查询信息 -->
+	    <typeAlias alias="MerchantSettleFail" type="com.chinaebi.entity.MerchantSettleFail"/>
+	    <!-- 账户头寸调拨 -->
+	    <typeAlias alias="Tmoney" type="com.chinaebi.entity.Tmoney"/>
+	    <!-- 应收银行交易款 -->
+	    <typeAlias alias="BankDealWith" type="com.chinaebi.entity.BankDealWith"/>
+	    <!-- 自定义文件配置信息 -->
+	    <typeAlias alias="CustomFileEntity" type="com.chinaebi.entity.CustomFileEntity"/>
+	    <!-- 商户资金流水 -->
+	    <typeAlias alias="MerFundStance" type="com.chinaebi.entity.MerFundStance"/>
+	    <!-- 商户余额查询 -->
+	    <typeAlias alias="MerchantsBalance" type="com.chinaebi.entity.MerchantsBalance"/>
+	    
+	    <!-- 手工调账申请、审核 -->
+	    <typeAlias alias="ManualRec" type="com.chinaebi.entity.ManualRec"/>
+	    <!-- 结算商户配置-->
+	    <typeAlias alias="SettleMerchantConfig" type="com.chinaebi.entity.SettleMerchantConfig"/>
+	    <!-- 结算商户号与电银商户号配置关系 -->
+	    <typeAlias alias="SettleMerchantMatch" type="com.chinaebi.entity.SettleMerchantMatch"/>
+	    <!-- 渠道费率配置 -->
+	    <typeAlias alias="InstRate" type="com.chinaebi.entity.InstRate"/>
+	    <!-- 渠道商户费率配置 -->
+	    <typeAlias alias="InstMerRateConfig" type="com.chinaebi.entity.InstMerRateConfig"/>
+	    <!-- 费率公式 -->
+	    <typeAlias alias="FeePoundage" type="com.chinaebi.entity.FeePoundage"/>
+	    <!-- 渠道MCC费率实体映射 -->
+	    <typeAlias alias="InstRateMccConfig" type="com.chinaebi.entity.InstRateMccConfig"/>
+	    <!-- 对账总表实体映射 -->
+	    <typeAlias alias="ChannelDzCollect" type="com.chinaebi.entity.ChannelDzCollect"/>
+	    <!-- 银联品牌服务费实体映射 -->
+	    <typeAlias alias="PpfwData" type="com.chinaebi.entity.PpfwData"/>
+	    <!-- 银行机构实体映射 -->
+	    <typeAlias alias="BankInst" type="com.chinaebi.entity.BankInst"/>
+	    <!-- 系统接口指定渠道配置实体映射 -->
+	    <typeAlias alias="CustomInstConfig" type="com.chinaebi.entity.CustomInstConfig"/>
+	    
+	    <!-- 差错退款表实体映射 -->
+	    <typeAlias alias="ErrorTkLst" type="com.chinaebi.entity.ErrorTkLst"/>
+	</typeAliases>
+</configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Trade_Type">
+	<resultMap type="TradeType" id="TradeTypeMap">
+		<id property="trade_code" column="trade_code"/>
+		<result property="trade_name" column="trade_name"/>
+		<result property="trade_type_category_id" column="trade_type_category_id"/>
+	</resultMap>
+	
+	<select id="queryTradeType" parameterType="java.lang.String" resultType="java.lang.String">
+		select trade_name from trade_type where trade_code = #{trade_code}
+	</select>
+	
+	<select id="queryAll"  resultMap="TradeTypeMap">
+		select * from trade_type
+	</select>
+</mapper>

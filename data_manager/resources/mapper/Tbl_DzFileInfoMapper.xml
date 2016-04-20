@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DzFileInfo">
+	<resultMap type="DzFileInfo" id="DzFileInfoMap">
+		<id property="id" column="id" />
+		<result property="deduct_sys_date" column="deduct_sys_date" />
+		<result property="file_name" column="file_name" />
+		<result property="file_type" column="file_type" />
+		<result property="create_last_time" column="create_last_time" />
+		<result property="file_path" column="file_path" />
+		<result property="object_id" column="object_id" />
+		<result property="object_name" column="object_name" />
+	</resultMap>
+	
+	<!-- 分页查询银联差错对账文件数据 -->
+	<select id="queryPageDzFileInfo" parameterType="Map" resultMap="DzFileInfoMap">
+		select * from dz_file_tab
+		where 1=1
+		<if test="deduct_sys_date != null and deduct_sys_date != ''">
+			and deduct_sys_date = #{deduct_sys_date}
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id}
+		</if>
+		order by id desc limit #{startRow},#{limit}
+	</select>
+	
+	<select id="selectCount" parameterType="Map" resultType="int">
+		select count(*) from dz_file_tab
+		where 1=1
+		<if test="deduct_sys_date != null and deduct_sys_date != ''">
+			and deduct_sys_date = #{deduct_sys_date}
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id}
+		</if>
+	</select>
+	<select id="queryDzFileInfoById" parameterType="int" resultMap="DzFileInfoMap">
+		select * from dz_file_tab where id = #{id }
+	</select>
+</mapper>

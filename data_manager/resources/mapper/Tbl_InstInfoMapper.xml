@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="InstInfo">
+	<resultMap type="InstInfo" id="InstInfoMap">
+		<id property="instId" column="inst_id" />
+		<result property="whetherInnerDz" column="whether_inner_dz" />
+		<result property="tradeDzImplClass" column="trade_dz_impl_class" />
+		<result property="name" column="name_" />
+		<result property="whether_inner_js" column="whether_inner_js" />
+		<result property="whether_apply_online_tk" column="whether_apply_online_tk"/>
+		<result property="active" column="active" />
+		<result property="whether_outer_error_dz" column="whether_outer_error_dz"/>
+		<result property="whetherOuterDz" column="whether_outer_dz" />
+		<result property="remark" column="remark" />
+		<result property="error_dz_data_tableName" column="error_dz_data_tableName"/>
+		<result property="error_original_data_tableName" column="error_original_data_tableName"/>
+		<result property="receivi_name" column="receivi_name"/>
+		<result property="inst_type" column="inst_type"/>
+		<result property="inner_clear_file_path" column="inner_clear_file_path"/>
+		<result property="dz_data_column" column="dz_data_column"/>
+		<result property="gate" column="gate"/>
+		<result property="bankftp_download" column="bankftp_download"/>
+		<result property="bankftp_path" column="bankftp_path"/>
+		<result property="bankftp_ip" column="bankftp_ip"/>
+		<result property="bankftp_port" column="bankftp_port"/>
+		<result property="bankftp_username" column="bankftp_username"/>
+		<result property="bankftp_password" column="bankftp_password"/>
+		<result property="whether_t_1" column="whether_t_1"/>
+		<result property="whether_parse_brank" column="whether_parse_brank"/>
+		<result property="bank_id" column="bank_id"/>
+	</resultMap>
+	
+	<!-- 添加渠道信息配置 -->
+	<insert id="addInstInfo" parameterType="InstInfo">
+		insert into inst_info (
+			inst_id,
+			name_,
+			remark,
+			whether_inner_dz,
+			whether_outer_dz,
+			whether_apply_online_tk,
+			whether_outer_error_dz,
+			error_dz_data_tableName,
+			error_original_data_tableName,
+			receivi_name,
+			inst_type,
+			dz_data_column,
+			gate,
+			bankftp_download,
+			bankftp_path,
+			bankftp_ip,
+			bankftp_port,
+			bankftp_username,
+			bankftp_password,
+			whether_t_1,
+			whether_parse_brank,
+			bank_id
+		) values(
+			#{instId},
+			#{name},
+			#{remark},
+			#{whetherInnerDz},
+			#{whetherOuterDz},
+			#{whether_apply_online_tk},
+			#{whether_outer_error_dz},
+			#{error_dz_data_tableName},
+			#{error_original_data_tableName},
+			#{receivi_name},
+			#{inst_type},
+			#{dz_data_column},
+			#{gate},
+			#{bankftp_download},
+			#{bankftp_path},
+			#{bankftp_ip},
+			#{bankftp_port},
+			#{bankftp_username},
+			#{bankftp_password},
+			#{whether_t_1}, 
+			#{whether_parse_brank},
+			#{bank_id}
+		)
+	</insert>
+	
+	<!-- 修改机构信息配置 -->
+	<update id="updateInstInfo" parameterType="InstInfo">
+		update inst_info
+		<set>
+			<if test="remark != null and remark != ''">
+				remark = #{remark},
+			</if>
+			<if test="whetherOuterDz != null">
+				whether_outer_dz = #{whetherOuterDz},
+			</if>
+			<if test="whetherInnerDz != null">
+				whether_inner_dz = #{whetherInnerDz},
+			</if>
+			<if test="whether_apply_online_tk != null">
+				whether_apply_online_tk = #{whether_apply_online_tk},
+			</if>
+			<if test="name != null and name != ''">
+				name_ = #{name},
+			</if>
+			<if test="receivi_name != null and receivi_name != ''">
+				receivi_name = #{receivi_name},
+			</if>
+			<if test="whether_inner_js != null">
+				whether_inner_js = #{whether_inner_js},
+			</if>
+			<if test="whether_outer_error_dz != null">
+				whether_outer_error_dz = #{whether_outer_error_dz},
+			</if>
+			<if test="error_dz_data_tableName != null">
+				error_dz_data_tableName = #{error_dz_data_tableName},
+			</if>
+			<if test="error_original_data_tableName != null">
+				error_original_data_tableName = #{error_original_data_tableName},
+			</if>
+			<if test="dz_data_column != null">
+				dz_data_column = #{dz_data_column},
+			</if>
+			<if test="gate != null">
+				gate = #{gate},
+			</if>
+			<if test="bankftp_download != null">
+				bankftp_download = #{bankftp_download},
+			</if>
+			<if test="bankftp_path != null">
+				bankftp_path = #{bankftp_path},
+			</if>
+			<if test="bankftp_ip != null">
+				bankftp_ip = #{bankftp_ip},
+			</if>
+			<if test="bankftp_port != null">
+				bankftp_port = #{bankftp_port},
+			</if>
+			<if test="bankftp_username != null">
+				bankftp_username = #{bankftp_username},
+			</if>
+			<if test="bankftp_password != null">
+				bankftp_password = #{bankftp_password},
+			</if>
+			<if test="whether_t_1 != null">
+				whether_t_1 = #{whether_t_1},
+			</if>
+			<if test="whether_parse_brank != null">
+				whether_parse_brank = #{whether_parse_brank},
+			</if>
+			<if test="bank_id != null and bank_id != ''">
+				bank_id = #{bank_id},
+			</if>
+		</set>
+		where inst_id = #{instId} and inst_type = #{inst_type}
+	</update>
+	
+	<!-- 删除机构信息配置 -->
+	<delete id="deleteInstInfo" parameterType="int">
+		delete from inst_info where inst_id = #{instId}
+	</delete>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageInstInfo" parameterType="Map" resultMap="InstInfoMap">
+		select * from inst_info 
+		where 1 = 1
+		<if test="instId != null and instId != 0">
+			and inst_id = #{instId}
+		</if>	
+		<if test="name != null and name != ''">
+			and name_ = #{name}
+		</if>
+		<if test="active != null">
+			and active = #{active}
+		</if>
+		<if test="instType != null">
+			and inst_type = #{instType}
+		</if>
+		<if test="bankId != null">
+			and bank_id = #{bankId}
+		</if>
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageInstInfoCount" parameterType="Map" resultType="int">
+		select count(*) from inst_info
+		where 1 = 1
+		<if test="instId != null and instId != 0">
+			and inst_id = #{instId}
+		</if>
+		<if test="name != null and name != ''">
+			and name_ = #{name}
+		</if>
+		<if test="active != null">
+			and active = #{active}
+		</if>
+		<if test="instType != null">
+			and inst_type = #{instType}
+		</if>
+		<if test="bankId != null">
+			and bank_id = #{bankId}
+		</if>
+	</select>
+	
+	<select id="queryAll" resultMap="InstInfoMap">
+		select * from inst_info where active = 1
+	</select>
+	
+	<select id="queryInstInfoByInstId" resultMap="InstInfoMap" parameterType="Map">
+		select * from inst_info where inst_id = #{inst_id} and inst_type = #{inst_type}
+	</select>
+	
+	<update id="updateInstInfoStatus" parameterType="Map" >
+		update inst_info
+			<set>
+				<if test="active != null">
+					active = #{active}
+				</if>
+			</set>
+		where inst_id = #{instId} and inst_type = #{inst_type}
+	</update>
+	
+	<select id="queryInstInfoById" parameterType="int" resultType="int">
+		select count(*) from inst_info where inst_id = #{instId}
+	</select>
+	
+	<!-- 根据bank_id获取渠道总数 -->
+	<select id="queryInstInfoCountByBankId" parameterType="String" resultType="int">
+		select count(*) from inst_info where bank_id = #{bank_id}
+	</select>
+	
+	<!-- 删除银行机构时，根据bank_id先删除该银行机构下的所有扣款渠道 -->
+	<delete id="deleteInstInfoByBankId" parameterType="String">
+		delete from inst_info where bank_id = #{bank_id}
+	</delete>
+</mapper>

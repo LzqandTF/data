@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MerchantFundSettle">
+	<resultMap type="MerchantFundSettle" id="MerchantFundSettleMap">
+		<id property="id" column="id" />
+		<result property="mer_code" column="mer_code" />
+		<result property="mer_type" column="mer_type" />
+		<result property="settle_type" column="settle_type" />
+		<result property="sys_batch_no" column="sys_batch_no" />
+		<result property="mer_batch_no" column="mer_batch_no" />
+		<result property="start_date" column="start_date" />
+		<result property="end_date" column="end_date" />
+		<result property="create_tab_date" column="create_tab_date" />
+		<result property="mer_name" column="mer_name" />
+		<result property="trade_amount" column="trade_amount" />
+		<result property="trade_count" column="trade_count" />
+		<result property="refund_amount" column="refund_amount" />
+		<result property="refund_count" column="refund_count" />
+		<result property="system_fee" column="system_fee" />
+		<result property="refund_mer_fee" column="refund_mer_fee" />
+		<result property="open_bank_name" column="open_bank_name" />
+		<result property="open_acount_name" column="open_acount_name" />
+		<result property="open_account_code" column="open_account_code" />
+		<result property="settle_amount" column="settle_amount" />
+		<result property="settle_way" column="settle_way" />
+		<result property="settle_state" column="settle_state"/>
+		<result property="totalMoney" column="totalMoney" />
+		<result property="settle_date" column="settle_date" />
+		<result property="settle_confirm_date" column="settle_confirm_date" />
+		<result property="bil_manual" column="bil_manual"/>
+		<result property="mer_fee" column="mer_fee"/>
+		<result property="system_refund_fee" column="system_refund_fee"/>
+		<result property="bil_bank" column="bil_bank"/>
+		<result property="error_msg" column="error_msg"/>
+		<result property="rec_amount_add" column="rec_amount_add"/>
+		<result property="rec_amount_add_count" column="rec_amount_add_count"/>
+		<result property="rec_amount_sub" column="rec_amount_sub"/>
+		<result property="rec_amount_sub_count" column="rec_amount_sub_count"/>
+		<result property="whtherFz" column="whtherFz"/>
+		<result property="syn_result" column="syn_result"/>
+		<result property="syn_date" column="syn_date"/>
+	</resultMap>
+	
+	<!-- 结算发起向商户结算单中插入数据 -->
+	<insert id="addMerchantFundSettle" parameterType="MerchantFundSettle">
+		insert into merchant_fund_settle (mer_code,mer_type,settle_type,sys_batch_no,mer_batch_no,
+								start_date,end_date,create_tab_date,mer_name,trade_amount,trade_count,
+							refund_amount,refund_count,system_fee,refund_mer_fee,open_bank_name,
+							open_acount_name,open_account_code,settle_amount,syn_result,settle_way,
+							settle_state,settle_date,settle_confirm_date,bil_manual,mer_fee,system_refund_fee,bil_bank,rec_amount_add,rec_amount_add_count,rec_amount_sub,rec_amount_sub_count,whtherFz) 
+		values(#{mer_code},#{mer_type},#{settle_type},#{sys_batch_no},#{mer_batch_no},#{start_date},
+				#{end_date},#{create_tab_date},#{mer_name},#{trade_amount},#{trade_count},#{refund_amount},
+				#{refund_count},#{system_fee},#{refund_mer_fee},#{open_bank_name},#{open_acount_name},
+				#{open_account_code},#{settle_amount},#{syn_result},#{settle_way},#{settle_state},
+				#{settle_date},#{settle_confirm_date},#{bil_manual},#{mer_fee},#{system_refund_fee},#{bil_bank},#{rec_amount_add},#{rec_amount_add_count},#{rec_amount_sub},#{rec_amount_sub_count},#{whtherFz})
+	</insert>
+	
+	<!-- 商户结算单查询 -->
+	<select id="queryPageMerchantFundSettle" parameterType="Map" resultMap="MerchantFundSettleMap" >
+		SELECT 
+			*, 
+			(SELECT SUM(settle_amount) FROM merchant_fund_settle where 
+				<choose>
+					<when test="dateType == 1">
+						<if test="startTime != null and startTime != ''">
+							settle_confirm_date between #{startTime}
+						</if>
+						<if test="endTime != null and endTime != ''">
+							and #{endTime}
+						</if>
+					</when>
+					<when test="dateType == 2">
+						<if test="startTime != null and startTime != ''">
+							create_tab_date between #{startTime}
+						</if>
+						<if test="endTime != null and endTime != ''">
+							and #{endTime}
+						</if>
+					</when>
+					<otherwise>
+						<if test="startTime != null and startTime != ''">
+							end_date between #{startTime}
+						</if>
+						<if test="endTime != null and endTime != ''">
+							and #{endTime}
+						</if>
+					</otherwise>
+				</choose>
+				<if test="settleWay != null and settleWay != ''">
+					and settle_way = #{settleWay}
+				</if>
+				<if test="bilManual != null and bilManual != ''">
+					and bil_manual = #{bilManual}
+				</if>
+				<if test="merType != null and merType != ''">
+					and mer_type = #{merType}
+				</if>
+				<if test="merCode != null and merCode != ''">
+					and mer_code = #{merCode}
+				</if>
+				<if test="merBatchNo != null and merBatchNo != ''">
+					and mer_batch_no = #{merBatchNo}
+				</if>
+				<if test="merName != null and merName != ''">
+					and mer_name LIKE CONCAT('%','${merName}','%')
+				</if>
+				<if test="openAcountName != null and openAcountName != ''">
+					and open_acount_name LIKE CONCAT('%','${openAcountName}','%')
+				</if>
+			) AS totalMoney 
+		FROM merchant_fund_settle where 
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					settle_confirm_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<when test="dateType == 2">
+				<if test="startTime != null and startTime != ''">
+					create_tab_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					end_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="settleWay != null and settleWay != ''">
+			and settle_way = #{settleWay}
+		</if>
+		<if test="bilManual != null and bilManual != ''">
+			and bil_manual = #{bilManual}
+		</if>
+		<if test="merType != null and merType != ''">
+			and mer_type = #{merType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="merName != null and merName != ''">
+			and mer_name LIKE CONCAT('%','${merName}','%')
+		</if>
+		<if test="openAcountName != null and openAcountName != ''">
+			and open_acount_name LIKE CONCAT('%','${openAcountName}','%')
+		</if>
+		order by mer_code desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int" >
+		SELECT COUNT(*) FROM merchant_fund_settle where 
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					settle_confirm_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<when test="dateType == 2">
+				<if test="startTime != null and startTime != ''">
+					create_tab_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					end_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="settleWay != null and settleWay != ''">
+			and settle_way = #{settleWay}
+		</if>
+		<if test="bilManual != null and bilManual != ''">
+			and bil_manual = #{bilManual}
+		</if>
+		<if test="merType != null and merType != ''">
+			and mer_type = #{merType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="merName != null and merName != ''">
+			and mer_name LIKE CONCAT('%','${merName}','%')
+		</if>
+		<if test="openAcountName != null and openAcountName != ''">
+			and open_acount_name LIKE CONCAT('%','${openAcountName}','%')
+		</if>
+	</select>
+	
+	<!-- 查询商户结算单列表 -->
+	<select id="queryMerchantFundSettleList" parameterType="Map" resultMap="MerchantFundSettleMap" >
+		SELECT * FROM merchant_fund_settle where 
+		<choose>
+			<when test="dateType == 1">
+				<if test="startTime != null and startTime != ''">
+					settle_confirm_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<when test="dateType == 2">
+				<if test="startTime != null and startTime != ''">
+					create_tab_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					end_date between #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="settleWay != null and settleWay != ''">
+			and settle_way = #{settleWay}
+		</if>
+		<if test="bilManual != null and bilManual != ''">
+			and bil_manual = #{bilManual}
+		</if>
+		<if test="merType != null and merType != ''">
+			and mer_type = #{merType}
+		</if>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="merName != null and merName != ''">
+			and mer_name LIKE CONCAT('%','${merName}','%')
+		</if>
+		<if test="openAcountName != null and openAcountName != ''">
+			and open_acount_name LIKE CONCAT('%','${openAcountName}','%')
+		</if>
+	</select>
+	
+	<select id="queryMaxSysBatchNo" parameterType="String" resultType="String">
+		select max(sys_batch_no) from merchant_fund_settle where end_date = #{end_date}
+	</select>
+	
+	<select id="queryNoConfirmSettleDataCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_fund_settle where settle_state != 2 and settle_way = 2
+		<if test="startTime !=null and startTime !=''">
+		 	and #{startTime} &lt;= end_date   
+	    </if>
+	    <if test="endTime !=null and endTime !=''">
+		 	and end_date &lt;= #{endTime} 
+	    </if>
+	</select>
+	<select id="getSysBatchNo" resultType="long">
+		select next_value('sys_batch_no') 
+	</select>
+	
+	<select id="queryMerchantFundSettleCount" parameterType="String" resultType="int">
+		select count(*) from merchant_fund_settle where mer_code = #{mer_code}
+	</select>
+	
+	<!-- 银行账户划款结果查询 -->
+	<select id="queryPageDfResult" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select id,mer_batch_no,sys_batch_no,mer_code,mer_name,end_date,settle_confirm_date,
+			bil_bank,open_bank_name,open_acount_name,open_account_code,settle_amount,syn_result,error_msg 
+		from merchant_fund_settle where settle_state = 2 and settle_way = 1   
+		<choose>
+			<when test="dateType != 2">
+				<if test="startTime != null and startTime != ''">
+					and end_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and end_date &lt;= #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and settle_confirm_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and settle_confirm_date &lt;= #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo} 
+		</if>
+		<if test="dfResult != null and dfResult != ''">
+			<choose>
+				<when test="dfResult == 2">
+					and syn_result in (2,4,5,6)
+				</when>
+				<otherwise>
+					and syn_result = #{dfResult}
+				</otherwise>
+			</choose>
+		</if>
+		and bil_manual = 2 and syn_result != 0 
+		order by mer_code desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryDfResultCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_fund_settle where settle_state = 2 and settle_way = 1 
+		<choose>
+			<when test="dateType != 2">
+				<if test="startTime != null and startTime != ''">
+					and end_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and end_date &lt;= #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and settle_confirm_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and settle_confirm_date &lt;= #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="dfResult != null and dfResult != ''">
+			<choose>
+				<when test="dfResult == 2">
+					and syn_result in (2,4,5,6)
+				</when>
+				<otherwise>
+					and syn_result = #{dfResult}
+				</otherwise>
+			</choose>
+		</if>
+		and bil_manual = 2 and syn_result != 0 
+	</select>
+	
+	<!-- 银行账户划款结果下载 -->
+	<select id="downExcelDfResult" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select id,mer_batch_no,sys_batch_no,mer_code,mer_name,end_date,settle_confirm_date,
+			bil_bank,open_bank_name,open_acount_name,open_account_code,settle_amount,syn_result,error_msg 
+		from merchant_fund_settle where settle_state = 2 and settle_way = 1   
+		<choose>
+			<when test="dateType != 2">
+				<if test="startTime != null and startTime != ''">
+					and end_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and end_date &lt;= #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and settle_confirm_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and settle_confirm_date &lt;= #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="dfResult != null and dfResult != ''">
+			<choose>
+				<when test="dfResult == 2">
+					and syn_result in (2,4,5,6)
+				</when>
+				<otherwise>
+					and syn_result = #{dfResult}
+				</otherwise>
+			</choose>
+		</if>
+		and bil_manual = 2 and syn_result != 0
+	</select>
+	
+	<!-- 电银账户划款结果查询 -->
+	<select id="queryPageDyDfResult" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select * from merchant_fund_settle where settle_state = 2 and settle_way = 2   
+		<choose>
+			<when test="dateType != 2">
+				<if test="startTime != null and startTime != ''">
+					and end_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and end_date &lt;= #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and settle_confirm_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and settle_confirm_date &lt;= #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="syn_result != null and syn_result != ''">
+			and syn_result = #{syn_result}
+		</if>
+		and bil_manual = 2 and syn_result != 0
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryDyDfResultCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_fund_settle where settle_state = 2 and settle_way = 2   
+		<choose>
+			<when test="dateType != 2">
+				<if test="startTime != null and startTime != ''">
+					and end_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and end_date &lt;= #{endTime}
+				</if>
+			</when>
+			<otherwise>
+				<if test="startTime != null and startTime != ''">
+					and settle_confirm_date &gt;= #{startTime}
+				</if>
+				<if test="endTime != null and endTime != ''">
+					and settle_confirm_date &lt;= #{endTime}
+				</if>
+			</otherwise>
+		</choose>
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merBatchNo != null and merBatchNo != ''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="syn_result != null and syn_result != ''">
+			and syn_result = #{syn_result}
+		</if>
+		and bil_manual = 2 and syn_result != 0
+	</select>
+	
+	<!-- 分页查询需要制表的数据 -->
+	<select id="queryPageNeedZBDataLst" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select 
+			id, 
+			mer_code,
+			mer_name,
+			start_date,
+			end_date,
+			mer_batch_no,
+			sys_batch_no, 
+			trade_amount, 
+			trade_count, 
+			refund_amount,
+			refund_count,
+			system_fee,
+			mer_type, 
+			rec_amount_add,
+			refund_mer_fee, 
+			mer_fee, 
+			settle_amount,
+			settle_date,
+			settle_way,
+			system_refund_fee, 
+			rec_amount_sub,
+			whtherFz
+		from merchant_fund_settle 
+		where settle_state = 0 
+		<if test="startTime != null and startTime != ''">
+			and end_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			 and #{endTime}
+		</if>
+		<if test="merBatchNo !=null and  merBatchNo !=''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="sysBatchNo !=null and sysBatchNo !=''">
+			and sys_batch_no = #{sysBatchNo}
+		</if>
+		<if test="merCode !=null and merCode !=''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merType !=null and merType !=''">
+			and mer_type = #{merType} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryNeedZBDataCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_fund_settle where settle_state = 0 
+		<if test="startTime != null and startTime != ''">
+			and end_date between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			 and #{endTime}
+		</if>
+		<if test="merBatchNo !=null and  merBatchNo !=''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="sysBatchNo !=null and sysBatchNo !=''">
+			and sys_batch_no = #{sysBatchNo}
+		</if>
+		<if test="merCode !=null and merCode !=''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="merType !=null and merType !=''">
+			and mer_type = #{merType} 
+		</if>
+	</select>
+	
+	<!-- 分页查询需要结算制表确认的数据 -->
+	<select id="queryPageNeedQRDataLst" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select 
+			id, 
+			mer_code, 
+			mer_name,
+			start_date, 
+			end_date,
+			mer_batch_no,
+			sys_batch_no,
+			trade_amount, 
+			trade_count, 
+			refund_amount, 
+			refund_count,
+			system_refund_fee,
+			system_fee, 
+			refund_mer_fee, 
+			mer_fee, 
+			settle_amount, 
+			settle_date, 
+			rec_amount_add ,
+			settle_way, 
+			mer_type,settle_state, 
+			create_tab_date, 
+			rec_amount_sub,
+			whtherFz
+		from merchant_fund_settle where end_date between #{startTime} and #{endTime}
+		<if test="settleState !=null and  settleState !=''">
+			and settle_state = #{settleState}
+		</if>
+		<if test="merBatchNo !=null and  merBatchNo !=''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="sysBatchNo !=null and sysBatchNo !=''">
+			and sys_batch_no = #{sysBatchNo}
+		</if>
+		<if test="merCode !=null and merCode !=''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="settleWay !=null and settleWay !=''">
+			and settle_way = #{settleWay}
+		</if>
+		<if test="merType !=null and merType !=''">
+			and mer_type = #{merType}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryNeedQRDataCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_fund_settle where end_date between #{startTime} and #{endTime}
+		<if test="settleState !=null and  settleState !=''">
+			and settle_state = #{settleState}
+		</if>
+		<if test="merBatchNo !=null and  merBatchNo !=''">
+			and mer_batch_no = #{merBatchNo}
+		</if>
+		<if test="sysBatchNo !=null and sysBatchNo !=''">
+			and sys_batch_no = #{sysBatchNo}
+		</if>
+		<if test="merCode !=null and merCode !=''">
+			and mer_code = #{merCode}
+		</if>
+		<if test="settleWay !=null and settleWay !=''">
+			and settle_way = #{settleWay}
+		</if>
+		<if test="merType !=null and merType !=''">
+			and mer_type = #{merType}
+		</if>
+	</select>
+	
+	<!-- 从商户结算单中获取需要代付的商户信息 -->
+	<select id="queryDataListByIds" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select * from merchant_fund_settle where ${id} and create_tab_date = #{create_tab_date}
+	</select>
+	
+	<!-- 结算制表操作，修改结算单数据 -->
+	<update id="updateDataStatusToZB" parameterType="Map">
+		update merchant_fund_settle set settle_state = 1, create_tab_date = #{create_tab_date} where ${id}
+	</update>
+	
+	<!-- 结算确认修改数据状态操作 -->
+	<update id="updateMerchantFundSettleDataQrStatus" parameterType="String">
+		update merchant_fund_settle set settle_state = 2, settle_confirm_date = DATE_FORMAT(CURDATE(),'%Y%m%d') where id = #{id}
+	</update>
+	<!-- 查询需要结算确认的结算到电银账户的已结算制表数据结算单数据 -->
+	<select id="queryMerSettleDataOfNoQR" parameterType="Map" resultMap="MerchantFundSettleMap">
+		select * from merchant_fund_settle where ${id} and settle_state = #{settle_state} and settle_way = #{settle_way} 
+	</select>
+	
+	<!-- 结算确认修改数据同步状态操作 -->
+	<update id="updateMerchantFundSettleSynResultAndDate" parameterType="Map">
+		update merchant_fund_settle 
+		<set>
+	      <if test="syn_result != null and syn_result != ''" >
+	        syn_result = #{syn_result},
+	      </if>
+	      <if test="syn_date !=null and syn_date != ''">
+	      	syn_date = #{syn_date},
+	      </if>
+	      <if test="error_msg !=null">
+	      	error_msg = #{error_msg},
+	      </if>
+    	</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 查询商户最后一次结算截止日期 -->
+	<select id="queryMerSettleDataEndDate" parameterType="String" resultType="int">
+		select end_date from merchant_fund_settle where mer_code = #{mer_code} ORDER BY end_date desc LIMIT 1 
+	</select>
+	
+</mapper>

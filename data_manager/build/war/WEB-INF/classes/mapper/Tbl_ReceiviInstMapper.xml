@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReceiviInst">
+	<resultMap type="ReceiviInst" id="ReceiviInstMap">
+		<id property="receivi_id" column="receivi_id" />
+		<result property="receivi_name" column="receivi_name" />
+		<result property="receivi_remark" column="receivi_remark" />
+		<result property="receivi_status" column="receivi_status" />
+		<result property="receivi_time" column="receivi_time" />
+	</resultMap>
+	
+	<!-- 添加机构信息配置 -->
+	<insert id="addReceiviInst" parameterType="ReceiviInst">
+		insert into receivi_inst 
+		(receivi_id,receivi_name,receivi_remark,receivi_status,receivi_time)
+		values(#{receivi_id},#{receivi_name},#{receivi_remark},#{receivi_status},#{receivi_time})
+	</insert>
+	
+	<!-- 修改机构信息配置 -->
+	<update id="updateReceiviInst" parameterType="ReceiviInst">
+		update receivi_inst
+		<set>
+			<if test="receivi_name != null and receivi_name != ''">
+				receivi_name = #{receivi_name},
+			</if>
+			<if test="receivi_remark != null and receivi_remark != ''">
+				receivi_remark = #{receivi_remark},
+			</if>
+			<if test="receivi_status != null">
+				receivi_status = #{receivi_status},
+			</if>
+			<if test="receivi_time != null and receivi_time != ''">
+				receivi_time = #{receivi_time},
+			</if>
+		</set>
+		where receivi_id = #{receivi_id}
+	</update>
+	<!-- 分页查询 -->
+	<select id="queryPageReceiviInst" parameterType="Map" resultMap="ReceiviInstMap">
+		select * from receivi_inst 
+		where 1 = 1
+		<if test="receivi_id != null and receivi_id != 0">
+			and receivi_id = #{receivi_id}
+		</if>	
+		<if test="receivi_name != null and receivi_name != ''">
+			and receivi_name = #{receivi_name}
+		</if>
+		<if test="receivi_status != null">
+			and receivi_status = #{receivi_status}
+		</if>
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageReceiviInstCount" parameterType="Map" resultType="int">
+		select count(*) from receivi_inst
+		where 1 = 1
+		<if test="receivi_id != null and receivi_id != 0">
+			and receivi_id = #{receivi_id}
+		</if>
+		<if test="receivi_name != null and receivi_name != ''">
+			and receivi_name = #{receivi_name}
+		</if>
+		<if test="receivi_status != null">
+			and receivi_status = #{receivi_status}
+		</if>	
+	</select>
+	<select id="queryAll" resultMap="ReceiviInstMap">
+		select * from receivi_inst where receivi_status = 1
+	</select>
+	<update id="updateReceiviInstStatus" parameterType="Map" >
+		update receivi_inst
+			<set>
+				<if test="receivi_status != null">
+					receivi_status = #{receivi_status}
+				</if>
+			</set>
+		where receivi_id = #{receivi_id}
+	</update>
+	<select id="queryReceiviInstById" parameterType="int" resultType="int">
+		select count(*) from receivi_inst where receivi_id = #{receivi_id}
+	</select>
+</mapper>

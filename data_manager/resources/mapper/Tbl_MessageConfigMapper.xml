@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MessageConfig">
+	<resultMap type="MessageConfig" id="MessageConfigMap">
+		<id property="id" column="id" />
+		<result property="eventName" column="eventName" />
+		<result property="linkMan" column="linkMan" />
+		<result property="remark" column="remark" />
+	</resultMap>
+	
+	<!-- 添加交易金额配置信息 -->
+	<insert id="addMessageConfig" parameterType="MessageConfig">
+		insert into message_config 
+		(eventName,linkMan,remark)
+		values(#{eventName},#{linkMan},#{remark})
+	</insert>
+	<!-- 修改交易金额配置信息 -->
+	<update id="updateMessageConfig" parameterType="MessageConfig">
+		update message_config set linkMan = #{linkMan},remark = #{remark}
+		where eventName = #{eventName}
+	</update>
+	
+	<select id="queryMessageConfigByName" parameterType="Map" resultMap="MessageConfigMap">
+		select * from message_config where eventName = #{eventName}
+	</select>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ObjectRelevanceColumn">
+	<resultMap type="ObjectRelevanceColumn" id="ObjectRelevanceColumnMap">
+		<id property="id" column="id" />
+		<result property="dz_column_id" column="dz_column_id" />
+		<result property="rule_id" column="rule_id" />
+		<result property="object_id" column="object_id" />
+		<result property="file_type" column="file_type" />
+		<result property="show_attribute_name" column="show_attribute_name" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageObjectRelevanceColumn" parameterType="Map" resultMap="ObjectRelevanceColumnMap">
+		select o.id,d.attribute_name,d.attribute_column,o.show_attribute_name,o.rule_id,d.attribute_type,o.dz_column_id from object_relevance_column o 
+		left join dz_file_column_conf d on o.dz_column_id = d.dz_column_id
+		left join custom_object c on o.object_id = c.object_id
+		left join rule_handler r on o.rule_id = r.rule_id
+		where 1 = 1 
+		<if test="id != null and id != 0">
+			and o.id = #{id} 
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and o.object_id = #{object_id} 
+		</if>
+		<if test="file_type != null and file_type != 0">
+			and o.file_type = #{file_type} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	
+	<!-- 获取对象自定义字段 -->
+	<select id="queryObjectRelevanceColumn" parameterType="ObjectRelevanceColumn" resultMap="ObjectRelevanceColumnMap">
+		select o.id,d.attribute_name,d.attribute_column,o.show_attribute_name,o.rule_id,d.attribute_type,o.dz_column_id from object_relevance_column o 
+		left join dz_file_column_conf d on o.dz_column_id = d.dz_column_id
+		left join custom_object c on o.object_id = c.object_id
+		left join rule_handler r on o.rule_id = r.rule_id
+		where 1 = 1 
+		<if test="id != null and id != 0">
+			and o.id = #{id} 
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and o.object_id = #{object_id} 
+		</if>
+		<if test="file_type != null and file_type != 0">
+			and o.file_type = #{file_type} 
+		</if>
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from object_relevance_column where 1 = 1
+		<if test="id != null and id != 0">
+			and id = #{id} 
+		</if>
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id} 
+		</if>
+		<if test="file_type != null and file_type != 0">
+			and file_type = #{file_type} 
+		</if>
+	</select>
+	
+	<insert id="insertObjectRelevanceColumn" parameterType="ObjectRelevanceColumn">
+		insert into object_relevance_column(dz_column_id,rule_id,object_id,file_type,show_attribute_name) 
+		values(#{dz_column_id},#{rule_id},#{object_id},#{file_type},#{show_attribute_name})
+	</insert>
+	
+	<delete id="deleteObjectRelevanceColumn" parameterType="int">
+		delete from object_relevance_column where id = #{id}
+	</delete>
+	<update id="updateObjectRelevanceColumn" parameterType="ObjectRelevanceColumn">
+		update object_relevance_column
+			<set>
+				<if test="dz_column_id != null and dz_column_id != 0">
+					dz_column_id = #{dz_column_id},
+				</if>
+				<if test="rule_id != null">
+					rule_id = #{rule_id},
+				</if>
+				<if test="object_id != null and object_id != 0">
+					object_id = #{object_id},
+				</if>
+				<if test="file_type != null and file_type != 0">
+					file_type = #{file_type},
+				</if>
+				<if test="show_attribute_name != null and show_attribute_name != ''">
+					show_attribute_name = #{show_attribute_name},
+				</if>
+			</set>
+			where id = #{id}
+	</update>
+	
+	<select id="queryObjectRelevanceColumnById" parameterType="int" resultMap="ObjectRelevanceColumnMap">
+		select id,dz_column_id,rule_id,object_id,file_type,show_attribute_name from object_relevance_column where id = #{id}
+	</select>
+	
+	<select id="queryObjectRelevanceColumnList" resultMap="ObjectRelevanceColumnMap">
+		select id,dz_column_id,rule_id,object_id,show_attribute_name from object_relevance_column
+	</select>
+	<select id="deleteObjectRelevanceColumnCountByObjectId" parameterType="Map">
+		delete from object_relevance_column where object_id = #{object_id} 
+		<if test="file_type != null and file_type != 0">
+			and file_type = #{file_type} 
+		</if>
+	</select>
+	<select id="deleteObjectRelevanceColumnCountByDzColumnId" parameterType="int">
+		delete from object_relevance_column where dz_column_id = #{dz_column_id}
+	</select>
+	<delete id="deleteObjectOrDzColumnId" parameterType="Map">
+		delete from object_relevance_column where dz_column_id = #{dz_column_id} and object_id = #{object_id}
+	</delete>
+	<update id="updateObjectRelevanceColumnByRuleId" parameterType="int">
+		update object_relevance_column set rule_id = 0 where rule_id = #{rule_id}
+	</update>
+	<update id="updateObjectRelevanceColumnByDzColumnId" parameterType="ObjectRelevanceColumn">
+		update object_relevance_column
+			<set>
+				<if test="dz_column_id != null and dz_column_id != 0">
+					dz_column_id = #{dz_column_id},
+				</if>
+				<if test="rule_id != null">
+					rule_id = #{rule_id},
+				</if>
+				<if test="object_id != null and object_id != 0">
+					object_id = #{object_id},
+				</if>
+				<if test="file_type != null and file_type != 0">
+					file_type = #{file_type},
+				</if>
+				<if test="show_attribute_name != null and show_attribute_name != ''">
+					show_attribute_name = #{show_attribute_name},
+				</if>
+			</set>
+			where update object_relevance_column
+			<set>
+				<if test="dz_column_id != null and dz_column_id != 0">
+					dz_column_id = #{dz_column_id},
+				</if>
+				<if test="rule_id != null">
+					rule_id = #{rule_id},
+				</if>
+				<if test="file_type != null and file_type != 0">
+					file_type = #{file_type},
+				</if>
+				<if test="show_attribute_name != null and show_attribute_name != ''">
+					show_attribute_name = #{show_attribute_name},
+				</if>
+			</set>
+			where object_id = #{object_id}
+	</update>
+</mapper>

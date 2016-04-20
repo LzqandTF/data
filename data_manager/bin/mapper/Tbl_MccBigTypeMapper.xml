@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MccBigType">
+	<resultMap type="MccBigType" id="MccBigTypeMap">
+		<id property="big_type_id" column="big_type_id" />
+		<result property="type_name" column="type_name" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageMccBigType" parameterType="Map" resultMap="MccBigTypeMap">
+		select * from mcc_big_type where 1 = 1 
+		<if test="big_type_id != null and big_type_id != 0">
+			and big_type_id = #{big_type_id} 
+		</if>
+		<if test="type_name != null and type_name != ''">
+			and type_name = #{type_name}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from mcc_big_type where 1=1 
+		<if test="big_type_id != null and big_type_id != 0">
+			and big_type_id = #{big_type_id} 
+		</if>
+		<if test="type_name != null and type_name != ''">
+			and type_name = #{type_name}
+		</if>
+	</select>
+	
+	<select id="queryMccBigTypeById" parameterType="int" resultType="MccBigType">
+		select * from mcc_big_type where big_type_id = #{big_type_id} 
+	</select>
+	
+	<select id="queryAllMccBigType" resultMap="MccBigTypeMap">
+		select * from mcc_big_type
+	</select>
+	
+	<delete id="deleteMccBigType" parameterType="int">
+		delete from mcc_big_type where big_type_id = #{big_type_id}
+	</delete>
+	
+	<update id="updateMccBigType" parameterType="MccBigType">
+		<if test="type_name != null and type_name != ''">
+			update mcc_big_type set type_name = #{type_name} where big_type_id = #{big_type_id}
+		</if>
+	</update>
+	<insert id="addMccBigType" parameterType="MccBigType">
+		<if test="type_name != null and type_name != ''">
+			insert into mcc_big_type(type_name) value(#{type_name})
+		</if>
+	</insert>
+</mapper>

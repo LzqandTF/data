@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ErrorAuditRecords">
+	<resultMap type="ErrorAuditRecords" id="ErrorAuditRecordsMap">
+		<id property="trade_id" column="trade_id" />
+		<id property="record_time" column="record_time" />
+		<result property="terminal_id" column="terminal_id" />
+		<result property="terminal_info" column="terminal_info" />
+		<result property="terminal_type" column="terminal_type" />
+		<result property="trade_time" column="trade_time" />
+		<result property="out_account" column="out_account" />
+		<result property="out_account_type" column="out_account_type" />
+		<result property="out_acc_valid_time" column="out_acc_valid_time" />
+		<result property="out_account_info" column="out_account_info" />
+		<result property="out_account_info2" column="out_account_info2" />
+		<result property="out_account_desc" column="out_account_desc" />
+		<result property="in_account" column="in_account" />
+		<result property="in_card_name" column="in_card_name" />
+		<result property="in_bank_id" column="in_bank_id" />
+		<result property="trade_amount" column="trade_amount" />
+		<result property="trade_fee" column="trade_fee" />
+		<result property="trade_currency" column="trade_currency" />
+		<result property="trade_result" column="trade_result" />
+		<result property="req_sys_id" column="req_sys_id" />
+		<result property="req_sys_stance" column="req_sys_stance" />
+		<result property="req_mer_code" column="req_mer_code" />
+		<result property="req_mer_term_id" column="req_mer_term_id" />
+		<result property="req_response" column="req_response" />
+		<result property="deduct_sys_id" column="deduct_sys_id" />
+		<result property="deduct_sys_stance" column="deduct_sys_stance" />
+		<result property="deduct_mer_code" column="deduct_mer_code" />
+		<result property="deduct_mer_term_id" column="deduct_mer_term_id" />
+		<result property="deduct_result" column="deduct_result" />
+		<result property="deduct_sys_response" column="deduct_sys_response" />
+		<result property="deduct_roll_bk" column="deduct_roll_bk" />
+		<result property="deduct_roll_bk_result" column="deduct_roll_bk_result" />
+		<result property="deduct_roll_bk_reason" column="deduct_roll_bk_reason" />
+		<result property="deduct_roll_bk_response" column="deduct_roll_bk_response" />
+		<result property="deduct_roll_bk_stance" column="deduct_roll_bk_stance" />
+		<result property="trade_type" column="trade_type" />
+		<result property="msg_num" column="msg_num" />
+		<result property="pass_wd_mode" column="pass_wd_mode" />
+		<result property="req_type" column="req_type" />
+		<result property="req_input_type" column="req_input_type" />
+		<result property="req_time" column="req_time" />
+		<result property="trade_req_method" column="trade_req_method" />
+		<result property="trade_desc" column="trade_desc" />
+		<result property="in_account_type" column="in_account_type" />
+		<result property="trade_other_info" column="trade_other_info" />
+		<result property="deduct_stlm_date" column="deduct_stlm_date" />
+		<result property="deduct_sys_time" column="deduct_sys_time" />
+		<result property="gain_sys_id" column="gain_sys_id" />
+		<result property="gain_sys_stance" column="gain_sys_stance" />
+		<result property="gain_mer_code" column="gain_mer_code" />
+		<result property="gain_mer_term_id" column="gain_mer_term_id" />
+		<result property="gain_sys_response" column="gain_sys_response" />
+		<result property="gain_result" column="gain_result" />
+		<result property="gain_trade_amount" column="gain_trade_amount" />
+		<result property="gain_sys_reference" column="gain_sys_reference" />
+		<result property="nii" column="nii" />
+		<result property="authorization_code" column="authorization_code" />
+		<result property="additional_response_data" column="additional_response_data" />
+		<result property="additional_data" column="additional_data" />
+		<result property="boc" column="boc" />
+		<result property="custom_define_info" column="custom_define_info" />
+		<result property="original_trans_info" column="original_trans_info" />
+		<result property="req_process" column="req_process" />
+		<result property="deduct_sys_reference" column="deduct_sys_reference" />
+		<result property="trademsg_type" column="trademsg_type" />
+		<result property="deduct_rollbk_sys_reference" column="deduct_rollbk_sys_reference" />
+		<result property="mer_name" column="mer_name" />
+		<result property="bk_chk" column="bk_chk" />
+		<result property="whetherJs" column="whetherJs" />
+		<result property="whetherValid" column="whetherValid" />
+		<result property="whetherErroeHandle" column="whetherErroeHandle" />
+		<result property="whetherRiqe" column="whetherRiqe" />
+		<result property="acqInstIdCode" column="acqInstIdCode" />
+		<result property="fwdInstIdCode" column="fwdInstIdCode" />
+		<result property="deduct_rollbk_sys_time" column="deduct_rollbk_sys_time" />
+		<result property="agentId" column="agentId" />
+		<result property="whetherzero" column="whetherzero" />
+		<result property="whetherInnerJs" column="whetherInnerJs" />
+		<result property="handling_time" column="handling_time" />
+		<result property="check_time" column="check_time" />
+		<result property="handling_id" column="handling_id" />
+		<result property="reason_id" column="reason_id" />
+		<result property="handler_remark" column="handler_remark" />
+		<result property="operator" column="operator" />
+		<result property="turnDown_remark" column="turnDown_remark" />
+		<result property="handling_status" column="handling_status" />
+		<result property="error_resource" column="error_resource" />
+		<result property="business_type" column="business_type" />
+		<result property="operation_type" column="operation_type" />
+		<result property="operator_ip" column="operator_ip" />
+		<result property="ic_card_ser_no" column="ic_card_ser_no"/>
+		<result property="ic_read_and_condition" column="ic_read_and_condition"/>
+		<result property="inst_type" column="inst_type"/>
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageErrorAuditRecords" parameterType="Map" resultMap="ErrorAuditRecordsMap">
+		select 
+			e.trade_id,
+			e.record_time,
+			e.trade_amount,
+			e.req_sys_stance,
+			e.deduct_sys_id,
+			i.name_,
+			i.inst_type,
+			e.deduct_sys_stance,
+			e.deduct_sys_response,
+			e.deduct_roll_bk,
+			e.deduct_roll_bk_response,
+			e.deduct_roll_bk_stance,
+			e.deduct_sys_time,
+			e.deduct_rollbk_sys_time,
+			e.req_process,
+			e.trademsg_type,
+			e.handling_id,
+			e.operator,
+			e.error_resource,
+			e.business_type,
+			e.operation_type,
+			e.operator_ip,
+			e.inst_type
+		from error_audit_records e
+		left join inst_info i on deduct_sys_id = i.inst_id 
+		where e.inst_type = i.inst_type
+		<if test="startTime != null and startTime != ''">
+			and e.record_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and e.business_type = #{businessType}
+		</if>
+		<if test="operator != null and operator != ''">
+			and e.operator = #{operator}
+		</if>
+		<if test="operationType != null and operationType != ''">
+			and e.operation_type = #{operationType} 
+		</if>
+		<if test="reqSysStance != null and  reqSysStance != ''">
+			and e.req_sys_stance = #{reqSysStance}
+		</if>
+		order by e.record_time desc limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageErrorAuditRecordsCount" parameterType="Map" resultType="int">
+		select count(*) from error_audit_records 
+		where 1 = 1
+		<if test="startTime != null and startTime != ''">
+			and record_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and business_type = #{businessType}
+		</if>
+		<if test="operator != null and operator != ''">
+			and operator = #{operator}
+		</if>
+		<if test="operationType != null and operationType != ''">
+			and operation_type = #{operationType} 
+		</if>
+		<if test="reqSysStance != null and  reqSysStance != ''">
+			and req_sys_stance = #{reqSysStance}
+		</if>
+	</select>
+	
+	<select id="queryDetail" parameterType="Map" resultMap="ErrorAuditRecordsMap">
+		select * from error_audit_records
+		where 1 = 1
+		<if test="tradeId != null and tradeId != ''">
+			and trade_id = #{tradeId}
+		</if>
+		<if test="recordTime != null and recordTime != ''">
+			and record_time = #{recordTime}
+		</if>
+	</select>
+	
+	<insert id="addErrorAuditRecords" parameterType="ErrorAuditRecords">
+		insert into error_audit_records(
+			trade_id,
+			record_time,
+			terminal_id,
+			terminal_info,
+			terminal_type,
+			trade_time,
+			out_account,
+			out_account_type,
+			out_acc_valid_time,
+			out_account_info,
+			out_account_info2,
+			out_account_desc,
+			in_account,
+			in_card_name,
+			in_bank_id,
+			trade_amount,
+			trade_fee,
+			trade_currency,
+			trade_result,
+			req_sys_id,
+			req_sys_stance,
+			req_mer_code,
+			req_mer_term_id,
+			req_response,
+			deduct_sys_id,
+			deduct_sys_stance,
+			deduct_mer_code,
+			deduct_mer_term_id,
+			deduct_result,
+			deduct_sys_response,
+			deduct_roll_bk,
+			deduct_roll_bk_result,
+			deduct_roll_bk_reason,
+			deduct_roll_bk_response,
+			deduct_roll_bk_stance,
+			trade_type,
+			msg_num,
+			pass_wd_mode,
+			req_type,
+			req_input_type,
+			req_time,
+			trade_req_method,
+			trade_desc,
+			in_account_type,
+			trade_other_info,
+			deduct_stlm_date,
+			deduct_sys_time,
+			gain_sys_id,
+			gain_sys_stance,
+			gain_mer_code,
+			gain_mer_term_id,
+			gain_sys_response,
+			gain_result,
+			gain_trade_amount,
+			gain_sys_reference,
+			nii,
+			authorization_code,
+			additional_response_data,
+			additional_data,
+			boc,
+			custom_define_info,
+			original_trans_info,
+			req_process,
+			deduct_sys_reference,
+			trademsg_type,
+			deduct_rollbk_sys_reference,
+			mer_name,
+			bk_chk,
+			whetherJs,
+			whetherValid,
+			whetherErroeHandle,
+			whetherRiqe,
+			acqInstIdCode,
+			fwdInstIdCode,
+			deduct_rollbk_sys_time,
+			agentId,
+			whetherzero,
+			whetherInnerJs,
+			handling_time,
+			check_time,
+			handling_id,
+			reason_id,
+			handler_remark,
+			operator,
+			turnDown_remark,
+			handling_status,
+			error_resource,
+			business_type,
+			operation_type,
+			operator_ip
+		)
+		value(
+			#{trade_id},
+			#{record_time},
+			#{terminal_id},
+			#{terminal_info},
+			#{terminal_type},
+			#{trade_time},
+			#{out_account},
+			#{out_account_type},
+			#{out_acc_valid_time},
+			#{out_account_info},
+			#{out_account_info2},
+			#{out_account_desc},
+			#{in_account},
+			#{in_card_name},
+			#{in_bank_id},
+			#{trade_amount},
+			#{trade_fee},
+			#{trade_currency},
+			#{trade_result},
+			#{req_sys_id},
+			#{req_sys_stance},
+			#{req_mer_code},
+			#{req_mer_term_id},
+			#{req_response},
+			#{deduct_sys_id},
+			#{deduct_sys_stance},
+			#{deduct_mer_code},
+			#{deduct_mer_term_id},
+			#{deduct_result},
+			#{deduct_sys_response},
+			#{deduct_roll_bk},
+			#{deduct_roll_bk_result},
+			#{deduct_roll_bk_reason},
+			#{deduct_roll_bk_response},
+			#{deduct_roll_bk_stance},
+			#{trade_type},
+			#{msg_num},
+			#{pass_wd_mode},
+			#{req_type},
+			#{req_input_type},
+			#{req_time},
+			#{trade_req_method},
+			#{trade_desc},
+			#{in_account_type},
+			#{trade_other_info},
+			#{deduct_stlm_date},
+			#{deduct_sys_time},
+			#{gain_sys_id},
+			#{gain_sys_stance},
+			#{gain_mer_code},
+			#{gain_mer_term_id},
+			#{gain_sys_response},
+			#{gain_result},
+			#{gain_trade_amount},
+			#{gain_sys_reference},
+			#{nii},
+			#{authorization_code},
+			#{additional_response_data},
+			#{additional_data},
+			#{boc},
+			#{custom_define_info},
+			#{original_trans_info},
+			#{req_process},
+			#{deduct_sys_reference},
+			#{trademsg_type},
+			#{deduct_rollbk_sys_reference},
+			#{mer_name},
+			#{bk_chk},
+			#{whetherJs},
+			#{whetherValid},
+			#{whetherErroeHandle},
+			#{whetherRiqe},
+			#{acqInstIdCode},
+			#{fwdInstIdCode},
+			#{deduct_rollbk_sys_time},
+			#{agentId},
+			#{whetherzero},
+			#{whetherInnerJs},
+			#{handling_time},
+			#{check_time},
+			#{handling_id},
+			#{reason_id},
+			#{handler_remark},
+			#{operator},
+			#{turnDown_remark},
+			#{handling_status},
+			#{error_resource},
+			#{business_type},
+			#{operation_type},
+			#{operator_ip}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChannelMccCalculate">
+	<resultMap type="ChannelMccCalculate" id="ChannelMccCalculateMap">
+		<id property="inst_id" column="inst_id" />
+		<result property="issuer" column="issuer" />
+		<result property="billToParty" column="billToParty" />
+		<result property="unionpay" column="unionpay" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageChannelMccCalculate" parameterType="Map" resultMap="ChannelMccCalculateMap">
+		select * from channel_mcc_calculate where 1 = 1 
+		<if test="inst_id != null and inst_id != 0">
+			and inst_id = #{inst_id} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryChannelMccCalculateById" parameterType="int" resultType="ChannelMccCalculate">
+		select * from channel_mcc_calculate where inst_id = #{inst_id} 
+	</select>
+	
+	<select id="queryAllChannelMccCalculate" resultMap="ChannelMccCalculateMap">
+		select * from channel_mcc_calculate
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from channel_mcc_calculate where 1 = 1 
+		<if test="inst_id != null and inst_id != 0">
+			and inst_id = #{inst_id} 
+		</if>
+	</select>
+	
+	<delete id="deleteChannelMccCalculate" parameterType="int">
+		delete from channel_mcc_calculate where inst_id = #{inst_id}
+	</delete>
+	
+	<update id="updateChannelMccCalculate" parameterType="ChannelMccCalculate">
+		update channel_mcc_calculate 
+		<set>
+			<if test="issuer != null ">
+				issuer = #{issuer},
+			</if>
+			<if test="billToParty != null">
+				billToParty = #{billToParty},
+			</if>
+			<if test="unionpay != null">
+				unionpay = #{unionpay},
+			</if>
+		</set>
+		 where inst_id = #{inst_id}
+	</update>
+	<insert id="addChannelMccCalculate" parameterType="ChannelMccCalculate">
+		insert into channel_mcc_calculate(inst_id,issuer,billToParty,unionpay) 
+		value(#{inst_id},#{issuer},#{billToParty},#{unionpay})
+	</insert>
+</mapper>

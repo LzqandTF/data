@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MerchantSettleFail">
+	<resultMap type="MerchantSettleFail" id="MerchantSettleFailMap">
+		<id property="id" column="id" />
+		<result property="mer_code" column="mer_code" />
+		<result property="mer_type" column="mer_type" />
+		<result property="mer_name" column="mer_name" />
+		<result property="last_settle_date" column="last_settle_date" />
+		<result property="settle_start_date" column="settle_start_date" />
+		<result property="reason_id" column="reason_id" />
+		<result property="reason" column="reason" />
+	</resultMap>
+	
+	<!-- 分页查询 结算发起失败原因-->
+	<select id="queryPageMerchantSettleFail" parameterType="Map" resultMap="MerchantSettleFailMap">
+		select m.mer_type,m.mer_code,m.mer_name,m.last_settle_date,m.settle_start_date,s.reason from merchant_settle_fail m left join settle_fail_reason s on m.reason_id = s.reason_id
+		where m.settle_start_date &gt;= #{startTime} and m.settle_start_date &lt;= #{endTime} 
+		<if test="reason_id != null and reason_id != 0">
+			and m.reason_id = #{reason_id}
+		</if>	
+		<if test="start_time != null ">
+			and m.last_settle_date &gt;= #{start_time}
+		</if>
+		<if test="end_time != null ">
+			and m.last_settle_date &lt;= #{end_time}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code}
+		</if>
+		<if test="mer_type != null">
+			and m.mer_type = #{mer_type}
+		</if>
+		order by id desc
+		limit #{startRow},#{limit}		
+	</select>
+	<select id="queryPageMerchantSettleFailCount" parameterType="Map" resultType="int">
+		select count(*) from merchant_settle_fail m left join settle_fail_reason s on m.reason_id = s.reason_id
+		where m.settle_start_date &gt;= #{startTime} and m.settle_start_date &lt;= #{endTime} 
+		<if test="reason_id != null and reason_id != 0">
+			and m.reason_id = #{reason_id}
+		</if>	
+		<if test="start_time != null ">
+			and m.last_settle_date &gt;= #{start_time}
+		</if>
+		<if test="end_time != null ">
+			and m.last_settle_date &lt;= #{end_time}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code}
+		</if>
+		<if test="mer_type != null">
+			and m.mer_type = #{mer_type}
+		</if>	
+	</select>
+	
+	<select id="queryMerchantSettleFailList" parameterType="Map" resultMap="MerchantSettleFailMap">
+		select m.mer_type,m.mer_code,m.mer_name,m.last_settle_date,m.settle_start_date,s.reason from merchant_settle_fail m left join settle_fail_reason s on m.reason_id = s.reason_id
+		where m.settle_start_date &gt;= #{startTime} and m.settle_start_date &lt;= #{endTime} 
+		<if test="reason_id != null and reason_id != 0">
+			and m.reason_id = #{reason_id}
+		</if>	
+		<if test="start_time != null ">
+			and m.last_settle_date &gt;= #{start_time}
+		</if>
+		<if test="end_time != null ">
+			and m.last_settle_date &lt;= #{end_time}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code}
+		</if>
+		<if test="mer_type != null">
+			and m.mer_type = #{mer_type}
+		</if>
+	</select>
+	
+	<insert id="addMerchantSettleFail" parameterType="MerchantSettleFail">
+		insert into merchant_settle_fail(mer_code,mer_type,mer_name,last_settle_date,settle_start_date,reason_id) 
+		values (#{mer_code},#{mer_type},#{mer_name},#{last_settle_date},#{settle_start_date},#{reason_id})
+	</insert>
+</mapper>

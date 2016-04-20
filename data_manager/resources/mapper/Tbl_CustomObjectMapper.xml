@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomObject">
+	<resultMap type="CustomObject" id="CustomObjectMap">
+		<id property="object_id" column="object_id" />
+		<result property="object_name" column="object_name" />
+		<result property="file_address" column="file_address" />
+		<result property="dz_file_name" column="dz_file_name" />
+		<result property="error_file_name" column="error_file_name" />
+		<result property="whether_upload" column="whether_upload" />
+		<result property="ftp_ip" column="ftp_ip" />
+		<result property="ftp_address" column="ftp_address" />
+		<result property="ftp_port" column="ftp_port" />
+		<result property="ftp_username" column="ftp_username" />
+		<result property="ftp_password" column="ftp_password" />
+		<result property="file_suffix" column="file_suffix" />
+		<result property="generate_number" column="generate_number" />
+		<result property="file_need_online_data" column="file_need_online_data" />
+		<result property="data_type" column="data_type" />
+		<result property="whether_create_error_file" column="whether_create_error_file" />
+		<result property="whether_create_file_by_range" column="whether_create_file_by_range" />
+		<result property="file_type" column="file_type" />
+		<result property="whether_create_file_by_inst" column="whether_create_file_by_inst" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageCustomObject" parameterType="Map" resultMap="CustomObjectMap">
+		select * from custom_object where 1 = 1 
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id} 
+		</if>
+		<if test="object_name != null and object_name != ''">
+			and object_name = #{object_name} 
+		</if>
+		<if test="generate_number != null ">
+			and generate_number = #{generate_number} 
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from custom_object where 1 = 1
+		<if test="object_id != null and object_id != 0">
+			and object_id = #{object_id} 
+		</if>
+		<if test="generate_number != null ">
+			and generate_number = #{generate_number} 
+		</if>
+		<if test="object_name != null and object_name != ''">
+			and object_name = #{object_name} 
+		</if>
+	</select>
+	
+	<insert id="insertCustomObject" parameterType="CustomObject">
+		insert into custom_object(object_name,file_address,dz_file_name,error_file_name,whether_upload,ftp_ip,
+			ftp_address,ftp_port,ftp_username,ftp_password,file_suffix,generate_number,file_need_online_data,data_type,whether_create_error_file,
+			whether_create_file_by_range,file_type,whether_create_file_by_inst) 
+		values(#{object_name},#{file_address},#{dz_file_name},#{error_file_name},#{whether_upload},#{ftp_ip},
+			#{ftp_address},#{ftp_port},#{ftp_username},#{ftp_password},#{file_suffix},#{generate_number},
+			#{file_need_online_data},#{data_type},#{whether_create_error_file},#{whether_create_file_by_range},#{file_type},#{whether_create_file_by_inst})
+	</insert>
+	
+	<delete id="deleteCustomObject" parameterType="int">
+		delete from custom_object where object_id = #{object_id}
+	</delete>
+	<update id="updateCustomObject" parameterType="CustomObject">
+		update custom_object
+			<set>
+				<if test="object_name != null and object_name != ''">
+					object_name = #{object_name},
+				</if>
+				<if test="file_address != null and file_address != ''">
+					file_address = #{file_address},
+				</if>
+				<if test="dz_file_name != null and dz_file_name != ''">
+					dz_file_name = #{dz_file_name},
+				</if>
+				<if test="error_file_name != null and error_file_name != ''">
+					error_file_name = #{error_file_name},
+				</if>
+				<if test="whether_upload != null">
+					whether_upload = #{whether_upload},
+				</if>
+				<if test="generate_number != null">
+					generate_number = #{generate_number},
+				</if>
+				<if test="file_need_online_data != null">
+					file_need_online_data = #{file_need_online_data},
+				</if>
+				<if test="data_type != null">
+					data_type = #{data_type},
+				</if>
+				<if test="whether_create_error_file != null">
+					whether_create_error_file = #{whether_create_error_file},
+				</if>
+				<if test="whether_create_file_by_range != null">
+					whether_create_file_by_range = #{whether_create_file_by_range},
+				</if>
+				<if test="file_type != null">
+					file_type = #{file_type},
+				</if>
+				<if test="whether_create_file_by_inst != null">
+					whether_create_file_by_inst = #{whether_create_file_by_inst},
+				</if>
+				ftp_ip = #{ftp_ip},ftp_address = #{ftp_address},ftp_port = #{ftp_port},ftp_username = #{ftp_username},ftp_password = #{ftp_password},file_suffix = #{file_suffix}
+			</set>
+			where object_id = #{object_id}
+	</update>
+	
+	<select id="queryCustomObjectById" parameterType="int" resultMap="CustomObjectMap">
+		select * from custom_object where object_id = #{object_id}
+	</select>
+	
+	<select id="queryCustomObjectList" resultMap="CustomObjectMap">
+		select object_id,object_name,file_address,dz_file_name,error_file_name,generate_number,
+			file_need_online_data,data_type,whether_create_error_file,whether_create_file_by_range,file_type,whether_create_file_by_inst
+		from custom_object
+	</select>
+	
+	<select id="queryCustomObjectListOfInterfaceTypeNotAll" resultMap="CustomObjectMap">
+		select object_id,object_name,file_address,dz_file_name,error_file_name,generate_number,
+			file_need_online_data,data_type,whether_create_error_file,whether_create_file_by_range,file_type,whether_create_file_by_inst
+		 from custom_object where generate_number != 1
+	</select>
+	
+	<select id="queryUnionCheckobjectName" parameterType="CustomObject" resultType="int">
+		select count(*) from custom_object where object_name = #{object_name}
+	</select>
+	
+	<select id="queryUnionCheckfileAddress" parameterType="CustomObject" resultType="int">
+		select count(*) from custom_object where file_address = #{file_address}
+	</select>
+	
+	<select id="queryCustomObjectByFileType" parameterType="int" resultMap="CustomObjectMap">
+		select object_id,object_name,dz_file_name from custom_object where file_type = #{file_type}
+	</select>
+	
+	<select id="queryCustomObjectByName" parameterType="String" resultMap="CustomObjectMap">
+		select object_id from custom_object where object_name = #{object_name}
+	</select>
+</mapper>

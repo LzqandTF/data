@@ -1,0 +1,1106 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ErrorData_Lst">
+	<resultMap type="ErrorDataLst" id="ErrorDataLstMap">
+		<id property="trade_id" column="trade_id"/>
+		<result property="terminal_id" column="terminal_id"/>
+		<result property="terminal_info" column="terminal_info"/>
+		<result property="terminal_type" column="terminal_type"/>
+		<result property="trade_time" column="trade_time"/>
+		<result property="out_account" column="out_account"/>
+		<result property="out_account_type" column="out_account_type"/>
+		<result property="out_acc_valid_time" column="out_acc_valid_time"/>
+		<result property="out_account_info" column="out_account_info"/>
+		<result property="out_account_info2" column="out_account_info2"/>
+		<result property="out_account_desc" column="out_account_desc"/>
+		<result property="in_account" column="in_account"/>
+		<result property="in_card_name" column="in_card_name"/>
+		<result property="in_bank_id" column="in_bank_id"/>
+		<result property="trade_amount" column="trade_amount"/>
+		<result property="trade_fee" column="trade_fee"/>
+		<result property="trade_currency" column="trade_currency"/>
+		<result property="trade_result" column="trade_result"/>
+		<result property="req_sys_id" column="req_sys_id"/>
+		<result property="req_sys_stance" column="req_sys_stance"/>
+		<result property="req_mer_code" column="req_mer_code"/>
+		<result property="req_mer_term_id" column="req_mer_term_id"/>
+		<result property="req_response" column="req_response"/>
+		<result property="deduct_sys_id" column="deduct_sys_id"/>
+		<result property="deduct_sys_stance" column="deduct_sys_stance"/>
+		<result property="deduct_mer_code" column="deduct_mer_code"/>
+		<result property="deduct_mer_term_id" column="deduct_mer_term_id"/>
+		<result property="deduct_result" column="deduct_result"/>
+		<result property="deduct_sys_response" column="deduct_sys_response"/>
+		<result property="deduct_roll_bk" column="deduct_roll_bk"/>
+		<result property="deduct_roll_bk_result" column="deduct_roll_bk_result"/>
+		<result property="deduct_roll_bk_reason" column="deduct_roll_bk_reason"/>
+		<result property="deduct_roll_bk_response" column="deduct_roll_bk_response"/>
+		<result property="deduct_roll_bk_stance" column="deduct_roll_bk_stance"/>
+		<result property="trade_type" column="trade_type"/>
+		<result property="msg_num" column="msg_num"/>
+		<result property="pass_wd_mode" column="pass_wd_mode"/>
+		<result property="req_type" column="req_type"/>
+		<result property="req_input_type" column="req_input_type"/>
+		<result property="req_time" column="req_time"/>
+		<result property="trade_req_method" column="trade_req_method"/>
+		<result property="trade_desc" column="trade_desc"/>
+		<result property="in_account_type" column="in_account_type"/>
+		<result property="trade_other_info" column="trade_other_info"/>
+		<result property="deduct_stlm_date" column="deduct_stlm_date"/>
+		<result property="deduct_sys_time" column="deduct_sys_time"/>
+		<result property="gain_sys_id" column="gain_sys_id"/>
+		<result property="gain_sys_stance" column="gain_sys_stance"/>
+		<result property="gain_mer_code" column="gain_mer_code"/>
+		<result property="gain_mer_term_id" column="gain_mer_term_id"/>
+		<result property="gain_sys_response" column="gain_sys_response"/>
+		<result property="gain_result" column="gain_result"/>
+		<result property="gain_trade_amount" column="gain_trade_amount"/>
+		<result property="gain_sys_reference" column="gain_sys_reference"/>
+		<result property="nii" column="nii"/>
+		<result property="authorization_code" column="authorization_code"/>
+		<result property="additional_response_data" column="additional_response_data"/>
+		<result property="additional_data" column="additional_data"/>
+		<result property="boc" column="boc"/>
+		<result property="custom_define_info" column="custom_define_info"/>
+		<result property="original_trans_info" column="original_trans_info"/>
+		<result property="req_process" column="req_process"/>
+		<result property="deduct_sys_reference" column="deduct_sys_reference"/>
+		<result property="trademsg_type" column="trademsg_type"/>
+		<result property="deduct_rollbk_sys_reference" column="deduct_rollbk_sys_reference"/>
+		<result property="mer_name" column="mer_name"/>
+		<result property="bk_chk" column="bk_chk"/>
+		<result property="whetherJs" column="whetherJs"/>
+		<result property="whetherValid" column="whetherValid"/>
+		<result property="whetherErroeHandle" column="whetherErroeHandle"/>
+		<result property="whetherRiqie" column="whetherRiqie" />
+		<result property="acqInstIdCode" column="acqInstIdCode" />
+		<result property="fwdInstIdCode" column="fwdInstIdCode" />
+		<result property="deduct_rollbk_sys_time" column="deduct_rollbk_sys_time" />
+		<result property="agentId" column="agentId" />
+		<result property="whetherzero" column="whetherzero" />
+		<result property="whtherInnerJs" column="whtherInnerJs" />
+		<result property="handling_time" column="handling_time" />
+		<result property="check_time" column="check_time" />
+		<result property="handling_id" column="handling_id" />
+		<result property="reason_id" column="reason_id" />
+		<result property="handler_remark" column="handler_remark" />
+		<result property="operator" column="operator" />
+		<result property="audit_operator" column="audit_operator"/>
+		<result property="turnDown_remark" column="turnDown_remark" />
+		<result property="handling_status" column="handling_status" />
+		<result property="error_resource" column="error_resource" />
+		<result property="ic_card_ser_no" column="ic_card_ser_no" />
+		<result property="ic_read_and_condition" column="ic_read_and_condition" />
+		<result property="js_date" column="js_date" />
+		<result property="whetherQs" column="whetherQs" />
+		<result property="mer_fee" column="mer_fee" />
+		<result property="whetherTk" column="whetherTk" />
+		<result property="zf_fee" column="zf_fee" />
+		<result property="zf_file_fee" column="zf_file_fee" />
+		<result property="inst_type" column="inst_type"/>
+		<result property="fee_formula" column="fee_formula"/>
+		<result property="bank_id" column="bank_id"/>
+		<result property="whetherAccessStance" column="whetherAccessStance"/>
+		<result property="whtherInnerDz" column="whtherInnerDz"/>
+	</resultMap>
+	
+	<!-- 内部差错调整分页查询 -->
+	<select id="queryPageErrorDataLst" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.trade_id,
+			 e.req_sys_stance,
+			 e.deduct_sys_stance,
+			 e.trade_time,
+			 e.trade_amount,
+			 e.req_process,
+			 e.trademsg_type,
+			 e.trade_result,
+			 e.deduct_sys_id,
+			 e.deduct_roll_bk,
+			 i.name_,
+			 e.whetherErroeHandle,
+			 e.deduct_rollbk_sys_time,
+			 e.deduct_roll_bk_response,
+			 e.deduct_roll_bk_stance,
+			 e.deduct_sys_time,
+			 e.deduct_sys_response,
+			 e.handling_id,
+			 e.handling_status,
+			 e.handling_time,
+			 e.turnDown_remark,
+			 e.error_resource,
+			 e.handling_time,
+			 e.js_date,
+			 e.handler_remark,
+			 e.additional_response_data,
+			 e.cdz_remark,
+			 e.bank_id,
+			 e.inst_type,
+			 e.nii,
+			 e.custom_define_info,
+			 e.deduct_stlm_date,
+			 e.deduct_sys_reference
+		from error_data_lst e
+		left join inst_info i on e.deduct_sys_id = i.inst_id 
+		<if test="inst_type != null and inst_type != ''">
+			and i.inst_type = #{inst_type}
+		</if>
+		where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and e.deduct_sys_id = #{deduct_sys_id} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and e.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and e.whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and e.js_date = #{js_date}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and e.handling_id = #{handling_id}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and e.whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and e.handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and e.deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="error_resource != null">
+			and e.error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null">
+			and e.bank_id = #{bankId}
+		</if>
+		order by trade_time desc limit #{startRow},#{limit}
+	</select>
+	<!-- 内部差错调整查询总条数 -->
+	<select id="selectPageErrorDataCount" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst
+		where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and js_date = #{js_date}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="error_resource != null">
+			and error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null">
+			and bank_id = #{bankId}
+		</if>
+	</select>
+	
+	<!-- 内部差错调整数据下载 -->
+	<select id="queryAllForDownExcel" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.trade_id,
+			 e.req_sys_stance,
+			 e.deduct_sys_stance,
+			 e.trade_time,
+			 e.trade_amount,
+			 e.req_process,
+			 e.trademsg_type,
+			 e.trade_result,
+			 e.deduct_sys_id,
+			 e.deduct_roll_bk,
+			 i.name_,
+			 e.whetherErroeHandle,
+			 e.deduct_rollbk_sys_time,
+			 e.deduct_roll_bk_response,
+			 e.deduct_roll_bk_stance,
+			 e.deduct_sys_time,
+			 e.deduct_sys_response,
+			 e.handling_id,
+			 e.handling_status,
+			 e.handling_time,
+			 e.handler_remark,
+			 e.error_resource,
+			 e.handling_time,
+			 e.js_date,
+			 e.additional_response_data,
+			 e.cdz_remark,
+			 e.inst_type,
+			 e.nii,
+			 e.custom_define_info,
+			 e.deduct_stlm_date
+		from error_data_lst e
+		left join inst_info i on e.deduct_sys_id = i.inst_id 
+		<if test="inst_type != null and inst_type != ''">
+			and i.inst_type = #{inst_type}
+		</if>
+		where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and e.deduct_sys_id = #{deduct_sys_id} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and e.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and e.whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and e.js_date = #{js_date}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and e.handling_id = #{handling_id}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and e.whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and e.handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and e.deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="error_resource != null">
+			and e.error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.trade_time desc
+	</select>
+	
+	<!-- 内部差错调整审批分页查询 -->
+	<select id="queryPageNeedApprovalData" parameterType="Map" resultMap="ErrorDataLstMap">
+		select 
+			e.trade_id,
+			e.req_sys_stance,
+			e.deduct_sys_stance,
+			e.deduct_roll_bk_stance,
+			e.trade_time,
+			e.trade_amount,
+			e.req_process,
+			e.trademsg_type,
+			e.trade_result,
+			e.deduct_sys_id,
+			e.deduct_roll_bk,
+			e.deduct_rollbk_sys_time,
+			e.deduct_roll_bk_response,
+			e.deduct_sys_time,
+			e.deduct_sys_response,
+			i.name_,
+			e.whetherErroeHandle,
+			e.handling_status,
+			e.handling_time,
+			e.check_time,
+			e.turnDown_remark,
+			e.error_resource,
+			e.handling_id,
+			e.handling_time,
+			e.js_date,
+			e.inst_type,
+			additional_response_data,
+			cdz_remark,
+			e.inst_type,
+			e.boc,
+			e.custom_define_info,
+			e.deduct_stlm_date
+		from error_data_lst e
+		left join inst_info i on e.deduct_sys_id = i.inst_id 
+		<if test="inst_type != null and inst_type != ''">
+			and i.inst_type = #{inst_type}
+		</if>
+		where e.handling_status = 1 and e.handling_id != 3 
+		<if test="startTime != null and startTime != ''">
+			and e.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and e.deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="whetherJs != null and whetherJs != ''">
+			and e.whetherJs = #{whetherJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and e.js_date = #{js_date}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and e.whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and e.handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and e.deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and e.handling_id = #{handling_id}
+		</if>
+		<if test="error_resource != null and error_resource != ''">
+			and e.error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.trade_time desc limit #{startRow},#{limit}
+	</select>
+	<!-- 内部差错调整审批查询总条数 -->
+	<select id="selectPageNeedApprovalDataCount" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst
+		where 1 = 1 and handling_status = 1 and handling_id != 3
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="whetherJs != null and whetherJs != ''">
+			and whetherJs = #{whetherJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and js_date = #{js_date}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="error_resource != null">
+			and error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and bank_id = #{bankId}
+		</if>
+	</select>
+	
+	<!-- 明细查看 -->
+	<select id="queryErrorDataLstDetails" parameterType="java.lang.String" resultMap="ErrorDataLstMap">
+		select * from error_data_lst where trade_id = #{trade_id}
+	</select>
+	
+	<!-- 内部差错模块  根据trade_id查询详情 -->
+	<select id="queryDetailByTradeId" parameterType="java.lang.String" resultMap="ErrorDataLstMap">
+		select * from error_data_lst where trade_id = #{tradeId}
+	</select>
+	
+	<!-- 调整 -->
+	<update id="updateErrorHandleMethod" parameterType="ErrorDataLst" >
+		update error_data_lst
+		<set>
+			<if test="handling_id != null">
+				handling_id = #{handling_id}
+			</if>
+			<if test="reason_id != null and reason_id != ''">
+				,reason_id = #{reason_id}
+			</if>
+			<if test="handler_remark != null and handler_remark != ''">
+				,handler_remark = #{handler_remark}
+			</if>
+			<if test="handling_id != 3">
+				,handling_status = 1
+			</if>
+			<if test="handling_time != null and handling_time != ''">
+				,handling_time = #{handling_time}
+			</if>
+			<if test="js_date != null and js_date != ''">
+				,js_date = #{js_date}
+			</if>
+			<if test="operator != null and operator != ''">
+				,operator = #{operator}
+			</if>
+			<if test="deduct_sys_id != null and deduct_sys_id != ''">
+				,deduct_sys_id = #{deduct_sys_id}
+		</if>
+		</set>
+		where trade_id = #{trade_id}
+	</update>
+	
+	<!-- 审批通过 -->
+	<update id="updateApprovalPass" parameterType="ErrorDataLst">
+		update error_data_lst set handling_status = 2,check_time = #{check_time},audit_operator = #{audit_operator} where trade_id = #{trade_id}
+	</update>
+	
+	<!-- 驳回操作 -->
+	<update id="updateForReject" parameterType="ErrorDataLst">
+		update error_data_lst set handling_status = 3,turnDown_remark = #{turnDown_remark},audit_operator = #{audit_operator} where trade_id = #{trade_id}
+	</update>
+	
+	<!--已处理差错查询 备注 -->
+	<update id="updateHandlerRemark" parameterType="ErrorDataLst">
+		update error_data_lst set handler_remark = #{handler_remark} where trade_id = #{trade_id}
+	</update>
+	
+	<!-- 已处理差错查询 -->
+	<select id="queryPageOptionErrorLst" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.trade_id,
+			 e.req_mer_code,
+			 e.deduct_roll_bk,
+			 e.deduct_sys_stance,
+			 e.deduct_roll_bk_stance,
+			 e.out_account,
+			 e.trade_amount,
+			 e.req_process,
+			 e.trademsg_type,
+			 e.deduct_sys_id,
+			 i.name_,
+			 i.inst_type,
+			 e.check_time,
+			 e.handling_id,
+			 e.handler_remark,
+			 e.handling_id,
+			 e.trade_time,
+			 e.js_date,
+			 e.inst_type,
+			 e.cdz_remark
+		from error_data_lst e
+		left join inst_info i on e.deduct_sys_id = i.inst_id 
+		<if test="inst_type != null and inst_type != ''">
+			and i.inst_type = #{inst_type}
+		</if>
+		where handling_status = 2 
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and e.deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and e.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and e.js_date = #{js_date}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and e.deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and e.handling_id = #{handling_id}
+		</if>
+		<if test="check_date != null and check_date != ''">
+			and substring(e.check_time, 1, 10) = #{check_date}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.check_time desc limit #{startRow},#{limit}
+	</select>
+	<!-- 已处理差错查询  查询数据总条数 -->
+	<select id="selectPageOptionErrorCount" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst
+		where handling_status = 2
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="inst_type != null">
+			and inst_type = #{inst_type}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and js_date = #{js_date}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="check_date != null and check_date != ''">
+			and substring(check_time, 1, 10) = #{check_date}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and bank_id = #{bankId}
+		</if>
+	</select>
+	
+	
+	<select id="queryOptionDataForDownExcel" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.trade_id,
+			 e.req_mer_code,
+			 e.deduct_roll_bk,
+			 e.deduct_sys_stance,
+			 e.deduct_roll_bk_stance,
+			 e.out_account,
+			 e.trade_amount,
+			 e.req_process,
+			 e.trademsg_type,
+			 e.deduct_sys_id,
+			 i.name_,
+			 i.inst_type,
+			 e.check_time,
+			 e.handling_id,
+			 e.handler_remark,
+			 e.handling_id,
+			 e.trade_time,
+			 e.js_date,
+			 e.inst_type,
+			 e.cdz_remark
+		from error_data_lst e
+		left join inst_info i on e.deduct_sys_id = i.inst_id and e.inst_type = i.inst_type
+		where handling_status = 2 
+		<if test="startTime != null and startTime != ''">
+			and e.trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and e.deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="inst_type != null">
+			and i.inst_type = #{inst_type}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and e.deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and e.js_date = #{js_date}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and e.additional_data = #{additional_data}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and e.deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and e.handling_id = #{handling_id}
+		</if>
+		<if test="check_date != null and check_date != ''">
+			and substring(e.check_time, 1, 10) = #{check_date}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.check_time desc
+	</select>
+	
+	<!-- 内部差错调整页面差错总金额显示 -->
+	<select id="queryRollBkMoney" parameterType="Map" resultType="string">
+		select CONCAT(IFNULL(sum(o.trade_amount),0),"") from (
+			select distinct 
+				deduct_roll_bk_response,
+				req_sys_stance,
+				trade_time,
+				deduct_roll_bk,
+				deduct_rollbk_sys_reference,
+				trade_amount 
+			from error_data_lst 
+			where deduct_roll_bk = 1 
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and js_date = #{js_date}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="error_resource != null">
+			and error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and bank_id = #{bankId}
+		</if>
+		group by deduct_roll_bk_response,req_sys_stance order by req_sys_stance) o
+	</select>
+	
+	<select id="queryNoRollBkMoney" parameterType="Map" resultType="string">
+		select CONCAT(IFNULL(sum(trade_amount),0),"") from error_data_lst 
+		where deduct_roll_bk = 0 
+		<if test="startTime != null and startTime != ''">
+			and trade_time between #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and #{endTime}
+		</if>
+		<if test="deduct_sys_id != null and deduct_sys_id != ''">
+			and deduct_sys_id = #{deduct_sys_id}
+		</if>
+		<if test="deduct_sys_reference != null and deduct_sys_reference != ''">
+			and deduct_sys_reference = #{deduct_sys_reference}
+		</if>
+		<if test="additional_data != null and additional_data != ''">
+			and additional_data = #{additional_data}
+		</if>
+		<if test="whtherInnerJs != null and whtherInnerJs != ''">
+			and whtherInnerJs = #{whtherInnerJs}
+		</if>
+		<if test="js_date != null and js_date != ''">
+			and js_date = #{js_date}
+		</if>
+		<if test="handling_id != null and handling_id != ''">
+			and handling_id = #{handling_id}
+		</if>
+		<if test="whetherErroeHandle != null and whetherErroeHandle != ''">
+			and whetherErroeHandle = #{whetherErroeHandle}
+		</if>
+		<if test="handling_status != null and handling_status != ''">
+			and handling_status = #{handling_status}
+		</if>
+		<if test="req_sys_stance != null and req_sys_stance != ''">
+			and deduct_sys_stance = #{req_sys_stance}
+		</if>
+		<if test="error_resource != null">
+			and error_resource = #{error_resource}
+		</if>
+		<if test="bankId != null and bankId != ''">
+			and bank_id = #{bankId}
+		</if>
+	</select>
+	<select id="queryErrorNoHandlerCount" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst where handling_status not in (2,4) 
+		<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+			and deduct_stlm_date &lt; #{deduct_stlm_date}
+		</if>
+		<if test="lastSettleDate != '' and lastSettleDate != null">
+			and deduct_stlm_date &gt;= #{lastSettleDate}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and req_mer_code = #{mer_code}
+		</if>
+	</select>
+	<!-- 根据清算日期统计差错数据总数 -->
+	<select id="queryTotalErrorDataCount" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst where 1=1
+		<if test="deduct_stlm_date != '' and deduct_stlm_date != null">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+	<!-- 内部差错调整分页查询 -->
+	<select id="queryPageDzTotalErrorData" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.req_sys_stance,
+			 e.additional_data,
+			 e.trade_amount,
+			 e.nii
+		from error_data_lst e where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and e.deduct_sys_id = #{deduct_sys_id} 
+		</if>
+		<if test="deduct_stlm_date_error != null and deduct_stlm_date_error != ''">
+			and e.deduct_stlm_date = #{deduct_stlm_date_error}
+		</if>
+		<if test="bankId != null">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.trade_time desc limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageCountDzTotalErrorData" parameterType="Map" resultType="int">
+		select count(*) from error_data_lst e where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and e.deduct_sys_id = #{deduct_sys_id} 
+		</if>
+		<if test="deduct_stlm_date_error != null and deduct_stlm_date_error != ''">
+			and e.deduct_stlm_date = #{deduct_stlm_date_error}
+		</if>
+		<if test="bankId != null">
+			and e.bank_id = #{bankId}
+		</if>
+	</select>
+	<!-- 内部差错调整分页查询 -->
+	<select id="queryDzTotalErrorDataList" parameterType="Map" resultMap="ErrorDataLstMap">
+		select
+			 e.req_sys_stance,
+			 e.additional_data,
+			 e.trade_amount,
+			 e.nii
+		from error_data_lst e where 1 = 1
+		<if test="deduct_sys_id != null and deduct_sys_id != 0">
+			and e.deduct_sys_id = #{deduct_sys_id} 
+		</if>
+		<if test="deduct_stlm_date_error != null and deduct_stlm_date_error != ''">
+			and e.deduct_stlm_date = #{deduct_stlm_date_error}
+		</if>
+		<if test="bankId != null">
+			and e.bank_id = #{bankId}
+		</if>
+		order by e.trade_time desc 
+	</select>
+	
+	<!-- 对账明细查询，线上成功交易未对账手动进入差错 -->
+	<insert id="addDataToErrorDataLst" parameterType="ErrorDataLst">
+		insert into error_data_lst(
+			trade_id,
+			trade_time,
+			out_account,
+			out_acc_valid_time,
+			trade_amount,
+			trade_result,
+			req_sys_stance,
+			req_mer_code,
+			req_response,
+			deduct_sys_id,
+			deduct_sys_stance,
+			deduct_result,
+			deduct_sys_response,
+			deduct_roll_bk,
+			trade_type,
+			req_time,
+			deduct_stlm_date,
+			deduct_sys_time,
+			additional_data,
+			req_process,
+			trademsg_type,
+			bk_chk,
+			whetherErroeHandle,
+			error_resource,
+			whetherQs,
+			mer_fee,
+			zf_fee,
+			zf_file_fee,
+			inst_type,
+			zf_fee_bj,
+			bank_id,
+			whetherValid
+		) values(
+			#{trade_id},
+			#{trade_time},
+			#{out_account},
+			#{out_acc_valid_time},
+			#{trade_amount},
+			#{trade_result},
+			#{req_sys_stance},
+			#{req_mer_code},
+			#{req_response},
+			#{deduct_sys_id},
+			#{deduct_sys_stance},
+			#{deduct_result},
+			#{deduct_sys_response},
+			#{deduct_roll_bk},
+			#{trade_type},
+			#{req_time},
+			#{deduct_stlm_date},
+			#{deduct_sys_time},
+			#{additional_data},
+			#{req_process},
+			#{trademsg_type},
+			#{bk_chk},
+			#{whetherErroeHandle},
+			#{error_resource},
+			#{whetherQs},
+			#{mer_fee},
+			#{zf_fee},
+			#{zf_file_fee},
+			#{inst_type},
+			#{zf_fee_bj},
+			#{bank_id},
+			#{whetherValid}
+		)
+	</insert>
+	
+	<!-- 对账明细查询，线下成功交易未对账手动进入差错 -->
+	<insert id="addUnderLineDataToErrorDataLst" parameterType="ErrorDataLst">
+		insert into error_data_lst(
+			trade_id,
+  			terminal_id,
+  			terminal_info,
+		    terminal_type,
+		    trade_time,
+		    out_account,
+		    out_account_type,
+		    out_acc_valid_time,
+		    out_account_info,
+		    out_account_info2,
+		    out_account_desc,
+		    in_account,
+		    in_card_name,
+		    in_bank_id,
+		    trade_amount,
+		    trade_fee,
+		    trade_currency,
+		    trade_result,
+		    req_sys_id,
+		    req_sys_stance,
+		    req_mer_code,
+		    req_mer_term_id,
+		    req_response,
+		    deduct_sys_id,
+		    deduct_sys_stance,
+		    deduct_mer_code,
+		    deduct_mer_term_id,
+		    deduct_result,
+		    deduct_sys_response,
+		    deduct_roll_bk,
+		    deduct_roll_bk_result,
+		    deduct_roll_bk_reason,
+		    deduct_roll_bk_response,
+		    deduct_roll_bk_stance,
+		    trade_type,
+		    msg_num,
+		    pass_wd_mode,
+		    req_type,
+		    req_input_type,
+		    req_time,
+		    trade_req_method,
+		    trade_desc,
+		    in_account_type,
+		    trade_other_info,
+		    deduct_stlm_date,
+		    deduct_sys_time,
+		    gain_sys_id,
+		    gain_sys_stance,
+		    gain_mer_code,
+		    gain_mer_term_id,
+		    gain_sys_response,
+		    gain_result,
+		    gain_trade_amount,
+		    gain_sys_reference,
+		    nii,
+  			authorization_code,
+  			additional_response_data,
+ 			additional_data,
+  			boc,
+  			custom_define_info,
+ 			original_trans_info,
+		  	req_process,
+		  	deduct_sys_reference,
+		  	trademsg_type,
+		  	deduct_rollbk_sys_reference,
+		  	mer_name,
+		  	bk_chk,
+		  	whetherJs,
+		  	whetherValid,
+  			whetherErroeHandle,
+  			whetherRiqie,
+  			acqInstIdCode,
+  			fwdInstIdCode,
+  			deduct_rollbk_sys_time,
+  			agentId,
+  			whetherzero,
+  			whtherInnerJs,
+  			handling_id,
+  			handling_status,
+  			error_resource,
+  			ic_card_ser_no,
+  			ic_read_and_condition,
+  			js_date,
+  			whetherQs,
+  			mer_fee,
+  			whetherTk,
+  			zf_fee,
+  			zf_file_fee,
+  			inst_type,
+  			zf_fee_bj,
+  			fee_formula,
+  			whetherAccessStance,
+  			whtherInnerDz,
+  			bank_id
+		) values(
+			#{trade_id},
+  			#{terminal_id},
+  			#{terminal_info},
+		    #{terminal_type},
+		    #{trade_time},
+		    #{out_account},
+		    #{out_account_type},
+		    #{out_acc_valid_time},
+		    #{out_account_info},
+		    #{out_account_info2},
+		    #{out_account_desc},
+		    #{in_account},
+		    #{in_card_name},
+		    #{in_bank_id},
+		    #{trade_amount},
+		    #{trade_fee},
+		    #{trade_currency},
+		    #{trade_result},
+		    #{req_sys_id},
+		    #{req_sys_stance},
+		    #{req_mer_code},
+		    #{req_mer_term_id},
+		    #{req_response},
+		    #{deduct_sys_id},
+		    #{deduct_sys_stance},
+		    #{deduct_mer_code},
+		    #{deduct_mer_term_id},
+		    #{deduct_result},
+		    #{deduct_sys_response},
+		    #{deduct_roll_bk},
+		    #{deduct_roll_bk_result},
+		    #{deduct_roll_bk_reason},
+		    #{deduct_roll_bk_response},
+		    #{deduct_roll_bk_stance},
+		    #{trade_type},
+		    #{msg_num},
+		    #{pass_wd_mode},
+		    #{req_type},
+		    #{req_input_type},
+		    #{req_time},
+		    #{trade_req_method},
+		    #{trade_desc},
+		    #{in_account_type},
+		    #{trade_other_info},
+		    #{deduct_stlm_date},
+		    #{deduct_sys_time},
+		    #{gain_sys_id},
+		    #{gain_sys_stance},
+		    #{gain_mer_code},
+		    #{gain_mer_term_id},
+		    #{gain_sys_response},
+		    #{gain_result},
+		    #{gain_trade_amount},
+		    #{gain_sys_reference},
+		    #{nii},
+  			#{authorization_code},
+  			#{additional_response_data},
+ 			#{additional_data},
+  			#{boc},
+  			#{custom_define_info},
+ 			#{original_trans_info},
+		  	#{req_process},
+		  	#{deduct_sys_reference},
+		  	#{trademsg_type},
+		  	#{deduct_rollbk_sys_reference},
+		  	#{mer_name},
+		  	#{bk_chk},
+		  	#{whetherJs},
+		  	#{whetherValid},
+  			#{whetherErroeHandle},
+  			#{whetherRiqie},
+  			#{acqInstIdCode},
+  			#{fwdInstIdCode},
+  			#{deduct_rollbk_sys_time},
+  			#{agentId},
+  			#{whetherzero},
+  			#{whtherInnerJs},
+  			#{handling_id},
+  			#{handling_status},
+  			#{error_resource},
+  			#{ic_card_ser_no},
+  			#{ic_read_and_condition},
+  			#{js_date},
+  			#{whetherQs},
+  			#{mer_fee},
+  			#{whetherTk},
+  			#{zf_fee},
+  			#{zf_file_fee},
+  			#{inst_type},
+  			#{zf_fee_bj},
+  			#{fee_formula},
+  			#{whetherAccessStance},
+  			#{whtherInnerDz},
+  			#{bank_id}
+		)
+	</insert>
+</mapper>

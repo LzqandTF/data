@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomInstConfig">
+	<resultMap type="CustomInstConfig" id="CustomInstConfigMap">
+		<id property="id" column="id" />
+		<result property="object_id" column="object_id" />
+		<result property="inst_id" column="inst_id" />
+		<result property="inst_type" column="inst_type" />
+		<result property="inst_name" column="inst_name" />
+	</resultMap>
+	
+	<insert id="insertCustomInstConfig" parameterType="CustomInstConfig">
+		insert into custom_inst_config(object_id,inst_id,inst_type,inst_name) values(#{object_id},#{inst_id},#{inst_type},#{inst_name})
+	</insert>
+	
+	<delete id="deleteCustomInstConfig" parameterType="int">
+		delete from custom_inst_config where object_id = #{object_id}
+	</delete>
+	<update id="updateCustomInstConfig" parameterType="CustomInstConfig">
+		update custom_inst_config
+			<set>
+				<if test="inst_id != null ">
+					inst_id = #{inst_id},
+				</if>
+				<if test="inst_type != null ">
+					inst_type = #{inst_type},
+				</if>
+				<if test="inst_name != null and inst_name != '' ">
+					inst_name = #{inst_name},
+				</if>
+			</set>
+			where object_id = #{object_id}
+	</update>
+	
+	<select id="queryCustomInstConfigByObjectId" parameterType="int" resultMap="CustomInstConfigMap">
+		select * from custom_inst_config where object_id = #{object_id}
+	</select>
+	
+	<select id="queryCustomInstConfig" parameterType="Map" resultMap="CustomInstConfigMap">
+		select * from custom_inst_config where object_id = #{object_id} 
+		<if test="inst_type != null and inst_type != '' ">
+			and inst_type = #{inst_type}
+		</if>
+	</select>
+	
+</mapper>

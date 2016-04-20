@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Merchants">
+	<resultMap type="Merchants" id="MerchantsMap">
+		<!-- 商户基本信息 -->
+		<id property="mer_code" column="mer_code"/>
+		<result property="mer_name" column="mer_name"/>
+		<result property="mer_category" column="mer_category"/>
+		<result property="mer_abbreviation" column="mer_abbreviation"/>
+		<result property="mer_state" column="mer_state"/>
+		<result property="city" column="city"/>
+		<result property="mer_type" column="mer_type"/>
+		<result property="startDate" column="startDate"/>
+		<result property="endDate" column="endDate"/>
+		<result property="channel" column="channel"/>
+		<result property="expand" column="expand"/>
+		<result property="expandno" column="expandno"/>
+		<result property="provinces" column="provinces"/>
+		
+		<!-- 商户结算信息 -->
+		<result property="bil_object" column="bil_object"/>
+		<result property="bil_bank" column="bil_bank"/>
+		<result property="bil_bankname" column="bil_bankname"/>
+		<result property="bil_accountname" column="bil_accountname"/>
+		<result property="bil_bankaccount" column="bil_bankaccount"/>
+		<result property="bil_way" column="bil_way"/>
+		<result property="bil_smallamt" column="bil_smallamt"/>
+		<result property="bil_cycle" column="bil_cycle"/>
+		<result property="bil_manual" column="bil_manual"/>
+		<result property="bil_account" column="bil_account"/>
+		<result property="bil_type" column="bil_type"/>
+		<result property="bil_status" column="bil_status"/>
+		<result property="mer_poundage" column="mer_poundage"/> 
+		<result property="lastSettleDate" column="lastSettleDate"/> 
+		<result property="merchantTotalCount" column="merchantTotalCount"/>
+		<result property="last_liq_date" column="last_liq_date"/>
+		<result property="bank_branch" column="bank_branch"/>
+		<result property="refund_fee" column="refund_fee"/>
+		<result property="whtherFz" column="whtherFz"/>
+		
+		<!-- 手工调账增加商户余额的显示 -->
+		<result property="mer_balance" column="mer_balance"/>
+	</resultMap>
+	
+	<!-- 商户信息查询 -->
+	<select id="queryPageMerchantsList" parameterType="Map" resultMap="MerchantsMap">
+		select 
+			m.mer_category, 
+			m.mer_code,
+			m.mer_name, 
+			m.mer_abbreviation, 
+			m.mer_type, 
+			m.mer_state
+		from  mer_basic m LEFT JOIN mer_billing b ON m.mer_code = b.mer_code 
+		where 1 = 1
+		<if test="mer_code !=null and  mer_code !=''">
+			and m.mer_code = #{mer_code}
+		</if>
+		<if test="mer_name !=null and mer_name !=''">
+			and m.mer_name = #{mer_name}
+		</if>
+		<if test="bil_status !=null and bil_status !=''">
+			and b.bil_status = #{bil_status}
+		</if>
+		<if test="bil_manual !=null and bil_manual !=''">
+			and b.bil_manual = #{bil_manual}
+		</if>
+		<if test="mer_category !=null and mer_category !=''">
+			and m.mer_category = #{mer_category}
+		</if>
+		<if test="bil_type !=null and bil_type !=''">
+			and b.bil_type = #{bil_type}
+		</if>
+		<if test="mer_state != null and mer_state != ''">
+			and m.mer_state = #{mer_state}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryCount" parameterType="Map" resultType="int">
+		select count(*) from mer_basic m LEFT JOIN mer_billing b ON m.mer_code = b.mer_code 
+		where 1 = 1
+		<if test="mer_code !=null and  mer_code !=''">
+			and m.mer_code = #{mer_code}
+		</if>
+		<if test="mer_name !=null and mer_name !=''">
+			and m.mer_name = #{mer_name}
+		</if>
+		<if test="bil_status !=null and bil_status !=''">
+			and b.bil_status = #{bil_status}
+		</if>
+		<if test="bil_manual !=null and bil_manual !=''">
+			and b.bil_manual = #{bil_manual}
+		</if>
+		<if test="mer_category !=null and mer_category !=''">
+			and m.mer_category = #{mer_category}
+		</if>
+		<if test="bil_type !=null and bil_type !=''">
+			and b.bil_type = #{bil_type}
+		</if>
+		<if test="mer_state != null and mer_state != ''">
+			and m.mer_state = #{mer_state}
+		</if>
+	</select>
+	
+	<select id="queryMerAbbreviationByMerCode" parameterType="String" resultType="String">
+		select mer_abbreviation from mer_basic  where mer_code = #{mer_code}
+	</select>
+	
+	<select id="querySettleMerchantInfoList"  parameterType="Map" resultMap="MerchantsMap">
+		select mc.mer_code,mc.mer_abbreviation,mc.endDate,mc.mer_category,mg.bil_way,mg.bil_smallamt,mg.bil_status,
+		mg.bil_cycle,mg.bil_bank,mg.bank_branch,mg.bil_accountname,mg.bil_bankaccount,mg.bil_object,mg.bil_account,
+		(select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) as lastSettleDate,mg.bil_manual,mg.whtherFz   
+		from mer_basic mc left join mer_billing mg on mc.mer_code = mg.mer_code
+		 where mc.mer_state = 5 
+		 <if test="deduct_stlm_date != '' and deduct_stlm_date != null ">
+		 	 and (select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) &lt; #{deduct_stlm_date}
+		 </if>
+		 <if test="mer_type != null">
+		 	and	mc.mer_category = #{mer_type}
+		</if>
+	</select>
+	<select id="queryPageSettleMerchantInfo"  parameterType="Map" resultMap="MerchantsMap">
+		select mc.mer_code,mc.mer_abbreviation,mc.endDate,mc.mer_category,mg.bil_way,mg.bil_smallamt,mg.bil_status,
+		mg.bil_cycle,mg.bil_bank,mg.bank_branch,mg.bil_accountname,mg.bil_bankaccount,mg.bil_object,mg.bil_account,
+		(select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) as lastSettleDate,mg.bil_manual,mg.whtherFz  
+		from mer_basic mc left join mer_billing mg on mc.mer_code = mg.mer_code
+		 where mc.mer_state = 5 
+		 <if test="deduct_stlm_date != '' and deduct_stlm_date != null ">
+		 	 and (select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) &lt; #{deduct_stlm_date}
+		 </if>
+		 <if test="mer_type != null">
+		 	and	mc.mer_category = #{mer_type}
+		</if>
+		<if test="mer_abbreviation != '' and mer_abbreviation != null">
+			and mc.mer_abbreviation like CONCAT('%','${mer_abbreviation}','%' )
+		</if>
+		<if test="mer_code != '' and mer_code != null">
+			and mc.mer_code = #{mer_code}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageSettleMerchantInfoCount"  parameterType="Map" resultType="int">
+		select count(*) 
+		from mer_basic mc left join mer_billing mg on mc.mer_code = mg.mer_code
+		 where mc.mer_state = 5 
+		 <if test="deduct_stlm_date != '' and deduct_stlm_date != null ">
+		 	 and (select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) &lt; #{deduct_stlm_date}
+		 </if>
+		 <if test="mer_type != null">
+		 	and	mc.mer_category = #{mer_type}
+		</if>
+		<if test="mer_abbreviation != '' and mer_abbreviation != null">
+			and mc.mer_abbreviation like CONCAT('%','${mer_abbreviation}','%' )
+		</if>
+		<if test="mer_code != '' and mer_code != null">
+			and mc.mer_code = #{mer_code}
+		</if>
+	</select>
+	
+	<select id="querySettleMerchantInfoCount"  parameterType="Map" resultMap="MerchantsMap">
+		select count(*) as merchantTotalCount ,mc.mer_category from mer_basic mc left join mer_billing mg on mc.mer_code = mg.mer_code
+		where mc.mer_state = 5 
+		<if test="deduct_stlm_date != '' and deduct_stlm_date != null ">
+		 	and (select IFNULL(MAX(end_date),IF(mc.startDate > mg.last_liq_date,mc.startDate,mg.last_liq_date)) from merchant_fund_settle where mer_code = mc.mer_code) &lt; #{deduct_stlm_date}
+		</if>
+		GROUP BY mc.mer_category ,mc.mer_state
+	</select>
+	<!-- 通过商户号查询商户信息，若有其他需求，可在查询信息中添加其他字段 -->
+	<select id="queryMerchantBasicInfoByMerCode" parameterType="String" resultMap="MerchantsMap">
+		select mer_state,mer_category,mer_abbreviation, mer_name, mer_type from mer_basic where mer_code = #{mer_code}
+	</select>
+	
+	<!-- 手工调账请求  根据商户号获取商户信息 -->
+	<select id="queryMerInfoByMerCode" parameterType="string" resultMap="MerchantsMap">
+		SELECT m.mer_code, m.mer_abbreviation, m.mer_state, b.mer_balance FROM mer_basic m LEFT JOIN mer_balance b ON m.mer_code = b.mer_code 
+		WHERE m.mer_code = #{mer_code}
+	</select>
+	
+	<!-- 通过商户号模糊查询 -->
+	<select id="vagueQueryMerchantInfoByMerCode" parameterType="string" resultMap="MerchantsMap">
+		select mer_abbreviation,mer_code from mer_basic where mer_code like CONCAT('%',#{mer_code},'%')
+	</select>
+	
+	<select id="queryMerchantsBilBankAccountInfo" resultMap="MerchantsMap">
+		select mer_code,bil_bankaccount from mer_billing where bil_bankaccount REGEXP "[:lower:]+" or bil_bankaccount REGEXP "[:upper:]+";
+	</select>
+	<update id="updateMerBillingBankAccount" parameterType="Map">
+		update mer_billing set bil_bankaccount = #{bil_bankaccount} where mer_code =#{mer_code}
+	</update>
+	
+	<!-- 商户信息配置查询 -->
+	<select id="queryAllMerInfoByMerCode" parameterType="String" resultMap="MerchantsMap">
+		SELECT * FROM mer_basic m INNER JOIN mer_billing b ON m.mer_code = b.mer_code WHERE m.mer_code = #{merCode}
+	</select>
+	
+	<!-- 修改商户基本信息 -->
+	<update id="updateMerBasicByMerCode" parameterType="Map">
+		update mer_basic 
+		<set>
+			<if test="endDate != null and endDate != ''">
+				endDate = #{endDate}
+			</if>
+		</set>
+		where mer_code = #{mer_code}
+	</update>
+	<update id="updateMerBillingByMerCode" parameterType="Map">
+		update mer_billing 
+		<set>
+			<if test="bil_manual != null and bil_manual != ''">
+				bil_manual = #{bil_manual},
+			</if>
+			<if test="bil_status != null and bil_status != ''">
+				bil_status = #{bil_status},
+			</if>
+			<if test="bil_cycle != null and bil_cycle != ''">
+				bil_cycle = #{bil_cycle},
+			</if>
+			<if test="bil_smallamt != null and bil_smallamt != ''">
+				bil_smallamt = #{bil_smallamt},
+			</if>
+			<if test="whtherFz != null and whtherFz != ''">
+				whtherFz = #{whtherFz} 
+			</if>
+		</set>
+		where  mer_code = #{mer_code}
+	</update>
+	
+	<!-- 系统启动时加载所有商户基本信息 -->
+	<select id="queryAllMerBasicInfo" resultMap="MerchantsMap">
+		select * from mer_basic
+	</select>
+	<!-- 系统启动时加载所有商户结算信息 -->
+	<select id="queryAllMerBillingInfo" resultMap="MerchantsMap">
+		select * from mer_billing
+	</select>
+	
+	<!-- 根据商户名称模糊查询商户基本信息表中商户名称列表 -->
+	<select id="queryMerNameListByMerName" parameterType="Map" resultMap="MerchantsMap">
+		select mer_name from mer_basic where mer_name like CONCAT('%','${mer_name}','%')
+	</select>
+</mapper>

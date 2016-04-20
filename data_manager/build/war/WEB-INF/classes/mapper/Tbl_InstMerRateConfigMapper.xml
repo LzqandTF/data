@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InstMerRateConfig">
+	<resultMap type="InstMerRateConfig" id="InstMerRateConfigMap">
+		<id property="gid" column="gid" />
+		<result property="inst_type" column="inst_type" />
+		<result property="g_type" column="g_type" />
+		<result property="inst_id" column="inst_id" />
+		<result property="mer_code" column="mer_code" />
+		<result property="card_type" column="card_type" />
+		<result property="fee_Poundage" column="fee_Poundage" />
+		<result property="lineOrinter" column="lineOrinter" />
+		<result property="user_name" column="user_name" />
+	</resultMap>
+	
+	<insert id="addInstMerRateConfig" parameterType="InstMerRateConfig">
+		insert into inst_mer_rate_conf 
+		(inst_id,inst_type,gid,g_type,mer_code,card_type,fee_Poundage,lineOrinter,user_name)
+		values(#{inst_id},#{inst_type},#{inst_id},#{inst_type},#{mer_code},#{card_type},#{fee_Poundage},#{lineOrinter},#{user_name})
+	</insert>
+	
+	<delete id="deleteInstMerRateConfig" parameterType="InstMerRateConfig">
+		delete from inst_mer_rate_conf where inst_id = #{inst_id} and inst_type = #{inst_type} and mer_code = #{mer_code} and card_type = #{card_type} and lineOrinter = #{lineOrinter}
+	</delete>
+	
+	<select id="queryInstMerRateConfigInstByInstIdAndInstType" resultMap="InstMerRateConfigMap">
+		select mer_code,card_type,fee_Poundage,lineOrinter from inst_mer_rate_conf where inst_id = #{inst_id} and inst_type = #{inst_type}
+	</select>
+	
+	<select id="checkInstMerRateConfigExistOrNot" parameterType="InstMerRateConfig" resultType="int">
+		select count(*) from inst_mer_rate_conf where mer_code = #{mer_code} and inst_type = #{inst_type} and inst_id = #{inst_id}
+		<!-- <if test="card_type != 'ALL' and lineOrinter != 3">
+			and ( card_type = #{card_type} or card_type = 'ALL' ) and ( lineOrinter = #{lineOrinter} or lineOrinter = 3 ) 
+		</if> -->
+		<if test="card_type != '' and card_type != null and card_type != 'ALL' ">
+			and ( card_type = #{card_type} or card_type = 'ALL' ) 
+		</if>
+		<if test="lineOrinter != null and lineOrinter != 3 ">
+			and ( lineOrinter = #{lineOrinter} or lineOrinter = 3 ) 
+		</if>
+	</select>
+	
+	<delete id="deleteInstMerRateConfigByInstIdAndInstType" parameterType="map">
+		delete from inst_mer_rate_conf where inst_id = #{inst_id} and inst_type = #{inst_type}  
+	</delete>
+	
+</mapper>

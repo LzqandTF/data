@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomFileEntity">
+	<resultMap type="CustomFileEntity" id="CustomFileEntityMap">
+		<result property="file_type" column="file_type" />
+		<result property="attribute_name" column="attribute_name" />
+		<result property="attribute_column" column="attribute_column" />
+		<result property="show_attribute_name" column="show_attribute_name" />
+		<result property="rule_id" column="rule_id" />
+		<result property="attribute_type" column="attribute_type" />
+		<result property="dz_column_id" column="dz_column_id" />
+		<result property="handler_type" column="handler_type" />
+		<result property="new_value" column="new_value" />
+		<result property="ole_value" column="ole_value" />
+		<result property="template_function" column="template_function" />
+		<result property="column_length" column="column_length" />
+		<result property="attribute_type" column="attribute_type" />
+		<result property="user_rule_column" column="user_rule_column" />
+		<result property="object_id" column="object_id" />
+	</resultMap>
+	
+	<select id="queryCustomFileEntityConfigInfo" parameterType="Map" resultMap="CustomFileEntityMap">
+		select o.file_type,o.show_attribute_name,d.attribute_column,d.attribute_name,
+						r.handler_type,r.new_value,r.old_value,t.template_function,r.attribute_column as user_rule_column,d.column_length,r.rule_id,
+						d.attribute_column_online,d.attribute_column_online_refund from object_relevance_column o 
+						left join dz_file_column_conf d on o.dz_column_id = d.dz_column_id
+						left join rule_handler r on o.rule_id = r.rule_id 
+						left join rule_template t on r.template_id = t.template_id
+						where 1=1
+		<if test="object_id != null">
+			and o.object_id = #{object_id}
+		</if>
+			ORDER BY o.id asc;
+	</select>
+	
+	<select id="queryReplaceValue" parameterType="Map" resultMap="CustomFileEntityMap" >
+		select r.rule_id,r.old_value,r.new_value from replace_value_tab r 
+		<if test="rule_id != null">
+			where r.rule_id = #{rule_id}
+		</if>  
+		ORDER BY r.rule_id asc
+	</select>
+	
+</mapper>

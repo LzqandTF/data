@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RuleHandler">
+	<resultMap type="RuleHandler" id="RuleHandlerMap">
+		<id property="rule_id" column="rule_id" />
+		<result property="dz_column_name" column="dz_column_name" />
+		<result property="attribute_column" column="attribute_column" />
+		<result property="old_value" column="old_value" />
+		<result property="handler_type" column="handler_type" />
+		<result property="template_id" column="template_id" />
+		<result property="rule_description" column="rule_description" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageRuleHandler" parameterType="Map" resultMap="RuleHandlerMap">
+		select h.rule_id,h.dz_column_name,h.attribute_column,h.handler_type,h.template_id,h.rule_description,h.old_value,t.template_name,r.new_value 
+				from rule_handler h left join rule_template t on h.template_id = t.template_id 
+				left join replace_value_tab r on h.rule_id = r.rule_id where 1 = 1 
+		<if test="rule_id != null and rule_id != 0">
+			and h.rule_id = #{rule_id} 
+		</if>
+		<if test="template_id != null and template_id != 0">
+			and h.template_id = #{template_id} 
+		</if>
+		<if test="attribute_column != null and attribute_column != ''">
+			and h.attribute_column = #{attribute_column} 
+		</if>
+		GROUP BY h.rule_id order by rule_id asc limit #{startRow},#{limit} 
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from rule_handler h left join rule_template t on h.template_id = t.template_id where 1 = 1
+		<if test="rule_id != null and rule_id != 0">
+			and h.rule_id = #{rule_id} 
+		</if>
+		<if test="template_id != null and template_id != 0">
+			and h.template_id = #{template_id} 
+		</if>
+		<if test="attribute_column != null and attribute_column != ''">
+			and h.attribute_column = #{attribute_column} 
+		</if>
+	</select>
+	
+	<insert id="insertRuleHandler" parameterType="RuleHandler">
+		insert into rule_handler(dz_column_name,attribute_column,old_value,new_value,handler_type,template_id,rule_description) 
+		values(#{dz_column_name},#{attribute_column},#{old_value},#{new_value},#{handler_type},#{template_id},#{rule_description})
+	</insert>
+	
+	<delete id="deleteRuleHandler" parameterType="int">
+		delete from rule_handler where rule_id = #{rule_id}
+	</delete>
+	<update id="updateRuleHandler" parameterType="RuleHandler">
+		update rule_handler
+			<set>
+				<if test="dz_column_name != null and dz_column_name != ''">
+					dz_column_name = #{dz_column_name},
+				</if>
+				<if test="attribute_column != null and attribute_column != ''">
+					attribute_column = #{attribute_column},
+				</if>
+				<if test="old_value != null">
+					old_value = #{old_value},
+				</if>
+				<if test="new_value != null">
+					new_value = #{new_value},
+				</if>
+				<if test="handler_type != -1">
+					handler_type = #{handler_type},
+				</if>
+				<if test="template_id != null and template_id != 0">
+					template_id = #{template_id},
+				</if>
+				<if test="rule_description != null and rule_description != ''">
+					rule_description = #{rule_description},
+				</if>
+			</set>
+			where rule_id = #{rule_id}
+	</update>
+	
+	<select id="queryRuleHandlerById" parameterType="int" resultMap="RuleHandlerMap">
+		select rule_id,dz_column_name,attribute_column,old_value,new_value,handler_type,template_id,rule_description from rule_handler where rule_id = #{rule_id}
+	</select>
+	
+	<select id="queryRuleHandlerList" resultMap="RuleHandlerMap">
+		select rule_id,dz_column_name,attribute_column,old_value,new_value,handler_type,template_id,rule_description from rule_handler
+	</select>
+	
+	<select id="queryRuleHandlerListByColumn" parameterType="string" resultMap="RuleHandlerMap">
+		select rule_id,dz_column_name,attribute_column,old_value,new_value,handler_type,template_id,rule_description from rule_handler where attribute_column = #{attribute_column}
+	</select>
+</mapper>

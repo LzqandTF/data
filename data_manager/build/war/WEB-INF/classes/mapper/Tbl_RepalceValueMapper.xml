@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReplaceValue">
+	<resultMap type="ReplaceValue" id="ReplaceValueMap">
+		<id property="id" column="id" />
+		<result property="old_value" column="old_value" />
+		<result property="new_value" column="new_value" />
+		<result property="rule_id" column="rule_id" />
+	</resultMap>
+	
+	<insert id="insertReplaceValue" parameterType="ReplaceValue">
+		insert into replace_value_tab(old_value,new_value,rule_id) 
+		values(#{old_value},#{new_value},#{rule_id})
+	</insert>
+	
+	<delete id="deleteReplaceValue" parameterType="int">
+		delete from replace_value_tab where id = #{id}
+	</delete>
+	<update id="updateReplaceValue" parameterType="ReplaceValue">
+		update replace_value_tab
+			<set>
+				<if test="old_value != null and old_value != ''">
+					old_value = #{old_value},
+				</if>
+				<if test="new_value != null and new_value != ''">
+					new_value = #{new_value},
+				</if>
+			</set>
+			where id = #{id}
+	</update>
+	
+	<select id="queryReplaceValueById" parameterType="int" resultMap="ReplaceValueMap">
+		select old_value,new_value,rule_id from replace_value_tab where id = #{id}
+	</select>
+	
+	<select id="queryReplaceValueByRuleId" parameterType="int" resultMap="ReplaceValueMap">
+		select id,old_value,new_value,rule_id from replace_value_tab where rule_id = #{rule_id}
+	</select>
+	
+	<select id="queryReplaceValueList" resultMap="ReplaceValueMap">
+		select id,old_value,new_value,rule_id from replace_value_tab
+	</select>
+	
+	<select id="queryReplaceValueCountByRuleIdAndOldValue" parameterType="ReplaceValue" resultType="int">
+		select count(*) from replace_value_tab where rule_id = #{rule_id} and old_value = #{old_value}
+	</select>
+	
+	<delete id="deleteReplaceValueByRuleId" parameterType="int">
+		delete from replace_value_tab where rule_id = #{rule_id}
+	</delete>
+</mapper>

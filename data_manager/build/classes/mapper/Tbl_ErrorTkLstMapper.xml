@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ErrorTkLst">
+	<resultMap type="ErrorTkLst" id="ErrorTkLstMap">
+		<id property="trade_id" column="trade_id"/>
+		<result property="trade_time" column="trade_time"/>
+		<result property="trade_amount" column="trade_amount"/>
+		<result property="deduct_sys_id" column="deduct_sys_id"/>
+		<result property="inst_type" column="inst_type"/>
+		<result property="handling_id" column="handling_id"/>
+		<result property="bank_id" column="bank_id"/>
+		<result property="syn_flag" column="syn_flag"/>
+	</resultMap>
+	
+	<!-- 差错审批时将差错处理方式是退款操作的数据保存至该表 -->
+	<insert id="addErrorTkLst" parameterType="Map">
+		insert into error_tk_lst(
+			trade_id,
+			trade_time,
+			trade_amount,
+			deduct_sys_id,
+			inst_type,
+			handling_id,
+			bank_id
+		) values (
+			#{trade_id},
+			#{trade_time},
+			#{trade_amount},
+			#{deduct_sys_id},
+			#{inst_type},
+			#{handling_id},
+			#{bank_id}
+		)
+	</insert>
+</mapper>

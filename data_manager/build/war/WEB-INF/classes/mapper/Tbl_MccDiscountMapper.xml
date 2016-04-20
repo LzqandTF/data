@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MccDiscount">
+	<resultMap type="MccDiscount" id="MccDiscountMap">
+		<id property="id" column="mcc_id" />
+		<result property="mcc_type" column="mcc_code" />
+		<result property="issuers" column="issuers" />
+		<result property="billToParty" column="billToParty" />
+		<result property="unionpay" column="unionpay" />
+		<result property="range_desc" column="range_desc" />
+		<result property="parent_id" column="type_id" />
+		<result property="mcc_fee" column="mcc_fee" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageMccDiscount" parameterType="Map" resultMap="MccDiscountMap">
+		select * from mcc_discount where 1 = 1 
+		<if test="id != null and id != 0">
+			and mcc_id = #{id} 
+		</if>
+		<if test="mcc_type != null and mcc_type != ''">
+			and mcc_code = #{mcc_type}
+		</if>
+		<if test="parent_id != null and parent_id != 0">
+			and type_id = #{parent_id}
+		</if>
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryMccDiscountById" parameterType="int" resultType="MccDiscount">
+		select * from mcc_discount where mcc_id = #{id} 
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from mcc_discount where 1=1 
+		<if test="id != null and id != 0">
+			and mcc_id = #{id} 
+		</if>
+		<if test="mcc_type != null and mcc_type != ''">
+			and mcc_code = #{mcc_type}
+		</if>
+		<if test="parent_id != null and parent_id != 0">
+			and type_id = #{parent_id}
+		</if> 
+	</select>
+	
+	<delete id="deleteMccDiscount" parameterType="int">
+		delete from mcc_discount where mcc_id = #{id}
+	</delete>
+	
+	<delete id="deleteMccDiscountByMccTypeId" parameterType="int">
+		delete from mcc_discount where type_id = #{id}
+	</delete>
+	
+	<update id="updateMccDiscount" parameterType="MccDiscount">
+		update mcc_discount 
+			<set>
+				<if test="mcc_type != null and mcc_type != ''">
+					mcc_code = #{mcc_type},
+				</if>
+				<if test="issuers != null">
+					issuers = #{issuers},
+				</if>
+				<if test="unionpay != null">
+					unionpay = #{unionpay},
+				</if>
+				<if test="billToParty != null">
+					billToParty = #{billToParty},
+				</if>
+				<if test="range_desc != null and range_desc != ''">
+					range_desc = #{range_desc},
+				</if>
+				<if test="parent_id != null">
+					type_id = #{parent_id},
+				</if>
+				<if test="mcc_fee != null">
+					mcc_fee = #{mcc_fee},
+				</if>
+			</set>
+		where mcc_id = #{id}
+	</update>
+	<insert id="addMccDiscount" parameterType="MccDiscount">
+		insert into mcc_discount(mcc_code,issuers,billToParty,unionpay,range_desc,type_id,mcc_fee) 
+			value(#{mcc_type},#{issuers},#{billToParty},#{unionpay},#{range_desc},#{parent_id},#{mcc_fee})
+	</insert>
+</mapper>

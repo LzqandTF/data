@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ExecuteNode">
+	<resultMap type="ExecuteNode" id="ExecuteNodeMap">
+		<id property="id" column="id" />
+		<result property="deduct_sys_id" column="deduct_sys_id" />
+		<result property="deduct_stml_date" column="deduct_stml_date" />
+		<result property="trade_collect" column="trade_collect" />
+		<result property="dz_file_gain" column="dz_file_gain" />
+		<result property="dz_handle" column="dz_handle" />
+		<result property="error_handle" column="error_handle" />
+		<result property="dz_file_create" column="dz_file_create" />
+		<result property="inst_name" column="inst_name" />
+		<result property="inst_type" column="inst_type"/>
+	</resultMap>
+	
+	<!-- 添加机构信息配置 -->
+	<insert id="addExecuteNode" parameterType="ExecuteNode">
+		insert into execute_node 
+		(id,deduct_sys_id,deduct_stml_date,trade_collect,dz_file_gain,dz_handle,error_handle,dz_file_create,inst_name,inst_type)
+		values(#{id},#{deduct_sys_id},#{deduct_stml_date},#{trade_collect},#{dz_file_gain},#{dz_handle},#{error_handle},#{dz_file_create},#{inst_name},#{inst_type})
+	</insert>
+	
+	<!-- 修改机构信息配置 -->
+	<update id="updateExecuteNode" parameterType="ExecuteNode">
+		update execute_node
+		<set>
+			<if test="inst_name != null and inst_name != ''">
+				inst_name = #{inst_name},
+			</if>
+			<if test="trade_collect != null">
+				trade_collect = #{trade_collect},
+			</if>
+			<if test="dz_file_gain != null">
+				dz_file_gain = #{dz_file_gain},
+			</if>
+			<if test="dz_handle != null">
+				dz_handle = #{dz_handle},
+			</if>
+			<if test="error_handle != null">
+				error_handle = #{error_handle},
+			</if>
+			<if test="dz_file_create != null">
+				dz_file_create = #{dz_file_create},
+			</if>
+		</set>
+		where deduct_sys_id = #{deduct_sys_id} and inst_type = #{inst_type} and substring(deduct_stml_date,1,10) = #{deduct_stml_date}
+	</update>
+	<select id="queryAll" parameterType="Map" resultMap="ExecuteNodeMap">
+		select * from execute_node where 1=1
+			<if test="deduct_sys_id != null">
+				and deduct_sys_id = #{deduct_sys_id}
+			</if>
+			<if test="deduct_stml_date != null and deduct_stml_date != ''">
+				and deduct_stml_date = #{deduct_stml_date}||'%'
+			</if>
+			<if test="inst_name != null and inst_name != ''">
+				and inst_name = #{inst_name}||'%'
+			</if>
+			<if test="trade_collect != null">
+				and trade_collect = #{trade_collect}
+			</if>
+			<if test="dz_file_gain != null">
+				and dz_file_gain = #{dz_file_gain}
+			</if>
+			<if test="dz_handle != null">
+				and dz_handle = #{dz_handle}
+			</if>
+			<if test="error_handle != null">
+				and error_handle = #{error_handle}
+			</if>
+			<if test="dz_file_create != null">
+				and dz_file_create = #{dz_file_create}
+			</if>
+			<if test="inst_type != null">
+				and inst_type = #{inst_type}
+			</if>
+	</select>
+	<select id="queryPage" parameterType="Map" resultMap="ExecuteNodeMap">
+		select * from execute_node where 1=1
+			<if test="deduct_sys_id != null">
+					and deduct_sys_id = #{deduct_sys_id}
+			</if>
+			<if test="deduct_stml_date != null and deduct_stml_date != ''">
+				and substring(deduct_stml_date,1,10) = #{deduct_stml_date}
+			</if>
+			<if test="inst_name != null and inst_name != ''">
+				and inst_name = #{inst_name}
+			</if>
+			<if test="trade_collect != null">
+				and trade_collect = #{trade_collect}
+			</if>
+			<if test="dz_file_gain != null">
+				and dz_file_gain = #{dz_file_gain}
+			</if>
+			<if test="dz_handle != null">
+				and dz_handle = #{dz_handle}
+			</if>
+			<if test="error_handle != null">
+				and error_handle = #{error_handle}
+			</if>
+			<if test="dz_file_create != null">
+				and dz_file_create = #{dz_file_create}
+			</if>
+			<if test="inst_type != null">
+				and inst_type = #{inst_type}
+			</if>
+			order by deduct_stml_date desc limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from execute_node where 1=1
+			<if test="deduct_sys_id != null">
+				and deduct_sys_id = #{deduct_sys_id}
+			</if>
+			<if test="deduct_stml_date != null and deduct_stml_date != ''">
+				and substring(deduct_stml_date,1,10) = #{deduct_stml_date}
+			</if>
+			<if test="inst_name != null and inst_name != ''">
+				and inst_name = #{inst_name}
+			</if>
+			<if test="trade_collect != null">
+				and trade_collect = #{trade_collect}
+			</if>
+			<if test="dz_file_gain != null">
+				and dz_file_gain = #{dz_file_gain}
+			</if>
+			<if test="dz_handle != null">
+				and dz_handle = #{dz_handle}
+			</if>
+			<if test="error_handle != null">
+				and error_handle = #{error_handle}
+			</if>
+			<if test="dz_file_create != null">
+				and dz_file_create = #{dz_file_create}
+			</if>
+			<if test="inst_type != null">
+				and inst_type = #{inst_type}
+			</if>
+	</select>
+	<select id="queryExecuteNodeByDeductIdAndDeductDate" parameterType="Map" resultMap="ExecuteNodeMap">
+		select * from execute_node where deduct_sys_id = #{deduct_sys_id} and substring(deduct_stml_date,1,10) = #{deduct_stml_date} and inst_type = #{inst_type}
+	</select>
+</mapper>

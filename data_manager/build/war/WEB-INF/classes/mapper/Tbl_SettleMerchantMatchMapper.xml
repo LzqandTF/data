@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SettleMerchantMatch">
+	<resultMap type="SettleMerchantMatch" id="SettleMerchantMatchMap">
+		<id property="id" column="id" />
+		<result property="dy_mer_code" column="dy_mer_code" />
+		<result property="settle_mer_code" column="settle_mer_code" />
+	</resultMap>
+	
+	<!-- 查询 -->
+	<select id="querySettleMerchantMatch" parameterType="Map" resultMap="SettleMerchantMatchMap">
+		select * from settle_merchant_match_table where 1 = 1 
+		<if test="id != null and id != ''">
+			and id = #{id} 
+		</if>
+		<if test="dy_mer_code != null and dy_mer_code != ''">
+			and dy_mer_code = #{dy_mer_code} 
+		</if>
+		<if test="settle_mer_code != null and settle_mer_code != ''">
+			and settle_mer_code = #{settle_mer_code} 
+		</if>
+	</select>
+	
+	<!-- 查询个数 -->
+	<select id="querySettleMerchantMatchCount" parameterType="Map" resultType="int">
+		select count(*) from settle_merchant_match_table where 1 = 1
+		<if test="dy_mer_code != null and dy_mer_code != ''">
+			and dy_mer_code = #{dy_mer_code} 
+		</if>
+		<if test="settle_mer_code != null and settle_mer_code != ''">
+			and settle_mer_code = #{settle_mer_code} 
+		</if>
+	</select>
+	
+	<insert id="insertSettleMerchantMatch" parameterType="SettleMerchantMatch">
+		insert into settle_merchant_match_table(id,dy_mer_code,settle_mer_code,user_id) 
+		values(#{id},#{dy_mer_code},#{settle_mer_code},#{user_id})
+	</insert>
+	
+	<delete id="deleteSettleMerchantMatchById" parameterType="string">
+		delete from settle_merchant_match_table where id = #{id}
+	</delete>
+	
+	<delete id="deleteSettleMerchantMatchBySettleMerCode" parameterType="string">
+		delete from settle_merchant_match_table where settle_mer_code = #{settle_mer_code}
+	</delete>
+	
+	<!-- 根据结算商户号获取电银商户号(结算单明细查询及下载) -->
+	<select id="queryDyMerCodeBySettleMerCode" parameterType="string" resultMap="SettleMerchantMatchMap">
+		select dy_mer_code from settle_merchant_match_table where settle_mer_code = #{settle_mer_code}
+	</select>
+	
+	<!-- 根据结算商户号与电银商户号删除匹配数据 -->
+	<delete id="deleteSettleMerchantMatchBySettleMerCodeAndDyCode" parameterType="Map">
+		delete from settle_merchant_match_table where settle_mer_code = #{settle_mer_code} and dy_mer_code = #{dy_mer_code}
+	</delete>
+	
+	<!-- 根据电银商户号查询对应配置的结算商户号 -->
+	<select id="querySettleMerCodeByDyMerCode" parameterType="string" resultType="string">
+		select settle_mer_code from settle_merchant_match_table where dy_mer_code = #{dy_mer_code}
+	</select>
+	
+	<update id="updateDyMerCode" parameterType="Map">
+		update settle_merchant_match_table set dy_mer_code = #{dy_mer_code_new} where dy_mer_code = #{dy_mer_code_old}
+	</update>
+</mapper>

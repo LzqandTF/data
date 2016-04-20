@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MerFundStance">
+	<resultMap type="MerFundStance" id="MerFundStanceMap">
+		<id property="id" column="id" />
+		<result property="mer_code" column="mer_code" />
+		<result property="trade_time" column="trade_time" />
+		<result property="trade_amount" column="trade_amount" />
+		<result property="mer_fee" column="mer_fee" />
+		<result property="change_amount" column="change_amount" />
+		<result property="account_amount" column="account_amount" />
+		<result property="trade_stance" column="trade_stance" />
+		<result property="derc_status" column="derc_status" />
+		<result property="mer_state" column="mer_state" />
+		<result property="mer_category" column="mer_category" />
+		<result property="mer_name" column="mer_name" />
+		<result property="inst_id" column="inst_id" />
+		<result property="deduct_stlm_date" column="deduct_stlm_date" />
+		<result property="inst_type" column="inst_type" />
+		<result property="bank_id" column="bank_id" />
+		
+		<result property="onAccountAmt" column="onAccountAmt" />
+		<result property="theAmount" column="theAmount" />	
+		<result property="refundAmount" column="refundAmount" />
+		<result property="merFees" column="merFees" />
+		<result property="merBackFees" column="merBackFees" />
+		<result property="settlementAmt" column="settlementAmt" />
+		<result property="thisAccountAmt" column="thisAccountAmt" />
+		<result property="stance_time" column="stance_time" />
+		<result property="addAmount" column="addAmount" />
+		<result property="subAmount" column="subAmount" />
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="queryPageMerFundStance" parameterType="Map" resultMap="MerFundStanceMap">
+		select id,mer_code,LEFT(trade_time,19) as trade_time,trade_amount,mer_fee,change_amount,account_amount,trade_stance,derc_status,mer_name,stance_time from mer_fund_stance where 1 = 1  
+		<if test="startDate != null and startDate != ''">
+			and trade_time between #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and #{endDate}
+		</if>
+		<if test="start_date != null and start_date != ''">
+			and stance_time between #{start_date}
+		</if>
+		<if test="end_date != null and end_date != ''">
+			and #{end_date}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code} 
+		</if>
+		<if test="trade_stance != null and trade_stance != ''">
+			and trade_stance = #{trade_stance} 
+		</if>
+		<if test="mer_state != null ">
+			and mer_state = #{mer_state} 
+		</if>
+		<if test="mer_category != null ">
+			and mer_category = #{mer_category} 
+		</if>
+		<if test="derc_status != null ">
+			and derc_status = #{derc_status} 
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		order by stance_time desc
+		limit #{startRow},#{limit}
+	</select>
+	
+	<select id="queryPageCount" parameterType="Map" resultType="int">
+		select count(*) from mer_fund_stance where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and trade_time between #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and #{endDate}
+		</if>
+		<if test="start_date != null and start_date != ''">
+			and stance_time between #{start_date}
+		</if>
+		<if test="end_date != null and end_date != ''">
+			and #{end_date}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code} 
+		</if>
+		<if test="trade_stance != null and trade_stance != ''">
+			and trade_stance = #{trade_stance} 
+		</if>
+		<if test="mer_state != null ">
+			and mer_state = #{mer_state} 
+		</if>
+		<if test="mer_category != null ">
+			and mer_category = #{mer_category} 
+		</if>
+		<if test="derc_status != null ">
+			and derc_status = #{derc_status} 
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+	</select>
+	
+	<insert id="insertMerFundStance" parameterType="MerFundStance">
+		insert into mer_fund_stance(id,mer_code,trade_time,trade_amount,mer_fee,change_amount,
+								account_amount,trade_stance,derc_status,mer_state,mer_category,mer_name,inst_id,deduct_stlm_date, inst_type,stance_time,bank_id) 
+		values(#{id},#{mer_code},#{trade_time},#{trade_amount},#{mer_fee},#{change_amount},
+				#{account_amount},#{trade_stance},#{derc_status},#{mer_state},#{mer_category},#{mer_name},#{inst_id},#{deduct_stlm_date},#{inst_type},#{stance_time},#{bank_id})
+	</insert>
+	
+	<update id="updateMerFundStance" parameterType="MerFundStance">
+		update mer_fund_stance
+			<set>
+				<if test="mer_code != null and mer_code != ''">
+					mer_code = #{mer_code} 
+				</if>
+				<if test="trade_stance != null and trade_stance != ''">
+					trade_stance = #{trade_stance} 
+				</if>
+				<if test="trade_time != null and trade_time != ''">
+					trade_time = #{trade_time} 
+				</if>
+				<if test="derc_status != null and derc_status != ''">
+					derc_status = #{derc_status} 
+				</if>
+				<if test="trade_amount != null '">
+					trade_amount = #{trade_amount} 
+				</if>
+				<if test="mer_fee != null ">
+					mer_fee = #{mer_fee} 
+				</if>
+				<if test="change_amount != null ">
+					change_amount = #{change_amount} 
+				</if>
+				<if test="account_amount != null ">
+					account_amount = #{account_amount} 
+				</if>
+				<if test="mer_state != null ">
+					mer_state = #{mer_state} 
+				</if>
+				<if test="mer_category != null ">
+					mer_category = #{mer_category} 
+				</if>
+				<if test="inst_id != null ">
+					inst_id = #{inst_id} 
+				</if>
+				<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+					deduct_stlm_date = #{deduct_stlm_date} 
+				</if>
+			</set>
+			where id = #{id}
+	</update>
+	<select id="queryLastAccountAmount" parameterType="Map" resultType="String">
+		select account_amount from mer_fund_stance where mer_code = #{mer_code} order by trade_time desc limit 1;
+	</select>
+	
+	<select id="queryMerFundStanceList" parameterType="Map" resultMap="MerFundStanceMap">
+		select id,mer_code,LEFT(trade_time,19) as trade_time,trade_amount,mer_fee,change_amount,account_amount,trade_stance,derc_status,mer_name,stance_time from mer_fund_stance where 1 = 1
+		<if test="startDate != null and startDate != ''">
+			and trade_time between #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and #{endDate}
+		</if>
+		<if test="start_date != null and start_date != ''">
+			and stance_time between #{start_date}
+		</if>
+		<if test="end_date != null and end_date != ''">
+			and #{end_date}
+		</if>
+		<if test="mer_code != null and mer_code != ''">
+			and mer_code = #{mer_code} 
+		</if>
+		<if test="trade_stance != null and trade_stance != ''">
+			and trade_stance = #{trade_stance} 
+		</if>
+		<if test="mer_state != null ">
+			and mer_state = #{mer_state} 
+		</if>
+		<if test="mer_category != null ">
+			and mer_category = #{mer_category} 
+		</if>
+		<if test="deduct_stlm_date != null and deduct_stlm_date != ''">
+			and deduct_stlm_date = #{deduct_stlm_date}
+		</if>
+		order by stance_time desc
+	</select>
+	
+	<select id="queryPageAccounting" parameterType="Map" resultMap="MerFundStanceMap">
+		select m.mer_code ,m.mer_name,m.mer_category,substring(#{startTime},1,10) as startDate,substring(#{endTime},1,10) as endDate
+			,(select l.account_amount from mer_fund_stance l where l.mer_code = m.mer_code and l.trade_time &lt; #{startTime} ORDER BY l.stance_time DESC limit 1) as onAccountAmt
+			,(select t.account_amount from mer_fund_stance t where t.mer_code = m.mer_code and t.trade_time &lt;= #{endTime} ORDER BY t.stance_time DESC limit 1) as thisAccountAmt
+			,(select sum(s.change_amount) from mer_fund_stance s where s.mer_code = m.mer_code and s.derc_status in (5,6) and s.trade_time BETWEEN #{startTime} AND #{endTime}) as settlementAmt
+			,(select sum(p.trade_amount) from mer_fund_stance p where p.mer_code = m.mer_code and p.derc_status in (1,3) and p.trade_time BETWEEN #{startTime} AND #{endTime}) as theAmount
+			,(select sum(r.trade_amount) from mer_fund_stance r where r.mer_code = m.mer_code and r.derc_status in (2,4) and r.trade_time BETWEEN #{startTime} AND #{endTime}) as refundAmount
+			,(select sum(y.mer_fee) from mer_fund_stance y where y.mer_code = m.mer_code and y.derc_status in (1,3) and y.trade_time BETWEEN #{startTime} AND #{endTime}) as merFees
+			,(select sum(d.mer_fee) from mer_fund_stance d where d.mer_code = m.mer_code and d.derc_status in (2,4) and d.trade_time BETWEEN #{startTime} AND #{endTime}) as merBackFees
+			,(select sum(r.trade_amount) from mer_fund_stance r where r.mer_code = m.mer_code and r.derc_status = 7 and r.trade_amount > 0 and r.trade_time BETWEEN #{startTime} AND #{endTime}) as addAmount
+			,(select sum(e.trade_amount) from mer_fund_stance e where e.mer_code = m.mer_code and e.derc_status = 7 and e.trade_amount &lt; 0 and e.trade_time BETWEEN #{startTime} AND #{endTime}) as subAmount
+		from mer_fund_stance m where  m.trade_time BETWEEN #{startTime} AND #{endTime} 
+		 <if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code} 
+		</if>
+		<if test="mer_category != null">
+			and m.mer_category = #{mer_category} 
+		</if>
+		 GROUP BY m.mer_code 
+		 ORDER BY m.stance_time DESC
+		 limit #{startRow},#{limit}
+	</select>
+	<select id="queryPageCountAccounting" parameterType="Map" resultType="int">
+		select count(DISTINCT m.mer_code) from mer_fund_stance m where  m.trade_time BETWEEN #{startTime} AND #{endTime} 
+		 <if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code} 
+		</if>
+		<if test="mer_category != null">
+			and m.mer_category = #{mer_category} 
+		</if>
+	</select>
+	
+	<select id="queryMerAccountList" parameterType="Map" resultMap="MerFundStanceMap">
+		select m.mer_code ,m.mer_name,m.mer_category,substring(#{startTime},1,10) as startDate,substring(#{endTime},1,10) as endDate
+			,(select l.account_amount from mer_fund_stance l where l.mer_code = m.mer_code and l.trade_time &lt; #{startTime} ORDER BY l.stance_time DESC limit 1) as onAccountAmt
+			,(select t.account_amount from mer_fund_stance t where t.mer_code = m.mer_code and t.trade_time &lt;= #{endTime} ORDER BY t.stance_time DESC limit 1) as thisAccountAmt
+			,(select sum(s.change_amount) from mer_fund_stance s where s.mer_code = m.mer_code and s.derc_status in (5,6) and s.trade_time BETWEEN #{startTime} AND #{endTime}) as settlementAmt
+			,(select sum(p.trade_amount) from mer_fund_stance p where p.mer_code = m.mer_code and p.derc_status in (1,3) and p.trade_time BETWEEN #{startTime} AND #{endTime}) as theAmount
+			,(select sum(r.trade_amount) from mer_fund_stance r where r.mer_code = m.mer_code and r.derc_status in (2,4) and r.trade_time BETWEEN #{startTime} AND #{endTime}) as refundAmount
+			,(select sum(y.mer_fee) from mer_fund_stance y where y.mer_code = m.mer_code and y.derc_status in (1,3) and y.trade_time BETWEEN #{startTime} AND #{endTime}) as merFees
+			,(select sum(d.mer_fee) from mer_fund_stance d where d.mer_code = m.mer_code and d.derc_status in (2,4) and d.trade_time BETWEEN #{startTime} AND #{endTime}) as merBackFees
+			,(select sum(r.trade_amount) from mer_fund_stance r where r.mer_code = m.mer_code and r.derc_status = 7 and r.trade_amount > 0 and r.trade_time BETWEEN #{startTime} AND #{endTime}) as addAmount
+			,(select sum(e.trade_amount) from mer_fund_stance e where e.mer_code = m.mer_code and e.derc_status = 7 and e.trade_amount &lt; 0 and e.trade_time BETWEEN #{startTime} AND #{endTime}) as subAmount
+		from mer_fund_stance m where  m.trade_time BETWEEN #{startTime} AND #{endTime} 
+		 <if test="mer_code != null and mer_code != ''">
+			and m.mer_code = #{mer_code} 
+		</if>
+		<if test="mer_category != null">
+			and m.mer_category = #{mer_category} 
+		</if>
+		 GROUP BY m.mer_code 
+		 ORDER BY m.stance_time DESC
+	</select>
+	
+	<select id="queryMercodeList" parameterType="Map" resultMap="MerFundStanceMap">
+		select DISTINCT mer_code,mer_category from mer_fund_stance where 1=1
+		<if test="merCode != null and merCode != ''">
+			and mer_code = #{merCode} 
+		</if>
+		<if test="merType != null and merType !='' ">
+			and mer_category = #{merType} 
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &gt;= #{startDate} 
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endDate} 
+		</if>
+	</select>
+	
+	<select id="queryOnAccountAmt" parameterType="Map" resultMap="MerFundStanceMap">
+		select account_amount,mer_name,mer_category
+		 from mer_fund_stance where 1 = 1
+		 <if test="mercodes != null and mercodes != ''">
+			and mer_code = #{mercodes} 
+		</if>
+		<if test="merType != null and merType !='' ">
+			and mer_category = #{merType} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &lt; #{startTime}
+		</if>
+		order by trade_stance desc
+	</select>
+	
+	<select id="queryThisAccountAmt" parameterType="Map" resultMap="MerFundStanceMap">
+		select account_amount
+		 from mer_fund_stance where 1 = 1
+		 <if test="mercodes != null and mercodes != ''">
+			and mer_code = #{mercodes} 
+		</if>
+		<if test="merType != null and merType !='' ">
+			and mer_category = #{merType} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &gt;= #{startTime} 
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime} 
+		</if>
+		order by trade_stance desc
+	</select>
+	
+	<select id="querySumTheAmount" parameterType="Map" resultMap="MerFundStanceMap">
+		select IFNULL(sum(trade_amount),'0.00') as theAmount,
+			   IFNULL(sum(mer_fee),'0.00') as merFees,mer_name,mer_category
+		 from mer_fund_stance where derc_status in(1,3)
+		<if test="mercodes != null and mercodes != ''">
+			and mer_code = #{mercodes} 
+		</if>
+		<if test="merType != null and merType !='' ">
+			and mer_category = #{merType} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &gt;= #{startTime} 
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime} 
+		</if>
+	</select>
+	
+	<select id="querySumRefundAmount" parameterType="Map" resultMap="MerFundStanceMap">
+		select  IFNULL(sum(trade_amount),'0.00') as refundAmount,
+				IFNULL(sum(mer_fee),'0.00') as merBackFees
+		 from mer_fund_stance where derc_status in(2,4)
+		<if test="mercodes != null and mercodes != ''">
+			and mer_code = #{mercodes} 
+		</if>
+		<if test="merType != null and merType !='' ">
+			and mer_category = #{merType} 
+		</if>
+		<if test="startTime != null and startTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &gt;= #{startTime} 
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and DATE_FORMAT(trade_time,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime} 
+		</if>
+	</select>
+	
+</mapper>
