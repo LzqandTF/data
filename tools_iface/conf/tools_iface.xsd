@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.dz.chinaebi.com.cn/webservice" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dz.chinaebi.com.cn/webservice" elementFormDefault="qualified" version="1.0" xml:lang="EN">
+	<xs:annotation>
+		<xs:documentation>
+			- v1.0 : First version of Chinaebi Kernel Manage schema
+		</xs:documentation>
+	</xs:annotation>
+	<!-- add : 增、delete : 删、update : 改 -->
+	<xs:simpleType name="dataHandler">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="add"/>
+			<xs:enumeration value="delete"/>
+			<xs:enumeration value="update"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- true ：是，false ：否 -->
+	<xs:simpleType name="yesOrno">
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="false"/>
+			<xs:pattern value="true"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 扣款渠道是否开通关闭 open : 开通、close ：关闭 -->
+	<xs:simpleType name="openOrclose">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="open"/>
+			<xs:enumeration value="close"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 内部对账等级  1 ：一级、2 ：二级-->
+	<xs:simpleType name="innerLevel">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 文件类型  1:一般对账文件、2:差错对账文件-->
+	<xs:simpleType name="fileType">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- 对账系统回执内容 
+		00 :　成功
+		01 : 失败
+	-->
+	<xs:complexType name="dzTradeContextType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<xs:element name="opCode" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 交易类型金额正负处理 
+		原交易处理码\原交易消息类型  只针对dataHandler 是update的时候才操作  其他添加/删除不操作
+			
+		<xs:complexType name="tradeTypeMoneyHandlerType">
+			<xs:sequence>
+				<xs:element name="trace" type="xs:string"/>
+				交易处理码
+				<xs:element name="process" type="xs:string"/>
+				交易消息类型
+				<xs:element name="tradeMsgType" type="xs:int"/>
+				交易名称
+				<xs:element name="name_" type="xs:string"/>
+				交易金额状态
+				<xs:element name="tradeMoneyStatus" type="xs:boolean"/>
+				<xs:element name="dataHandler" type="dataHandler"/>
+			</xs:sequence>
+			<xs:attribute name="issueInstant" type="xs:dateTime"/>
+		</xs:complexType> -->
+	<!-- 定时任务 对账文件获取任务操作 -->
+	<xs:complexType name="timingTaskDzFileConfType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 主键 -->
+			<xs:element name="id" type="xs:int"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 对账文件获取时间 -->
+			<xs:element name="acquisitionTime" type="xs:string"/>
+			<!-- 对账文件获取定时任务名称 -->
+			<xs:element name="acquisitionName" type="xs:string"/>
+			<xs:element name="dataHandler" type="dataHandler"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 定时任务 汇总核心交易数据任务操作 -->
+	<xs:complexType name="timingTaskSummaryDataConfType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 汇总核心交易数据 -->
+			<xs:element name="gatherDataTime" type="xs:string"/>
+			<!-- 汇总核心交易数据定时任务名称 -->
+			<xs:element name="gatherDataName" type="xs:string"/>
+			<xs:element name="dataHandler" type="dataHandler"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 定时任务 对账处理时间任务操作 -->
+	<xs:complexType name="timingTaskDzHandlerConfType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 主键 -->
+			<xs:element name="id" type="xs:int"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 对账处理时间 -->
+			<xs:element name="dzHandlerTime" type="xs:string"/>
+			<!-- 对账处理时间定时任务名称 -->
+			<xs:element name="dzHandlerName" type="xs:string"/>
+			<xs:element name="dataHandler" type="dataHandler"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 定时任务 对账文件生成时间任务操作 -->
+	<xs:complexType name="timingTaskDzFileGenerateType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 对账文件生成处理时间 -->
+			<xs:element name="dzFileHandlerTime" type="xs:string"/>
+			<!-- 对账文件生成处理时间定时任务名称 -->
+			<xs:element name="dzFileHandlerName" type="xs:string"/>
+			<xs:element name="dataHandler" type="dataHandler"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 是否内部对账处理  
+		<xs:complexType name="whetherInnerDzHandlerType">
+			<xs:sequence>
+				<xs:element name="trace" type="xs:string"/>
+				机构号
+				<xs:element name="instId" type="xs:int"/>
+				渠道类型
+				<xs:element name="instType" type="xs:int"/>
+				是否内部对账
+				<xs:element name="yesOrno" type="yesOrno"/>
+			</xs:sequence>
+			<xs:attribute name="issueInstant" type="xs:dateTime"/>
+		</xs:complexType> -->
+	<!-- 手动汇总原始交易数据 -->
+	<xs:complexType name="manualSummaryOriginalType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 银行网关 -->
+			<xs:element name="bankGate" type="xs:int"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 表名称 -->
+			<xs:element name="tableName" type="xs:int"/>
+			<!-- 汇总日期 -->
+			<xs:element name="summaryDate" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 手动解析银行对账文件数据 -->
+	<xs:complexType name="manualParseDzFileType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 银行网关 -->
+			<xs:element name="bankId" type="xs:int"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 汇总名称 -->
+			<xs:element name="summaryFileName" type="xs:string"/>
+			<!-- 汇总文件时间 -->
+			<xs:element name="summaryFileDate" type="xs:string"/>
+			<!-- 文件类型  1:一般对账文件 2:差错文件-->
+			<xs:element name="file_type" type="xs:int"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 手动处理对账文件数据与电银内部交易数据重对账 -->
+	<xs:complexType name="manualHandlerAgainDzType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 银行网关 -->
+			<xs:element name="bankId" type="xs:int"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 机构对账处理类 -->
+			<xs:element name="dzHandlerClass" type="xs:string"/>
+			<!-- 原始交易日期时间 -->
+			<xs:element name="summaryDate" type="xs:string"/>
+			<xs:sequence maxOccurs="unbounded">
+				<!-- 原始交易数据对账字段 -->
+				<xs:element name="originalDzColumn" type="xs:string"/>
+				<!-- 扣款渠道对账字段 -->
+				<xs:element name="channelDzColumn" type="xs:string"/>
+			</xs:sequence>
+			<!-- 是否内部对账 -->
+			<xs:element name="innertTradeHandler" type="xs:boolean"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 手动处理差错文件数据与电银内部交易差错数据重对账 -->
+	<xs:complexType name="manualHandlerErrorDzType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 机构对账处理类 -->
+			<xs:element name="dzHandlerClass" type="xs:string"/>
+			<!-- 原始交易日期时间 -->
+			<xs:element name="summaryDate" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 手动还原数据对账处理状态
+	<xs:complexType name="reductionDataStatusType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			机构号
+			<xs:element name="instId" type="xs:int"/>
+			渠道类型
+			<xs:element name="instType" type="xs:int"/>
+			原始交易日期时间
+			<xs:element name="summaryDate" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType> -->
+	<!-- 手动还原差错数据对账处理状态 -->
+	<xs:complexType name="reductionErrorDataStatusType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 原始交易日期时间 -->
+			<xs:element name="summaryDate" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 手动生产对账文件 -->
+	<xs:complexType name="reductionGenerateDzFileType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- 文件类型  1:一般对账文件、2:差错对账文件 -->
+			<xs:element name="fileType" type="fileType"/>
+			<!-- 系统接口ID -->
+			<xs:element name="customId" type="xs:int"></xs:element>
+			<!-- 日期时间 -->
+			<xs:element name="GenerateDate" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 扣款渠道开通关闭处理 -->
+	<xs:complexType name="deductChannelOpenOrCloseType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+			<!-- open:开通、close:关闭 -->
+			<xs:element name="openOrclose" type="openOrclose"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	
+	<!-- 银行机构更新内存 -->
+	<xs:complexType name="bankInstUpdateRamType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构ID -->
+			<xs:element name="bankId" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 扣款渠道更新内存 -->
+	<xs:complexType name="deductChannelUpdateRamType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 机构号 -->
+			<xs:element name="instId" type="xs:int"/>
+			<!-- 渠道类型 -->
+			<xs:element name="instType" type="xs:int"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 交易金额内存更新 
+	<xs:complexType name="tradeMoneyUpdateRamType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			机构号
+			<xs:element name="id" type="xs:int"/>
+			渠道类型
+			<xs:element name="instType" type="xs:int"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType> -->
+	<!-- 商户管理接口 -->
+	<xs:complexType name="merInfoHandlerReqType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!--                     商户基本信息                                       -->
+			<!-- 商户类别 -->
+			<xs:element name="merCategory" type="xs:int"/>
+			<!-- 商户名称 -->
+			<xs:element name="merName" type="xs:string"/>
+			<!-- 商户简称 -->
+			<xs:element name="merAbbreviation" type="xs:string"/>
+			<!-- 电银商户号 -->
+			<xs:element name="innerMerCode" type="xs:string"/>
+			<!-- 商户状态 0:正常、1:关闭 -->
+			<xs:element name="industry" type="xs:int"/>
+			<!-- 所属省份 -->
+			<xs:element name="province" type="xs:string"/>
+			<!-- 商户类型 1:个人、2:企业-->
+			<xs:element name="merType" type="xs:int"/>
+			<!-- 合同起始日期-->
+			<xs:element name="startDateFrom" type="xs:string"/>
+			<!-- 合同结束日期-->
+			<xs:element name="endDateFrom" type="xs:string"/>
+			<!-- 所属交易渠道-->
+			<xs:element name="tradeChannel" type="xs:string"/>
+			<!-- 商户拓展方(代理商名称)-->
+			<xs:element name="merExpand" type="xs:string"/>
+			<!-- 商户拓展方(代理商编号)-->
+			<xs:element name="merExpandNo" type="xs:string"/>
+			<!--                      商户结算信息                                           -->
+			<!-- 结算对象-->
+			<xs:element name="clearingObject" type="xs:int"/>
+			<!-- 结算银行联行号 -->
+			<xs:element name="clearingBankNo" type="xs:string"/>
+			<!-- 结算银行名称 -->
+			<xs:element name="clearingBankName" type="xs:string"/>
+			<!-- 结算账户名称 -->
+			<xs:element name="clearingAccountName" type="xs:string"/>
+			<!-- 结算银行账号 -->
+			<xs:element name="clearingCardNo" type="xs:string"/>
+			<!-- 结算方式  1:全额、2:净额-->
+			<xs:element name="clearingWay" type="xs:int"/>
+			<!-- 结算最少金额(元) -->
+			<xs:element name="clearingMinMoney" type="xs:string"/>
+			<!-- 结算周期  1:每天结算一次、2:每周结算一次、3:每月结算一次-->
+			<xs:element name="clearingPeriod" type="xs:int"/>
+			<!-- 手工结算 1:关闭、2:开通-->
+			<xs:element name="handworkClearing" type="xs:int"/>
+			<!-- 电银结算账号-->
+			<xs:element name="dyClearingNo" type="xs:string"/>
+			<!-- 结算状态 1:正常、2:冻结-->
+			<xs:element name="clearingStatus" type="xs:int"/>
+			<!-- 结算类型 1:电银账号、2:银行卡账号-->
+			<xs:element name="clearingType" type="xs:int"/>
+			<!--                           手续费信息                                      -->
+			<!-- 商户签约手续费-->
+			<xs:element name="merSignedFee" type="xs:string"/>
+			<!-- 数据处理  add : 增、delete : 删、update : 改 -->
+			<xs:element name="dataHandler" type="dataHandler"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 创建结算单 -->
+	<xs:complexType name="createSettleFileType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 结算发起日期 范围-->
+			<xs:element name="startDate" type="xs:int"/>
+			<xs:element name="endDate" type="xs:int"/>
+			<!-- 结算账户类型-->
+			<xs:element name="settleAccountType" type="xs:int"/>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 代付接口 -->
+	<xs:complexType name="merMoneyDeductedReqType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="id" type="xs:string"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:attribute name="issueInstant" type="xs:dateTime"/>
+	</xs:complexType>
+	<!-- 融易付平台商户余额查询接口 -->
+	<xs:complexType name="ryfMerStanceSelectReqType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 商户号 -->
+			<xs:element name="mer_code" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 融易付平台商户余额查询接口回执
+		获取不到商户余额时 商户余额为0
+	-->
+	<xs:complexType name="rreturnRyfMerBalanceSelectReqType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<!-- 商户号 -->
+			<xs:element name="mer_code" type="xs:string"/>
+			<!-- 商户余额  -->
+			<xs:element name="mer_balance" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 商户基本信息更新内存 -->
+	<xs:complexType name="merBasicUpdateRamType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<xs:element name="mer_code" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 商户结算信息更新内存 -->
+	<xs:complexType name="merBillingUpdateRamType">
+		<xs:sequence>
+			<xs:element name="trace" type="xs:string"/>
+			<xs:element name="mer_code" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="dzTradeContext" type="dzTradeContextType"/>
+	<!-- <xs:element name="tradeTypeMoneyHandler" type="tradeTypeMoneyHandlerType"/> -->
+	<xs:element name="timingTaskDzFileConf" type="timingTaskDzFileConfType"/>
+	<xs:element name="timingTaskSummaryDataConf" type="timingTaskSummaryDataConfType"/>
+	<xs:element name="timingTaskDzHandlerConf" type="timingTaskDzHandlerConfType"/>
+	<xs:element name="manualSummaryOriginal" type="manualSummaryOriginalType"/>
+	<xs:element name="manualParseDzFile" type="manualParseDzFileType"/>
+	<xs:element name="manualHandlerAgainDz" type="manualHandlerAgainDzType"/>
+	<!-- <xs:element name="reductionDataStatus" type="reductionDataStatusType"/> -->
+	<xs:element name="deductChannelOpenOrClose" type="deductChannelOpenOrCloseType"/>
+	<xs:element name="bankInstUpdateRam" type="bankInstUpdateRamType"/>
+	<xs:element name="deductChannelUpdateRam" type="deductChannelUpdateRamType"/>
+	<!-- <xs:element name="tradeMoneyUpdateRam" type="tradeMoneyUpdateRamType"/> -->
+	<xs:element name="timingTaskDzFileGenerate" type="timingTaskDzFileGenerateType"/>
+	<xs:element name="manualHandlerErrorDz" type="manualHandlerErrorDzType"/>
+	<xs:element name="reductionErrorDataStatus" type="reductionErrorDataStatusType"/>
+	<xs:element name="reductionGenerateDzFile" type="reductionGenerateDzFileType"/>
+	<xs:element name="merInfoHandlerReq" type="merInfoHandlerReqType"/>
+	<xs:element name="createSettleFile" type="createSettleFileType"/>
+	<xs:element name="merMoneyDeductedReq" type="merMoneyDeductedReqType"/>
+	<xs:element name="ryfMerStanceSelectReq" type="ryfMerStanceSelectReqType"/>
+	<xs:element name="rreturnRyfMerBalanceSelectReq" type="rreturnRyfMerBalanceSelectReqType"/>
+	<xs:element name="merBasicUpdateRam" type="merBasicUpdateRamType"/>
+	<xs:element name="merBillingUpdateRam" type="merBillingUpdateRamType"/>
+</xs:schema>

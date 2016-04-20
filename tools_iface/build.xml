@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project name="dz_interfacetools_project" basedir="." default="dist">
+	<property file="build.properties" />
+	
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<taskdef name="xmlbean"
+		classname="org.apache.xmlbeans.impl.tool.XMLBean"
+		classpath="${lib.dir}/xbean.jar:${lib.dir}/jsr173_1.0_api.jar" />
+		
+	<target name="gencode">
+		<mkdir dir="${src.dir}" />
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${dist.dir}"/>
+		<xmlbean srconly="yes" classgendir="${src.dir}" failonerror="true">
+			<fileset dir="${src.dir}" excludes="**/*.xsd"/>
+			<fileset dir="${schema.dir}" includes="**/tools_iface.xsd"/>
+		</xmlbean>
+	</target>
+	
+	<target name="compile" depends="gencode">
+		<mkdir dir="${bin.dir}" />
+		
+		<javac destdir="${bin.dir}" encoding="UTF-8" source="1.6" target="1.6" debug="${debug.flag}" deprecation="false" optimize="${optimize.flag}" failonerror="${failonerror.flag}">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+		
+		<copy todir="${bin.dir}" preservelastmodified="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.class" />
+				<include name="**/*.xsb"/>
+			</fileset>		
+		</copy>	
+	</target>
+		
+	<target name="gendoc" depends="dist" description="Generate javadocs">
+		<javadoc packagenames="cn.com.chinaebi.*"
+			sourcepath="${src.dir}"
+			defaultexcludes="yes"
+			destdir="${doc.dir}"
+			version="true"
+			use="true"
+			encoding="UTF-8"
+			windowtitle="Chinaebi DZ Interface Java API">
+			<doctitle><![CDATA[<h1>Chinaebi Xpe Java API</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2012 Chinaebi. All Rights Reserved.</i>]]></bottom>
+			<link offline="true" href="http://java.sun.com/javase/6/docs/api/" packagelistLoc="C:\Java\jdk-6u10-docs\docs"/>
+		</javadoc>
+	</target>
+	
+	<target name="dist" depends="clean,compile">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${project.name}_${project.version}.jar">
+			<fileset dir="${bin.dir}">
+				<exclude name="**/test/*.*" />
+			</fileset>	
+		</jar>
+	</target>
+		
+	<target name="clean" description="Delete all build files" >
+		<delete dir="${src.dir}"/>
+		<delete dir="${bin.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	
+</project>

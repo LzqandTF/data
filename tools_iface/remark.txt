@@ -1,0 +1,11 @@
+接口xml解析工程
+conf ：接口schema xml定义说明
+lib ： 解析时需要的jar包
+dist ：接口工程打包文件
+
+编译打包命令：
+scomp -src F:\workspace\tools_iface\src -out F:\workspace\tools_iface\lib\dz-iface_1.8.0.jar tools_iface.xsd
+ -compiler C:\Program Files\Java\jdk1.6.0_10\bin\javac Kernel.xsdconfig
+ 
+ 
+ 
